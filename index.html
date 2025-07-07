@@ -13,6 +13,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claudio's Web Demo</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
     <style>
         * {
             margin: 0;
@@ -157,6 +161,127 @@
             }
         }
 
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 27, 44, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 0;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .popup-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .popup-body {
+            padding: 1.5rem;
+        }
+
+        .popup-body label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .popup-body input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .popup-body input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .popup-body input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .popup-login-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .popup-login-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .popup-cancel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .popup-cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -170,6 +295,10 @@
             .container {
                 padding: 1rem;
             }
+
+            .popup-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -180,6 +309,24 @@
         <div class="floating-element"></div>
     </div>
 
+    <!-- Login Popup -->
+    <div id="login-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>Login</h2>
+                <button class="close-btn" onclick="closeLoginPopup()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <label for="username-input">Username:</label>
+                <input type="text" id="username-input" placeholder="Enter your username" />
+                <div class="popup-buttons">
+                    <button class="btn popup-login-btn" onclick="performLogin()">Login</button>
+                    <button class="btn popup-cancel-btn" onclick="closeLoginPopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="hero">
             <h1>Welcome to the Playground!</h1>
@@ -187,14 +334,14 @@
         </div>
 
         <div class="buttons-grid">
-            <button class="btn" onclick="handleClick('Text 1')">Login</button>
-            <button class="btn" onclick="handleClick('Text 2')">Logout</button>
-            <button class="btn" onclick="handleClick('Text 3')">Add Tag</button>
-            <button class="btn" onclick="handleClick('Text 4')">Remove Tag</button>
-            <button class="btn" onclick="handleClick('Text 5')">Add Email</button>
-            <button class="btn" onclick="handleClick('Text 6')">Add SMS</button>
-            <button class="btn" onclick="handleClick('Text 5')">Add Event (beta)</button>
-            <button class="btn" onclick="handleClick('Text 6')">Send Outcome</button>
+            <button id="login-btn" class="btn" onclick="handleClick('login')">Login</button>
+            <button id="logout-btn" class="btn" onclick="handleClick('logout')">Logout</button>
+            <button id="add-tag-btn" class="btn" onclick="handleClick('add-tag')">Add Tag</button>
+            <button id="remove-tag-btn" class="btn" onclick="handleClick('remove-tag')">Remove Tag</button>
+            <button id="add-email-btn" class="btn" onclick="handleClick('add-email')">Add Email</button>
+            <button id="add-sms-btn" class="btn" onclick="handleClick('add-sms')">Add SMS</button>
+            <button id="add-event-btn" class="btn" onclick="handleClick('add-event')">Add Event (beta)</button>
+            <button id="send-outcome-btn" class="btn" onclick="handleClick('send-outcome')">Send Outcome</button>
         </div>
     </div>
 
@@ -208,12 +355,92 @@
                 button.style.transform = '';
             }, 150);
 
-            // You can add your custom logic here for each button
-            console.log(`Button clicked: ${buttonText}`);
-            
-            // Example: Show an alert (you can replace this with your desired functionality)
-            alert(`You clicked: ${buttonText}`);
+            // Handle different button actions
+            switch(buttonText) {
+                case 'login':
+                    showLoginPopup();
+                    break;
+                case 'logout':
+                    // TODO: Add logout functionality
+                    console.log('Logout clicked');
+                    break;
+                case 'add-tag':
+                    // TODO: Add tag functionality
+                    console.log('Add tag clicked');
+                    break;
+                case 'remove-tag':
+                    // TODO: Add remove tag functionality
+                    console.log('Remove tag clicked');
+                    break;
+                case 'add-email':
+                    // TODO: Add email functionality
+                    console.log('Add email clicked');
+                    break;
+                case 'add-sms':
+                    // TODO: Add SMS functionality
+                    console.log('Add SMS clicked');
+                    break;
+                case 'add-event':
+                    // TODO: Add event functionality
+                    console.log('Add event clicked');
+                    break;
+                case 'send-outcome':
+                    // TODO: Add send outcome functionality
+                    console.log('Send outcome clicked');
+                    break;
+                default:
+                    console.log(`Button clicked: ${buttonText}`);
+            }
         }
+
+        // Login popup functions
+        function showLoginPopup() {
+            const popup = document.getElementById('login-popup');
+            popup.style.display = 'flex';
+            document.getElementById('username-input').focus();
+        }
+
+        function closeLoginPopup() {
+            const popup = document.getElementById('login-popup');
+            popup.style.display = 'none';
+            document.getElementById('username-input').value = '';
+        }
+
+        function performLogin() {
+            const username = document.getElementById('username-input').value.trim();
+            
+            if (!username) {
+                alert('Please enter a username');
+                return;
+            }
+
+            // Call OneSignal login with the username as external_id
+            OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                    await OneSignal.login(username);
+                    console.log(`Successfully logged in with external_id: ${username}`);
+                    alert(`Successfully logged in as: ${username}`);
+                    closeLoginPopup();
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Login failed. Please try again.');
+                }
+            });
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('login-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginPopup();
+            }
+        });
+
+        // Handle Enter key in username input
+        document.getElementById('username-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performLogin();
+            }
+        });
 
         // Add some interactive effects
         document.addEventListener('DOMContentLoaded', function() {
