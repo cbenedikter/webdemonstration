@@ -571,15 +571,14 @@
         function showNotification(title, message, type = 'success', duration = 4000) {
             const container = document.getElementById('notification-container');
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
+            notification.className = 'notification ' + type;
             
-            notification.innerHTML = `
-                <div class="notification-header">
-                    <div class="notification-title">${title}</div>
-                    <button class="notification-close" onclick="closeNotification(this)">&times;</button>
-                </div>
-                <div class="notification-message">${message}</div>
-            `;
+            notification.innerHTML = 
+                '<div class="notification-header">' +
+                    '<div class="notification-title">' + title + '</div>' +
+                    '<button class="notification-close" onclick="closeNotification(this)">&times;</button>' +
+                '</div>' +
+                '<div class="notification-message">' + message + '</div>';
             
             container.appendChild(notification);
             
@@ -644,7 +643,7 @@
                     console.log('Send outcome clicked');
                     break;
                 default:
-                    console.log(`Button clicked: ${buttonText}`);
+                    console.log('Button clicked: ' + buttonText);
             }
         }
 
@@ -673,8 +672,8 @@
             OneSignalDeferred.push(async function(OneSignal) {
                 try {
                     await OneSignal.login(username);
-                    console.log(`Successfully logged in with external_id: ${username}`);
-                    showNotification('Login Successful', `Successfully logged in as: ${username}`, 'success');
+                    console.log('Successfully logged in with external_id: ' + username);
+                    showNotification('Login Successful', 'Successfully logged in as: ' + username, 'success');
                     closeLoginPopup();
                 } catch (error) {
                     console.error('Login error:', error);
@@ -738,19 +737,19 @@
                     if (tagValue) {
                         // Adding a tag
                         await OneSignal.User.addTag(tagKey, tagValue);
-                        console.log(`Successfully added tag: ${tagKey} = ${tagValue}`);
-                        showNotification('Tag Added', `Successfully added tag: ${tagKey} = ${tagValue}`, 'success');
+                        console.log('Successfully added tag: ' + tagKey + ' = ' + tagValue);
+                        showNotification('Tag Added', 'Successfully added tag: ' + tagKey + ' = ' + tagValue, 'success');
                     } else {
                         // Removing a tag
                         await OneSignal.User.removeTag(tagKey);
-                        console.log(`Successfully removed tag: ${tagKey}`);
-                        showNotification('Tag Removed', `Successfully removed tag: ${tagKey}`, 'success');
+                        console.log('Successfully removed tag: ' + tagKey);
+                        showNotification('Tag Removed', 'Successfully removed tag: ' + tagKey, 'success');
                     }
                     closeAddTagPopup();
                 } catch (error) {
                     console.error('Tag modification error:', error);
                     const action = tagValue ? 'add' : 'remove';
-                    showNotification('Tag Modification Failed', `Failed to ${action} tag. Please try again.', 'error');
+                    showNotification('Tag Modification Failed', 'Failed to ' + action + ' tag. Please try again.', 'error');
                 }
             });
         }
