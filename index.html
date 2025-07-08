@@ -387,6 +387,39 @@
             padding: 2rem;
             font-style: italic;
         }
+        .tag-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .tag-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tag-key {
+            font-weight: 600;
+            color: #e0f2fe;
+        }
+
+        .tag-value {
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+        }
+
+        .no-tags {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            font-style: italic;
+        }
 
         @media (max-width: 768px) {
             .hero h1 {
