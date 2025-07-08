@@ -280,6 +280,114 @@
             border-color: rgba(255, 255, 255, 0.4);
         }
 
+        /* Custom Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            max-width: 350px;
+            word-wrap: break-word;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-color: rgba(76, 175, 80, 0.6);
+            background: linear-gradient(135deg, #051b2c 0%, #2e7d32 100%);
+        }
+
+        .notification.error {
+            border-color: rgba(244, 67, 54, 0.6);
+            background: linear-gradient(135deg, #051b2c 0%, #c62828 100%);
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .notification-message {
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        /* Tags display styles */
+        .tag-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .tag-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tag-key {
+            font-weight: 600;
+            color: #e0f2fe;
+        }
+
+        .tag-value {
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+        }
+
+        .no-tags {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -297,6 +405,17 @@
             .popup-buttons {
                 flex-direction: column;
             }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: translateY(-100px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -306,6 +425,9 @@
         <div class="floating-element"></div>
         <div class="floating-element"></div>
     </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
 
     <!-- Login Popup -->
     <div id="login-popup" class="popup-overlay">
@@ -325,6 +447,74 @@
         </div>
     </div>
 
+    <!-- Logout Popup -->
+    <div id="logout-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>Logout</h2>
+                <button class="close-btn" onclick="closeLogoutPopup()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <p style="margin-bottom: 1.5rem; color: white; font-size: 1.1rem;">Are you sure you want to logout?</p>
+                <div class="popup-buttons">
+                    <button class="btn popup-login-btn" onclick="performLogout()">Logout</button>
+                    <button class="btn popup-cancel-btn" onclick="closeLogoutPopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modify Tags Popup -->
+    <div id="add-tag-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>Modify Tags</h2>
+                <button class="close-btn" onclick="closeAddTagPopup()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <p style="margin-bottom: 1.5rem; color: white; font-size: 1rem; line-height: 1.5; opacity: 0.9;">
+                    Provide any key:value pair of string data to add tag to your profile. If wishing to remove a tag simply leave the value as blank.
+                </p>
+                
+                <label for="tag-key-input">Tag Key:</label>
+                <input type="text" id="tag-key-input" placeholder="Enter tag key" />
+                
+                <label for="tag-value-input">Tag Value:</label>
+                <input type="text" id="tag-value-input" placeholder="Enter tag value (leave blank to remove)" />
+                
+                <div class="popup-buttons">
+                    <button class="btn popup-login-btn" onclick="performAddTag()">Modify Tag</button>
+                    <button class="btn popup-cancel-btn" onclick="closeAddTagPopup()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Tags Popup -->
+    <div id="view-tags-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>View Tags</h2>
+                <button class="close-btn" onclick="closeViewTagsPopup()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <p style="margin-bottom: 1.5rem; color: white; font-size: 1rem; line-height: 1.5; opacity: 0.9;">
+                    These are the existing tags on record:
+                </p>
+                
+                <div id="tags-container" style="max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;">
+                    <div style="text-align: center; color: rgba(255, 255, 255, 0.7); padding: 2rem;">
+                        Loading tags...
+                    </div>
+                </div>
+                
+                <div class="popup-buttons">
+                    <button class="btn popup-cancel-btn" onclick="closeViewTagsPopup()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="hero">
             <h1>Welcome to the Playground!</h1>
@@ -334,8 +524,8 @@
         <div class="buttons-grid">
             <button id="login-btn" class="btn" onclick="handleClick('login')">Login</button>
             <button id="logout-btn" class="btn" onclick="handleClick('logout')">Logout</button>
-            <button id="add-tag-btn" class="btn" onclick="handleClick('add-tag')">Add Tag</button>
-            <button id="remove-tag-btn" class="btn" onclick="handleClick('remove-tag')">Remove Tag</button>
+            <button id="add-tag-btn" class="btn" onclick="handleClick('modify-tags')">Modify Tags</button>
+            <button id="remove-tag-btn" class="btn" onclick="handleClick('view-tag')">View Tags</button>
             <button id="add-email-btn" class="btn" onclick="handleClick('add-email')">Add Email</button>
             <button id="add-sms-btn" class="btn" onclick="handleClick('add-sms')">Add SMS</button>
             <button id="add-event-btn" class="btn" onclick="handleClick('add-event')">Add Event (beta)</button>
@@ -344,6 +534,43 @@
     </div>
 
     <script>
+        // Custom notification functions
+        function showNotification(title, message, type = 'success', duration = 4000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-title">${title}</div>
+                    <button class="notification-close" onclick="closeNotification(this)">&times;</button>
+                </div>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Auto remove after duration
+            if (duration > 0) {
+                setTimeout(() => {
+                    closeNotification(notification.querySelector('.notification-close'));
+                }, duration);
+            }
+        }
+
+        function closeNotification(closeBtn) {
+            const notification = closeBtn.closest('.notification');
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 400);
+        }
+
         function handleClick(buttonText) {
             // Add a subtle animation effect
             const button = event.target;
@@ -359,16 +586,13 @@
                     showLoginPopup();
                     break;
                 case 'logout':
-                    // TODO: Add logout functionality
-                    console.log('Logout clicked');
+                    showLogoutPopup();
                     break;
-                case 'add-tag':
-                    // TODO: Add tag functionality
-                    console.log('Add tag clicked');
+                case 'modify-tags':
+                    showAddTagPopup();
                     break;
-                case 'remove-tag':
-                    // TODO: Add remove tag functionality
-                    console.log('Remove tag clicked');
+                case 'view-tag':
+                    showViewTagsPopup();
                     break;
                 case 'add-email':
                     // TODO: Add email functionality
@@ -408,7 +632,7 @@
             const username = document.getElementById('username-input').value.trim();
             
             if (!username) {
-                alert('Please enter a username');
+                showNotification('Error', 'Please enter a username', 'error', 3000);
                 return;
             }
 
@@ -417,11 +641,125 @@
                 try {
                     await OneSignal.login(username);
                     console.log(`Successfully logged in with external_id: ${username}`);
-                    alert(`Successfully logged in as: ${username}`);
+                    showNotification('Login Successful', `Successfully logged in as: ${username}`, 'success');
                     closeLoginPopup();
                 } catch (error) {
                     console.error('Login error:', error);
-                    alert('Login failed. Please try again.');
+                    showNotification('Login Failed', 'Login failed. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Logout popup functions
+        function showLogoutPopup() {
+            const popup = document.getElementById('logout-popup');
+            popup.style.display = 'flex';
+        }
+
+        function closeLogoutPopup() {
+            const popup = document.getElementById('logout-popup');
+            popup.style.display = 'none';
+        }
+
+        function performLogout() {
+            // Call OneSignal logout
+            OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                    await OneSignal.logout();
+                    console.log('Successfully logged out');
+                    showNotification('Logout Successful', 'You have been successfully logged out', 'success');
+                    closeLogoutPopup();
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    showNotification('Logout Failed', 'Logout failed. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Modify Tags popup functions
+        function showAddTagPopup() {
+            const popup = document.getElementById('add-tag-popup');
+            popup.style.display = 'flex';
+            document.getElementById('tag-key-input').focus();
+        }
+
+        function closeAddTagPopup() {
+            const popup = document.getElementById('add-tag-popup');
+            popup.style.display = 'none';
+            document.getElementById('tag-key-input').value = '';
+            document.getElementById('tag-value-input').value = '';
+        }
+
+        function performAddTag() {
+            const tagKey = document.getElementById('tag-key-input').value.trim();
+            const tagValue = document.getElementById('tag-value-input').value.trim();
+            
+            if (!tagKey) {
+                showNotification('Error', 'Please enter a tag key', 'error', 3000);
+                return;
+            }
+
+            // Call OneSignal based on whether we're adding or removing
+            OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                    if (tagValue) {
+                        // Adding a tag
+                        await OneSignal.User.addTag(tagKey, tagValue);
+                        console.log(`Successfully added tag: ${tagKey} = ${tagValue}`);
+                        showNotification('Tag Added', `Successfully added tag: ${tagKey} = ${tagValue}`, 'success');
+                    } else {
+                        // Removing a tag
+                        await OneSignal.User.removeTag(tagKey);
+                        console.log(`Successfully removed tag: ${tagKey}`);
+                        showNotification('Tag Removed', `Successfully removed tag: ${tagKey}`, 'success');
+                    }
+                    closeAddTagPopup();
+                } catch (error) {
+                    console.error('Tag modification error:', error);
+                    const action = tagValue ? 'add' : 'remove';
+                    showNotification('Tag Modification Failed', `Failed to ${action} tag. Please try again.', 'error');
+                }
+            });
+        }
+
+        // View Tags popup functions
+        function showViewTagsPopup() {
+            const popup = document.getElementById('view-tags-popup');
+            popup.style.display = 'flex';
+            loadUserTags();
+        }
+
+        function closeViewTagsPopup() {
+            const popup = document.getElementById('view-tags-popup');
+            popup.style.display = 'none';
+        }
+
+        function loadUserTags() {
+            const tagsContainer = document.getElementById('tags-container');
+            
+            // Call OneSignal to get user tags
+            OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                    const tags = OneSignal.User.getTags();
+                    console.log('User tags:', tags);
+                    
+                    if (tags && Object.keys(tags).length > 0) {
+                        // Display tags
+                        let tagsHTML = '';
+                        for (const [key, value] of Object.entries(tags)) {
+                            tagsHTML += '<div class="tag-item">' +
+                                '<span class="tag-key">' + key + '</span>' +
+                                '<span class="tag-value">' + value + '</span>' +
+                                '</div>';
+                        }
+                        tagsContainer.innerHTML = tagsHTML;
+                    } else {
+                        // No tags found
+                        tagsContainer.innerHTML = '<div class="no-tags">No tags found on your profile.</div>';
+                    }
+                } catch (error) {
+                    console.error('Error loading tags:', error);
+                    tagsContainer.innerHTML = '<div class="no-tags">Error loading tags. Please try again.</div>';
                 }
             });
         }
@@ -433,10 +771,41 @@
             }
         });
 
+        document.getElementById('logout-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLogoutPopup();
+            }
+        });
+
+        document.getElementById('add-tag-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddTagPopup();
+            }
+        });
+
+        document.getElementById('view-tags-popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeViewTagsPopup();
+            }
+        });
+
         // Handle Enter key in username input
         document.getElementById('username-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 performLogin();
+            }
+        });
+
+        // Handle Enter key in tag inputs
+        document.getElementById('tag-key-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('tag-value-input').focus();
+            }
+        });
+
+        document.getElementById('tag-value-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performAddTag();
             }
         });
 
