@@ -550,20 +550,18 @@
                 console.log('Generated order ID:', orderId);
                 
                 // Send OneSignal custom event
-                const cartProperties = {
-                    "additional_data": {
-                        "order_id": orderId,
-                        "product_name": product.name,
-                        "product_price": product.price,
-                        "cart_updated_date": new Date().toISOString()
-                    }
+                const properties = {
+                    "order_id": orderId,
+                    "product_name": product.name,
+                    "product_price": product.price,
+                    "cart_updated_date": new Date().toISOString()
                 };
                 
                 if (window.OneSignal && window.OneSignal.User) {
-                    window.OneSignal.User.trackEvent('cart_updated', cartProperties);
+                    window.OneSignal.User.trackEvent('cart_updated', properties);
                     console.log(`OneSignal event sent: cart_updated with order_id: ${orderId}`);
                 } else {
-                    console.log('OneSignal not available, would send:', cartProperties);
+                    console.log('OneSignal not available, would send:', properties);
                 }
                 
                 await new Promise(resolve => setTimeout(resolve, 1500));
@@ -628,20 +626,18 @@
                 const order = orderHistory[orderIndex];
                 
                 // Send OneSignal custom event
-                const purchaseProperties = {
-                    "additional_data": {
-                        "order_id": orderId,
-                        "product_name": order.product,
-                        "product_price": order.price,
-                        "purchase_date": new Date().toISOString()
-                    }
+                const properties = {
+                    "order_id": orderId,
+                    "product_name": order.product,
+                    "product_price": order.price,
+                    "purchase_date": new Date().toISOString()
                 };
                 
                 if (window.OneSignal && window.OneSignal.User) {
-                    window.OneSignal.User.trackEvent('purchase_made', purchaseProperties);
+                    window.OneSignal.User.trackEvent('purchase_made', properties);
                     console.log(`OneSignal event sent: purchase_made with order_id: ${orderId}`);
                 } else {
-                    console.log('OneSignal not available, would send:', purchaseProperties);
+                    console.log('OneSignal not available, would send:', properties);
                 }
                 
                 await new Promise(resolve => setTimeout(resolve, 2000));
