@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+        });
+      });
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Events Demo - Checkout</title>
+    
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/notifications.css">
+    
+    <style>
+        /* Custom styles for checkout page */
+        .checkout-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .product-image {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .product-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .product-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 2rem;
+        }
+        
+        .checkout-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .summary-row.total {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .add-to-cart-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .add-to-cart-btn:active {
+            transform: translateY(0);
+        }
+        
+        .place-order-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border: none;
+            color: white;
+            padding: 1.2rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .place-order-btn:hover {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+        }
+        
+        .place-order-btn:active {
+            transform: translateY(0);
+        }
+        
+        .demo-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+
+        
+        .product-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .product-selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        
+        #product-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        #product-select option {
+            background: #1e614e;
+            color: white;
+        }
+        
+        .order-history {
+            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .order-history h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        
+        .no-orders {
+            text-align: center;
+            opacity: 0.6;
+            font-style: italic;
+            padding: 1rem;
+        }
+        
+        .order-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .order-details {
+            flex: 1;
+        }
+        
+        .order-id {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+        
+        .order-product {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .order-timestamp {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .order-state {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .state-cart-updated {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        
+        .state-completed {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        
+        .state-abandoned {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        
+        .history-place-order-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 1rem;
+        }
+        
+        .history-place-order-btn:hover {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        
+        .history-place-order-btn:active {
+            transform: translateY(0);
+        }
+        
+        .history-place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        @media (max-width: 768px) {
+            .back-button, .demo-badge {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                margin-bottom: 1rem;
+            }
+            
+            .checkout-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <a href="../../index.html" class="back-button">
+        ← Back to Demo
+    </a>
+    
+    <div class="demo-badge">
+        Custom Events Demo
+    </div>
+
+    <div class="checkout-container">
+        <div class="hero">
+            <h1>Custom Events Demo</h1>
+            <p>Select products and track the complete customer journey with OneSignal</p>
+        </div>
+
+
+
+        <!-- Product Selection -->
+        <div class="product-selector">
+            <label for="product-select">Choose Product:</label>
+            <select id="product-select" onchange="updateProduct()">
+                <option value="pro">OneSignal Pro - $29.99/month</option>
+                <option value="analytics">Analytics Plus - $19.99/month</option>
+                <option value="mobile">Mobile SDK Premium - $39.99/month</option>
+                <option value="enterprise">Enterprise Suite - $99.99/month</option>
+                <option value="starter">Starter Pack - $9.99/month</option>
+            </select>
+        </div>
+
+        <div class="product-card" id="product-card">
+            <div class="product-image" id="product-image">
+                📱
+            </div>
+            <div class="product-title" id="product-title">OneSignal Pro</div>
+            <div class="product-description" id="product-description">
+                Unlock advanced push notification features including unlimited sends, advanced targeting, 
+                detailed analytics, and priority support. Perfect for growing businesses and enterprises.
+            </div>
+            <div class="product-price" id="product-price">$29.99/month</div>
+        </div>
+
+        <div class="checkout-summary" id="checkout-summary">
+            <div class="summary-row">
+                <span id="summary-product">OneSignal Pro</span>
+                <span id="summary-price">$29.99</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax</span>
+                <span id="summary-tax">$2.40</span>
+            </div>
+            <div class="summary-row">
+                <span>Processing Fee</span>
+                <span>$0.99</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="summary-total">$33.38</span>
+            </div>
+        </div>
+
+        <button class="add-to-cart-btn" onclick="handleAddToCart(event)" id="add-to-cart-btn">
+            Add to Cart
+        </button>
+
+        <!-- Order History Section -->
+        <div class="order-history">
+            <h3>Order History (This Session)</h3>
+            <div id="order-history-list">
+                <div class="no-orders">No orders yet. Start a new order to begin tracking!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript Files -->
+    <script src="../../assets/js/notifications.js"></script>
+    
+    <script>
+        // Product data
+        const products = {
+            pro: {
+                name: 'OneSignal Pro',
+                price: 29.99,
+                description: 'Unlock advanced push notification features including unlimited sends, advanced targeting, detailed analytics, and priority support. Perfect for growing businesses and enterprises.',
+                emoji: '📱',
+                tax: 2.40
+            },
+            analytics: {
+                name: 'Analytics Plus',
+                price: 19.99,
+                description: 'Get detailed insights into user behavior, engagement metrics, and conversion tracking. Advanced analytics dashboard with real-time reporting and custom segments.',
+                emoji: '📊',
+                tax: 1.60
+            },
+            mobile: {
+                name: 'Mobile SDK Premium',
+                price: 39.99,
+                description: 'Enhanced mobile SDK with advanced features like rich media notifications, location-based targeting, and deep linking. Includes iOS and Android support.',
+                emoji: '📲',
+                tax: 3.20
+            },
+            enterprise: {
+                name: 'Enterprise Suite',
+                price: 99.99,
+                description: 'Complete enterprise solution with dedicated support, custom integrations, white-label options, and advanced security features. Perfect for large organizations.',
+                emoji: '🏢',
+                tax: 8.00
+            },
+            starter: {
+                name: 'Starter Pack',
+                price: 9.99,
+                description: 'Perfect for small projects and startups. Includes basic push notifications, simple targeting, and essential analytics. Great way to get started with OneSignal.',
+                emoji: '🚀',
+                tax: 0.80
+            }
+        };
+
+        // Global state
+        let currentProduct = 'pro';
+        let orderHistory = JSON.parse(sessionStorage.getItem('orderHistory') || '[]');
+
+        // Generate UUID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // Update product display
+        function updateProduct() {
+            const selectedProduct = document.getElementById('product-select').value;
+            currentProduct = selectedProduct;
+            const product = products[selectedProduct];
+            
+            document.getElementById('product-image').textContent = product.emoji;
+            document.getElementById('product-title').textContent = product.name;
+            document.getElementById('product-description').textContent = product.description;
+            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}/month`;
+            
+            // Update summary
+            document.getElementById('summary-product').textContent = product.name;
+            document.getElementById('summary-price').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('summary-tax').textContent = `$${product.tax.toFixed(2)}`;
+            const total = product.price + product.tax + 0.99;
+            document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
+        }
+
+
+
+        // Update order history display
+        function updateOrderHistory() {
+            const historyList = document.getElementById('order-history-list');
+            
+            if (orderHistory.length === 0) {
+                historyList.innerHTML = '<div class="no-orders">No orders yet. Add a product to cart to begin tracking!</div>';
+                return;
+            }
+            
+            historyList.innerHTML = orderHistory.map(order => `
+                <div class="order-item">
+                    <div class="order-details">
+                        <div class="order-id">#${order.id.substring(0, 8)}...</div>
+                        <div class="order-product">${order.product} - $${order.price.toFixed(2)}</div>
+                        <div class="order-timestamp">${new Date(order.timestamp).toLocaleString()}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div class="order-state state-${order.state.replace('_', '-')}">${order.state.replace('_', ' ')}</div>
+                        ${order.state === 'cart_updated' ? `<button class="history-place-order-btn" onclick="handlePlaceOrderFromHistory('${order.id}', event)">Place Order</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle add to cart - simplified flow
+        async function handleAddToCart(event) {
+            console.log('handleAddToCart called');
+            const button = event.target;
+            const originalText = button.textContent;
+            
+            button.textContent = 'Adding...';
+            button.disabled = true;
+            button.style.opacity = '0.7';
+            
+            try {
+                console.log('Current product:', currentProduct);
+                const product = products[currentProduct];
+                console.log('Product data:', product);
+                
+                if (!product) {
+                    throw new Error(`Product not found: ${currentProduct}`);
+                }
+                
+                const orderId = generateUUID();
+                const totalPrice = product.price + product.tax + 0.99;
+                console.log('Generated order ID:', orderId);
+                
+                // Send OneSignal custom event
+                const cartProperties = {
+                    "additional_data": {
+                        "order_id": orderId,
+                        "product_name": product.name,
+                        "product_price": product.price,
+                        "cart_updated_date": new Date().toISOString()
+                    }
+                };
+                
+                if (window.OneSignal && window.OneSignal.User) {
+                    window.OneSignal.User.trackEvent('cart_updated', cartProperties);
+                    console.log(`OneSignal event sent: cart_updated with order_id: ${orderId}`);
+                } else {
+                    console.log('OneSignal not available, would send:', cartProperties);
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Create order entry immediately
+                const order = {
+                    id: orderId,
+                    product: product.name,
+                    price: totalPrice,
+                    state: 'cart_updated',
+                    timestamp: new Date().toISOString(),
+                    productData: product
+                };
+                
+                orderHistory.unshift(order);
+                sessionStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+                updateOrderHistory();
+                
+                button.textContent = 'Added to Cart! ✓';
+                button.style.background = 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                button.style.borderColor = 'rgba(59, 130, 246, 0.4)';
+                
+
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.opacity = '1';
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                button.textContent = 'Error - Try Again';
+                button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.opacity = '1';
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }, 3000);
+            }
+        }
+
+        // Handle place order from history
+        async function handlePlaceOrderFromHistory(orderId, event) {
+            const button = event.target;
+            const originalText = button.textContent;
+            
+            button.textContent = 'Processing...';
+            button.disabled = true;
+            button.style.opacity = '0.7';
+            
+            try {
+                // Find the order in history
+                const orderIndex = orderHistory.findIndex(order => order.id === orderId);
+                if (orderIndex === -1) return;
+                
+                const order = orderHistory[orderIndex];
+                
+                // Send OneSignal custom event
+                const purchaseProperties = {
+                    "additional_data": {
+                        "order_id": orderId,
+                        "product_name": order.product,
+                        "product_price": order.price,
+                        "purchase_date": new Date().toISOString()
+                    }
+                };
+                
+                if (window.OneSignal && window.OneSignal.User) {
+                    window.OneSignal.User.trackEvent('purchase_made', purchaseProperties);
+                    console.log(`OneSignal event sent: purchase_made with order_id: ${orderId}`);
+                } else {
+                    console.log('OneSignal not available, would send:', purchaseProperties);
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Update order state to completed
+                orderHistory[orderIndex].state = 'completed';
+                orderHistory[orderIndex].timestamp = new Date().toISOString();
+                sessionStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+                updateOrderHistory();
+                
+
+                
+            } catch (error) {
+                console.error('Error processing order:', error);
+                button.textContent = 'Error - Try Again';
+                button.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.opacity = '1';
+                    button.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
+                }, 3000);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Custom Events Demo - Enhanced checkout page loaded');
+            
+            // Load order history
+            updateOrderHistory();
+            
+            // Initialize product display
+            updateProduct();
+            
+            // Add entrance animation
+            const container = document.querySelector('.checkout-container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.6s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

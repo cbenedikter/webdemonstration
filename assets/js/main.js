@@ -36,8 +36,8 @@ function handleClick(buttonText) {
             console.log('Add SMS clicked');
             break;
         case 'add-event':
-            // TODO: Add event functionality
-            console.log('Add event clicked');
+            // Navigate to custom events demo page
+            window.location.href = 'demos/custom-events/demo.html';
             break;
         case 'send-outcome':
             // TODO: Add send outcome functionality
