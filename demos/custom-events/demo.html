@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Events Demo - Checkout</title>
+    <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
     
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="../../assets/css/main.css">
@@ -372,11 +373,11 @@
         <div class="product-selector">
             <label for="product-select">Choose Product:</label>
             <select id="product-select" onchange="updateProduct()">
-                <option value="pro">OneSignal Pro - $29.99/month</option>
-                <option value="analytics">Analytics Plus - $19.99/month</option>
-                <option value="mobile">Mobile SDK Premium - $39.99/month</option>
-                <option value="enterprise">Enterprise Suite - $99.99/month</option>
-                <option value="starter">Starter Pack - $9.99/month</option>
+                <option value="coffee_maker">Premium Coffee Maker - $89.99</option>
+                <option value="vacuum">Cordless Stick Vacuum - $149.99</option>
+                <option value="blender">High-Speed Blender - $199.99</option>
+                <option value="air_fryer">Digital Air Fryer - $79.99</option>
+                <option value="lamp">Smart LED Table Lamp - $45.99</option>
             </select>
         </div>
 
@@ -430,45 +431,45 @@
     <script>
         // Product data
         const products = {
-            pro: {
-                name: 'OneSignal Pro',
-                price: 29.99,
-                description: 'Unlock advanced push notification features including unlimited sends, advanced targeting, detailed analytics, and priority support. Perfect for growing businesses and enterprises.',
-                emoji: '📱',
-                tax: 2.40
+            coffee_maker: {
+                name: 'Premium Coffee Maker',
+                price: 89.99,
+                description: 'Programmable 12-cup coffee maker with thermal carafe, auto shut-off, and brew strength control. Perfect for morning routines and entertaining guests.',
+                emoji: '☕',
+                tax: 7.20
             },
-            analytics: {
-                name: 'Analytics Plus',
-                price: 19.99,
-                description: 'Get detailed insights into user behavior, engagement metrics, and conversion tracking. Advanced analytics dashboard with real-time reporting and custom segments.',
-                emoji: '📊',
-                tax: 1.60
+            vacuum: {
+                name: 'Cordless Stick Vacuum',
+                price: 149.99,
+                description: 'Lightweight cordless vacuum with powerful suction, HEPA filtration, and versatile attachments. Ideal for quick cleanups and deep cleaning sessions.',
+                emoji: '🧹',
+                tax: 12.00
             },
-            mobile: {
-                name: 'Mobile SDK Premium',
-                price: 39.99,
-                description: 'Enhanced mobile SDK with advanced features like rich media notifications, location-based targeting, and deep linking. Includes iOS and Android support.',
-                emoji: '📲',
-                tax: 3.20
+            blender: {
+                name: 'High-Speed Blender',
+                price: 199.99,
+                description: 'Professional-grade blender with multiple speed settings and pre-programmed cycles. Perfect for smoothies, soups, and food preparation.',
+                emoji: '🥤',
+                tax: 16.00
             },
-            enterprise: {
-                name: 'Enterprise Suite',
-                price: 99.99,
-                description: 'Complete enterprise solution with dedicated support, custom integrations, white-label options, and advanced security features. Perfect for large organizations.',
-                emoji: '🏢',
-                tax: 8.00
+            air_fryer: {
+                name: 'Digital Air Fryer',
+                price: 79.99,
+                description: 'Compact digital air fryer with 8 preset cooking functions and easy-to-clean basket. Enjoy healthier versions of your favorite fried foods.',
+                emoji: '🍟',
+                tax: 6.40
             },
-            starter: {
-                name: 'Starter Pack',
-                price: 9.99,
-                description: 'Perfect for small projects and startups. Includes basic push notifications, simple targeting, and essential analytics. Great way to get started with OneSignal.',
-                emoji: '🚀',
-                tax: 0.80
+            lamp: {
+                name: 'Smart LED Table Lamp',
+                price: 45.99,
+                description: 'Adjustable LED desk lamp with touch controls, multiple brightness levels, and USB charging port. Modern design fits any home or office space.',
+                emoji: '💡',
+                tax: 3.68
             }
         };
 
         // Global state
-        let currentProduct = 'pro';
+        let currentProduct = 'coffee_maker';
         let orderHistory = JSON.parse(sessionStorage.getItem('orderHistory') || '[]');
 
         // Generate UUID
