@@ -559,6 +559,20 @@
             });
         });
 
+        // OneSignal tracking for Explore Voyages button
+        document.addEventListener('DOMContentLoaded', function() {
+            const exploreButton = document.querySelector('.btn-primary');
+            if (exploreButton) {
+                exploreButton.addEventListener('click', function(e) {
+                    // Add OneSignal tag when user clicks Explore Voyages
+                    if (typeof OneSignal !== 'undefined') {
+                        OneSignal.User.addTag('clicked_explore_button', 'true');
+                        console.log('OneSignal tag added: clicked_explore_button = true');
+                    }
+                });
+            }
+        });
+
         // Header background change on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
