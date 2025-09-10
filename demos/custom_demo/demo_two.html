@@ -285,19 +285,24 @@ self.addEventListener('push', e => {
       return await navigator.serviceWorker.register(swUrl)
     }
 
-    document.getElementById('subscribeBtn').addEventListener('click', async () => {
-      const reg = await ensureSW();
-      if(!reg) return;
-      const perm = await Notification.requestPermission();
-      if(perm !== 'granted') return alert('Notification permission denied.');
-      alert('Subscribed (demo only).');
-    });
-
-    document.getElementById('testNotifyBtn').addEventListener('click', async () => {
-      if(Notification.permission !== 'granted') return alert('Please allow notifications first.');
-      const reg = await ensureSW();
-      if(reg) reg.showNotification('Hello from Sayidaty Kitchen!', {body:'This is a demo push notification.'});
-    });
+    const testNotifyBtn = document.getElementById('testNotifyBtn');
+    if (testNotifyBtn) {
+      testNotifyBtn.addEventListener('click', async () => {
+        const reg = await ensureSW();
+        if(!reg) return;
+        
+        // Request permission if not granted
+        if(Notification.permission !== 'granted') {
+          const perm = await Notification.requestPermission();
+          if(perm !== 'granted') return alert('Notification permission denied.');
+        }
+        
+        // Show test notification
+        if(reg) {
+          reg.showNotification('Hello from Sayidaty Kitchen!', {body:'This is a demo push notification.'});
+        }
+      });
+    }
 
     // Recipe modal functions
     function showRecipe(title, imgSrc) {
@@ -375,8 +380,11 @@ self.addEventListener('push', e => {
       closeRecipeModal();
     };
     
-    // Simple event listeners
-    document.getElementById('recipeClose').onclick = closeRecipeModal;
+    // Simple event listeners - with null checks
+    const recipeCloseBtn = document.getElementById('recipeClose');
+    if (recipeCloseBtn) {
+      recipeCloseBtn.onclick = closeRecipeModal;
+    }
 
     // Registration modal functions - defined first for HTML onclick
     function openModal(){
@@ -412,15 +420,19 @@ self.addEventListener('push', e => {
     console.log('Cancel button:', !!cancelBtn);
     console.log('Form:', !!form);
 
-    openBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
 
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    if (modal) {
+      modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    }
+    
     document.addEventListener('keydown', (e)=>{ 
       if(e.key === 'Escape') {
-        if(!modal.classList.contains('hidden')) closeModal();
-        if(!document.getElementById('recipeModal').classList.contains('hidden')) closeRecipeModal();
+        if(modal && !modal.classList.contains('hidden')) closeModal();
+        const recipeModal = document.getElementById('recipeModal');
+        if(recipeModal && !recipeModal.classList.contains('hidden')) closeRecipeModal();
       }
     });
 
@@ -474,7 +486,8 @@ self.addEventListener('push', e => {
       return cleaned;
     }
 
-    form.addEventListener('submit', async (e)=>{
+    if (form) {
+      form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
       
@@ -501,30 +514,34 @@ self.addEventListener('push', e => {
           });
         });
         
-        // Step 2: Add tags, email, and SMS (after login)
+        // Step 2: Add tags, email, and SMS (after login) - SEQUENTIAL EXECUTION
         if (window.OneSignal && window.OneSignal.User) {
-          // Add OneSignal user tags
-          window.OneSignal.User.addTags({
+          console.log('Starting sequential OneSignal operations...');
+          
+          // Step 2a: Add OneSignal user tags (FIRST)
+          await window.OneSignal.User.addTags({
             name: data.name,
             gender: data.gender,
             country: data.country
           });
-          console.log('OneSignal tags added:', {
+          console.log('✓ OneSignal tags added:', {
             name: data.name,
             gender: data.gender,
             country: data.country
           });
           
-          // Add email to OneSignal
-          window.OneSignal.User.addEmail(data.email);
-          console.log('OneSignal email added:', data.email);
+          // Step 2b: Add email to OneSignal (SECOND - after tags complete)
+          await window.OneSignal.User.addEmail(data.email);
+          console.log('✓ OneSignal email added:', data.email);
           
-          // Add SMS to OneSignal (E164 format)
-          window.OneSignal.User.addSms(formattedPhone);
-          console.log('OneSignal SMS added:', formattedPhone);
+          // Step 2c: Add SMS to OneSignal (THIRD - after email completes)
+          await window.OneSignal.User.addSms(formattedPhone);
+          console.log('✓ OneSignal SMS added:', formattedPhone);
+          
+          console.log('✓ All OneSignal operations completed successfully');
           
         } else {
-          console.log('OneSignal not ready, user data not added');
+          throw new Error('OneSignal not ready after login');
         }
         
         // Show success confirmation
@@ -548,7 +565,8 @@ Your profile has been updated with OneSignal:
       
       closeModal();
       form.reset();
-    });
+      });
+    }
   </script>
 </body>
 </html>
