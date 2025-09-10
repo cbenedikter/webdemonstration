@@ -37,7 +37,7 @@ function handleClick(buttonText) {
             break;
         case 'add-event':
             // Navigate to custom events demo page
-            window.location.href = 'demos/custom-events/demo.html';
+            window.location.href = 'demos/custom-events/custom_event_demo.html';
             break;
         case 'send-outcome':
             // TODO: Add send outcome functionality
@@ -45,7 +45,7 @@ function handleClick(buttonText) {
             break;
         case 'custom-demo-1':
             // Open the first custom demo page
-            window.open('demos/custom-events/demo.html', '_blank');
+            window.open('demos/custom_demo/demo_one.html', '_blank');
             break;
         case 'custom-demo-2':
             // Open the second custom demo page
