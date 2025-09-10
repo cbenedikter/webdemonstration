@@ -544,19 +544,8 @@ self.addEventListener('push', e => {
           throw new Error('OneSignal not ready after login');
         }
         
-        // Show success confirmation
-        alert(`Thanks, ${data.name}!
-Email: ${data.email}
-Phone: ${data.phone} (formatted as ${formattedPhone})
-Gender: ${data.gender}
-Country: ${data.country}
-External ID: ${externalId}
-
-Your profile has been updated with OneSignal:
-✓ Logged in with external ID
-✓ Tags added
-✓ Email added
-✓ SMS number added`);
+        // Show simple success confirmation
+        alert(`Registration successful! Welcome, ${data.name}!`);
         
       } catch (error) {
         console.error('Registration process failed:', error);
