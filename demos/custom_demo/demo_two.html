@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- OneSignal SDK-->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+        });
+      });
+    </script>
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sayidaty Kitchen — Web Push Demo</title>
+  <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
+  <style>
+    :root{
+      --primary:#e91e63;
+      --chip:#ffeef4;
+      --chip-border:#f5c8d6;
+      --shadow:0 2px 6px rgba(0,0,0,.06);
+      --radius:.75rem;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#faf7f8;color:#222}
+    header,footer{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+    .container{max-width:1100px;margin:auto;padding:0 1rem}
+
+    /* Topbar */
+    .topbar{display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:0.75rem 0}
+    .icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;cursor:pointer}
+    .icon-btn svg{width:22px;height:22px}
+    .actions{display:flex;align-items:center;gap:.5rem;justify-self:center}
+    .search input{padding:.5rem 1rem;border-radius:2rem;border:1px solid #ddd;min-width:250px}
+    .btn{padding:.5rem 1rem;border:none;border-radius:2rem;cursor:pointer}
+    .btn-primary{background:var(--primary);color:#fff}
+    .logo-link{justify-self:end}
+    .logo-img{height:40px;display:block}
+
+    /* Chips */
+    .chips{display:flex;gap:.5rem;overflow-x:auto;padding:.5rem 0;background:#fff}
+    .chip{background:var(--chip);border:1px solid var(--chip-border);border-radius:1rem;padding:.4rem .8rem;white-space:nowrap}
+
+    /* Grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin:1rem 0}
+    .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+    .card img{width:100%;height:200px;object-fit:cover}
+    .card .body{padding:1rem;flex:1;display:flex;flex-direction:column}
+
+    footer{margin-top:2rem;padding:1rem 0;text-align:center;font-size:.9rem;color:#666}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.4);padding:1rem}
+    .hidden{display:none !important}
+    .dialog{width:min(520px,96vw);background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.15);overflow:hidden}
+    .dialog header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;box-shadow:none;border-bottom:1px solid #eee}
+    .dialog h2{margin:0;font-size:1.1rem}
+    .close-btn{background:transparent;border:0;font-size:1.25rem;cursor:pointer}
+    form{padding:1rem 1.25rem;display:grid;gap:.75rem}
+    label{font-weight:600;font-size:.9rem}
+    input,select{width:100%;padding:.6rem .7rem;border:1px solid #ddd;border-radius:.5rem}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .form-actions{display:flex;justify-content:flex-end;gap:.5rem;padding:0 1.25rem 1rem}
+
+    /* Recipe Modal */
+    .recipe-modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.4);padding:1rem;z-index:1002}
+    .modal-backdrop{position:absolute;inset:0;cursor:pointer}
+    .recipe-dialog{width:min(900px,95vw);background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.15);overflow:hidden;max-height:95vh;overflow-y:auto;position:relative;z-index:1}
+    .recipe-dialog header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;box-shadow:none;border-bottom:1px solid #eee;background:var(--primary);color:#fff}
+    .recipe-dialog h2{margin:0;font-size:1.5rem;color:#fff}
+    .recipe-dialog .close-btn{color:#fff;font-size:1.5rem;padding:0.25rem;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background-color 0.2s}
+    .recipe-dialog .close-btn:hover{background:rgba(255,255,255,0.2)}
+    .recipe-content{padding:2rem}
+    .recipe-video{width:100%;aspect-ratio:16/9;border-radius:8px;margin-bottom:2rem;border:none}
+    .recipe-image{width:100%;height:300px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem}
+    .recipe-section{margin-bottom:2rem}
+    .recipe-section h3{color:var(--primary);font-size:1.4rem;margin-bottom:1rem;font-weight:600}
+    .ingredients-list{list-style:none;padding:0}
+    .ingredients-list li{padding:0.75rem 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;font-size:1.1rem}
+    .ingredients-list li:last-child{border-bottom:none}
+    .ingredient-name{font-weight:500}
+    .ingredient-amount{color:#666;font-size:1rem}
+    .steps-list{list-style:none;padding:0;counter-reset:step-counter}
+    .steps-list li{padding:1.25rem 0;border-bottom:1px solid #f0f0f0;counter-increment:step-counter;position:relative;padding-left:3.5rem;font-size:1.1rem;line-height:1.6}
+    .steps-list li:last-child{border-bottom:none}
+    .steps-list li::before{content:counter(step-counter);position:absolute;left:0;top:1.25rem;background:var(--primary);color:#fff;width:2.25rem;height:2.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1rem}
+
+    /* Back button */
+    .back-button{position:absolute;top:1rem;left:1rem;background:rgba(255,255,255,0.9);border:1px solid #ddd;color:#333;padding:0.5rem 1rem;border-radius:2rem;cursor:pointer;transition:all 0.3s ease;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;font-size:0.9rem;box-shadow:0 2px 6px rgba(0,0,0,0.1);z-index:1000}
+    .back-button:hover{background:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+
+    @media (max-width:640px){
+      .topbar{grid-template-columns:auto 1fr auto}
+      .search input{min-width:160px}
+      .row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <a href="../../index.html" class="back-button">← Back to Demo</a>
+  
+  <header>
+    <div class="container topbar">
+      <!-- Left: User icon -->
+      <button class="icon-btn" id="userBtn" title="Register / Sign In" aria-label="Register or sign in" onclick="openModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21a8 8 0 0 0-16 0"/>
+          <circle cx="12" cy="8" r="4"/>
+        </svg>
+      </button>
+
+      <!-- Center: search + push buttons -->
+      <div class="actions">
+        <div class="search"><input type="search" placeholder="Search recipes…" aria-label="Search"></div>
+        <button class="btn btn-primary" id="testNotifyBtn">Discover</button>
+      </div>
+
+      <!-- Right: Logo banner -->
+      <a class="logo-link" href="#" aria-label="Sayidaty Kitchen homepage">
+        <img class="logo-img" src="https://kitchen.sayidaty.net/assets/frontend/img/logo.png?a2" alt="Sayidaty Kitchen logo">
+      </a>
+    </div>
+  </header>
+
+  <nav class="chips container" aria-label="Categories">
+    <span class="chip">Main Dishes</span>
+    <span class="chip">Desserts</span>
+    <span class="chip">Salads</span>
+    <span class="chip">Soups</span>
+    <span class="chip">Pizza</span>
+    <span class="chip">Appetizers</span>
+  </nav>
+
+  <main class="container">
+    <div class="grid" id="recipeGrid"></div>
+  </main>
+
+  <footer>
+    © 2025 Web Push Demo — Mimicking Sayidaty Kitchen look & feel.
+  </footer>
+
+  <!-- Registration Modal -->
+  <div class="modal hidden" id="regModal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+    <div class="dialog">
+      <header>
+        <h2 id="regTitle">Create your account</h2>
+        <button class="close-btn" id="regClose" aria-label="Close" onclick="closeModal()">×</button>
+      </header>
+      <form id="regForm">
+        <div class="row">
+          <div>
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" required placeholder="e.g. Maria Ahmed" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="name@example.com" />
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" required placeholder="+971 55 123 4567" />
+          </div>
+          <div>
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Female</option>
+              <option>Male</option>
+              <option>Prefer not to say</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="" disabled selected>Select your country…</option>
+            <option>Saudi Arabia</option>
+            <option>United Arab Emirates</option>
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Egypt</option>
+            <option>India</option>
+            <option>Germany</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn" id="regCancel" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recipe Modal -->
+  <div class="recipe-modal hidden" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="recipeTitle">
+    <div class="modal-backdrop" onclick="closeRecipeModal()"></div>
+    <div class="recipe-dialog">
+      <header>
+        <h2 id="recipeTitle">Recipe Details</h2>
+        <button class="close-btn" id="recipeClose" aria-label="Close" onclick="closeRecipeModal()">×</button>
+      </header>
+      <div class="recipe-content">
+        <iframe id="recipeVideo" class="recipe-video" src="" title="Recipe video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none;"></iframe>
+        <img id="recipeImage" class="recipe-image" src="" alt="">
+        <div class="recipe-section">
+          <h3>Ingredients</h3>
+          <ul class="ingredients-list" id="ingredientsList">
+            <!-- Ingredients will be populated by JavaScript -->
+          </ul>
+        </div>
+        <div class="recipe-section">
+          <h3>Preparation Method</h3>
+          <ol class="steps-list" id="stepsList">
+            <!-- Steps will be populated by JavaScript -->
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Recipe data with full details
+    const recipeData = {
+      "Sesame and pistachio video": {
+        videoUrl: "https://www.youtube.com/embed/aTZqmbL-Pv4?si=oGfqipchr3ghFeAJ",
+        ingredients: [
+          {name: "Honey", amount: "2 cups"},
+          {name: "Sugar", amount: "2 cups"},
+          {name: "Lemon juice", amount: "1 teaspoon"},
+          {name: "Sesame", amount: "2 cups"},
+          {name: "Pistachios", amount: "2 cups"}
+        ],
+        steps: [
+          "To prepare the sesame: Melt a cup of honey and sugar in a saucepan over low heat, then squeeze a little lemon juice, then add 2 cups of sesame and stir until the ingredients are combined.",
+          "To prepare the pistachio: Melt a cup of honey and sugar in a saucepan over low heat, then squeeze a little lemon juice, then add 2 cups of peeled pistachios and stir until the ingredients are combined.",
+          "Line 2 baking sheets with parchment paper, and spray the parchment paper with a little cooking spray.",
+          "Spread the sesame mixture in the first tray, and the pistachio mixture in the other tray.",
+          "Place the pistachio and sesame trays in the refrigerator for 2 hours."
+        ]
+      }
+    };
+
+    // Populate recipes with provided real images
+    const recipes = [
+      {title:"Sesame and pistachio video", img:"https://kitchen.sayidaty.net/uploads/small/74/745e25a0b0dabfd01e861bd9e87bd306_w360_h360.jpg"},
+      {title:"How to make delicious cauliflower dishes", img:"https://kitchen.sayidaty.net/uploads/small/2e/2e17158549e1ce0562c69bdb1a469895_w360_h360.jpg"},
+      {title:"Healthy chickpea salad", img:"https://kitchen.sayidaty.net/uploads/small/fd/fd6b8446dcc2e5e2a22133d637948471_w360_h360.jpg"},
+      {title:"Avocado, banana, and almond juice", img:"https://kitchen.sayidaty.net/uploads/small/3f/3fc12d1779e29650f6a3a1ca5150a024_w360_h360.jpg"},
+      {title:"Spicy Roasted Chicken Masala", img:"https://kitchen.sayidaty.net/uploads/small/0e/0e9eea4ab7b84945a4c774b4cc8e75a7_w360_h360.jpg"}
+    ];
+
+    const grid = document.getElementById('recipeGrid');
+    recipes.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.cursor = recipeData[r.title] ? 'pointer' : 'default';
+      card.innerHTML = `<img src="${r.img}" alt="${r.title}"><div class="body"><h3>${r.title}</h3><p>Delicious recipe demo for web push.</p></div>`;
+      
+      // Add click handler for recipes with data
+      if (recipeData[r.title]) {
+        card.addEventListener('click', () => showRecipe(r.title, r.img));
+      }
+      
+      grid.appendChild(card);
+    });
+
+    // Service worker for notification demo (no external file)
+    const swCode = `self.addEventListener('install', e => self.skipWaiting());
+self.addEventListener('activate', e => self.clients.claim());
+self.addEventListener('push', e => {
+  const data = e.data ? e.data.json() : {title:'Demo Notification', body:'This is a web push simulation.'};
+  e.waitUntil(self.registration.showNotification(data.title, {body: data.body, icon: data.icon||undefined, dir:'ltr'}));
+});`;
+    const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'}));
+    async function ensureSW(){
+      if(!('serviceWorker' in navigator)){alert('Service Workers not supported');return null}
+      return await navigator.serviceWorker.register(swUrl)
+    }
+
+    document.getElementById('subscribeBtn').addEventListener('click', async () => {
+      const reg = await ensureSW();
+      if(!reg) return;
+      const perm = await Notification.requestPermission();
+      if(perm !== 'granted') return alert('Notification permission denied.');
+      alert('Subscribed (demo only).');
+    });
+
+    document.getElementById('testNotifyBtn').addEventListener('click', async () => {
+      if(Notification.permission !== 'granted') return alert('Please allow notifications first.');
+      const reg = await ensureSW();
+      if(reg) reg.showNotification('Hello from Sayidaty Kitchen!', {body:'This is a demo push notification.'});
+    });
+
+    // Recipe modal functions
+    function showRecipe(title, imgSrc) {
+      const recipe = recipeData[title];
+      if (!recipe) return;
+      
+      // Set modal content
+      document.getElementById('recipeTitle').textContent = title;
+      
+      // Handle video or image display
+      const videoElement = document.getElementById('recipeVideo');
+      const imageElement = document.getElementById('recipeImage');
+      
+      if (recipe.videoUrl) {
+        videoElement.src = recipe.videoUrl;
+        videoElement.style.display = 'block';
+        imageElement.style.display = 'none';
+      } else {
+        videoElement.style.display = 'none';
+        imageElement.src = imgSrc;
+        imageElement.alt = title;
+        imageElement.style.display = 'block';
+      }
+      
+      // Populate ingredients
+      const ingredientsList = document.getElementById('ingredientsList');
+      ingredientsList.innerHTML = '';
+      recipe.ingredients.forEach(ingredient => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="ingredient-name">${ingredient.name}</span>
+          <span class="ingredient-amount">${ingredient.amount}</span>
+        `;
+        ingredientsList.appendChild(li);
+      });
+      
+      // Populate steps
+      const stepsList = document.getElementById('stepsList');
+      stepsList.innerHTML = '';
+      recipe.steps.forEach(step => {
+        const li = document.createElement('li');
+        li.textContent = step;
+        stepsList.appendChild(li);
+      });
+      
+      // Show modal
+      const modal = document.getElementById('recipeModal');
+      modal.classList.remove('hidden');
+      modal.style.display = 'grid'; // Reset display style
+      
+      // Track OneSignal event when modal opens
+      const properties = {
+        "article_category": "desert",
+        "article_title": "Sesame and Pistachio",
+        "article_author": "Claudio"
+      };
+      
+      if (window.OneSignal && window.OneSignal.User) {
+        window.OneSignal.User.trackEvent('article_read', properties);
+        console.log('OneSignal event tracked: article_read', properties);
+      } else {
+        console.log('OneSignal not ready yet, event not tracked');
+      }
+    }
+    
+    function closeRecipeModal() {
+      // Dead simple - just hide it
+      document.getElementById('recipeModal').style.display = 'none';
+      document.getElementById('recipeVideo').src = '';
+    }
+    
+    // Test function - you can call this from browser console
+    window.testCloseModal = function() {
+      console.log('Test close function called');
+      closeRecipeModal();
+    };
+    
+    // Simple event listeners
+    document.getElementById('recipeClose').onclick = closeRecipeModal;
+
+    // Registration modal functions - defined first for HTML onclick
+    function openModal(){
+      console.log('openModal called');
+      const modal = document.getElementById('regModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        // focus first field after short delay to ensure paint
+        setTimeout(()=>{
+          const nameField = document.getElementById('name');
+          if (nameField) nameField.focus();
+        }, 50);
+      }
+    }
+    
+    function closeModal(){ 
+      console.log('closeModal called');
+      const modal = document.getElementById('regModal');
+      if (modal) modal.classList.add('hidden'); 
+    }
+
+    // Registration modal logic
+    const modal = document.getElementById('regModal');
+    const openBtn = document.getElementById('userBtn');
+    const closeBtn = document.getElementById('regClose');
+    const cancelBtn = document.getElementById('regCancel');
+    const form = document.getElementById('regForm');
+
+    console.log('Registration modal elements found:');
+    console.log('Modal:', !!modal);
+    console.log('Open button:', !!openBtn);
+    console.log('Close button:', !!closeBtn);
+    console.log('Cancel button:', !!cancelBtn);
+    console.log('Form:', !!form);
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ 
+      if(e.key === 'Escape') {
+        if(!modal.classList.contains('hidden')) closeModal();
+        if(!document.getElementById('recipeModal').classList.contains('hidden')) closeRecipeModal();
+      }
+    });
+
+    // Function to format phone number to E164 format
+    function formatPhoneToE164(phone) {
+      // Remove all non-digit characters except +
+      let cleaned = phone.replace(/[^\d+]/g, '');
+      
+      // If it already starts with +, just clean it
+      if (cleaned.startsWith('+')) {
+        return cleaned;
+      }
+      
+      // Remove leading zeros
+      cleaned = cleaned.replace(/^0+/, '');
+      
+      // Add country code based on common patterns
+      if (cleaned.length === 10) {
+        // Assume US/Canada number
+        cleaned = '+1' + cleaned;
+      } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
+        // US/Canada with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 9 && cleaned.startsWith('971')) {
+        // UAE number with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 8) {
+        // Assume UAE local number
+        cleaned = '+971' + cleaned;
+      } else if (cleaned.length === 11 && cleaned.startsWith('44')) {
+        // UK number with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 10 && cleaned.startsWith('44')) {
+        // UK number missing +
+        cleaned = '+' + cleaned;
+      } else {
+        // Default: add + if not present
+        cleaned = '+' + cleaned;
+      }
+      
+      return cleaned;
+    }
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      
+      // Format phone to E164
+      const formattedPhone = formatPhoneToE164(data.phone);
+      
+      if (window.OneSignal && window.OneSignal.User) {
+        // Add OneSignal user tags
+        window.OneSignal.User.addTags({
+          name: data.name,
+          gender: data.gender,
+          country: data.country
+        });
+        console.log('OneSignal tags added:', {
+          name: data.name,
+          gender: data.gender,
+          country: data.country
+        });
+        
+        // Add email to OneSignal
+        window.OneSignal.User.addEmail(data.email);
+        console.log('OneSignal email added:', data.email);
+        
+        // Add SMS to OneSignal (E164 format)
+        window.OneSignal.User.addSms(formattedPhone);
+        console.log('OneSignal SMS added:', formattedPhone);
+        
+      } else {
+        console.log('OneSignal not ready, user data not added');
+      }
+      
+      // Show confirmation
+      alert(`Thanks, ${data.name}!
+Email: ${data.email}
+Phone: ${data.phone} (formatted as ${formattedPhone})
+Gender: ${data.gender}
+Country: ${data.country}
+
+Your profile has been updated with OneSignal:
+✓ Tags added
+✓ Email added
+✓ SMS number added`);
+      
+      closeModal();
+      form.reset();
+    });
+  </script>
+</body>
+</html>

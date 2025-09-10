@@ -43,9 +43,13 @@ function handleClick(buttonText) {
             // TODO: Add send outcome functionality
             console.log('Send outcome clicked');
             break;
-        case 'live-demo':
-            // Open the live demonstration page
-            window.open('demos/iqos/demo.html', '_blank');
+        case 'custom-demo-1':
+            // Open the first custom demo page
+            window.open('demos/custom-events/demo.html', '_blank');
+            break;
+        case 'custom-demo-2':
+            // Open the second custom demo page
+            window.open('demos/custom_demo/demo_two.html', '_blank');
             break;
         default:
             console.log('Button clicked: ' + buttonText);
