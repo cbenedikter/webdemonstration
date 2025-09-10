@@ -424,6 +424,16 @@ self.addEventListener('push', e => {
       }
     });
 
+    // Function to generate random 8 alphanumeric ID
+    function generateRandomId() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < 8; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
     // Function to format phone number to E164 format
     function formatPhoneToE164(phone) {
       // Remove all non-digit characters except +
@@ -464,49 +474,77 @@ self.addEventListener('push', e => {
       return cleaned;
     }
 
-    form.addEventListener('submit', (e)=>{
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
       
       // Format phone to E164
       const formattedPhone = formatPhoneToE164(data.phone);
       
-      if (window.OneSignal && window.OneSignal.User) {
-        // Add OneSignal user tags
-        window.OneSignal.User.addTags({
-          name: data.name,
-          gender: data.gender,
-          country: data.country
-        });
-        console.log('OneSignal tags added:', {
-          name: data.name,
-          gender: data.gender,
-          country: data.country
-        });
-        
-        // Add email to OneSignal
-        window.OneSignal.User.addEmail(data.email);
-        console.log('OneSignal email added:', data.email);
-        
-        // Add SMS to OneSignal (E164 format)
-        window.OneSignal.User.addSms(formattedPhone);
-        console.log('OneSignal SMS added:', formattedPhone);
-        
-      } else {
-        console.log('OneSignal not ready, user data not added');
-      }
+      // Generate random 8 alphanumeric external ID
+      const externalId = generateRandomId();
+      console.log('Generated external ID:', externalId);
       
-      // Show confirmation
-      alert(`Thanks, ${data.name}!
+      try {
+        // Step 1: Login to OneSignal with external ID (must happen first)
+        await new Promise((resolve, reject) => {
+          window.OneSignalDeferred = window.OneSignalDeferred || [];
+          window.OneSignalDeferred.push(async function(OneSignal) {
+            try {
+              await OneSignal.login(externalId);
+              console.log('OneSignal login successful with ID:', externalId);
+              resolve();
+            } catch (error) {
+              console.error('OneSignal login failed:', error);
+              reject(error);
+            }
+          });
+        });
+        
+        // Step 2: Add tags, email, and SMS (after login)
+        if (window.OneSignal && window.OneSignal.User) {
+          // Add OneSignal user tags
+          window.OneSignal.User.addTags({
+            name: data.name,
+            gender: data.gender,
+            country: data.country
+          });
+          console.log('OneSignal tags added:', {
+            name: data.name,
+            gender: data.gender,
+            country: data.country
+          });
+          
+          // Add email to OneSignal
+          window.OneSignal.User.addEmail(data.email);
+          console.log('OneSignal email added:', data.email);
+          
+          // Add SMS to OneSignal (E164 format)
+          window.OneSignal.User.addSms(formattedPhone);
+          console.log('OneSignal SMS added:', formattedPhone);
+          
+        } else {
+          console.log('OneSignal not ready, user data not added');
+        }
+        
+        // Show success confirmation
+        alert(`Thanks, ${data.name}!
 Email: ${data.email}
 Phone: ${data.phone} (formatted as ${formattedPhone})
 Gender: ${data.gender}
 Country: ${data.country}
+External ID: ${externalId}
 
 Your profile has been updated with OneSignal:
+✓ Logged in with external ID
 ✓ Tags added
 ✓ Email added
 ✓ SMS number added`);
+        
+      } catch (error) {
+        console.error('Registration process failed:', error);
+        alert(`Registration failed: ${error.message || 'Unknown error'}`);
+      }
       
       closeModal();
       form.reset();
