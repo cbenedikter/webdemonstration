@@ -18,6 +18,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Get Inspired — Cruises</title>
+  <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
     <style>
     /* --------- Base / Reset --------- */
     *, *::before, *::after { box-sizing: border-box; }
@@ -800,7 +801,7 @@
       background-repeat: no-repeat; }
 
     .img-antarctica { background-image:
-      url('https://cdn.sanity.io/images/rd0y3pad/production/945678d5de8bd5d3acbb1ac1249333b8c0ca7ece-1488x725.jpg?rect=200,0,1088,725&w=816&h=544&q=75&fit=max&auto=format&dpr=1.5');
+      url('https://cdn.sanity.io/images/rd0y3pad/production/634cdb3b1edcac486efa9801491ba86cbbb4ab91-1200x766.jpg?rect=26,0,1149,766&w=816&h=544&q=75&fit=max&auto=format&dpr=1.5');
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat; }
@@ -1108,10 +1109,61 @@
       }
     };
     
+    // Card name mapping for OneSignal tracking
+    const cardNameMapping = {
+      'hk-sg': 'Asia Cruise',
+      'tahiti': 'Pacific Cruise', 
+      'antarctica': 'Antarctica Cruise',
+      'med': 'Mediterranean Cruise'
+    };
+    
+    // Track which card is currently open
+    let currentOpenCard = null;
+    
+    // Function to track card views with OneSignal
+    async function trackCardView(cardId) {
+      const cardName = cardNameMapping[cardId];
+      if (!cardName) {
+        console.warn('Unknown card ID for tracking:', cardId);
+        return;
+      }
+      
+      try {
+        // Get current view count for this card from localStorage
+        const countKey = `${cardName.toLowerCase().replace(' ', '_')}_count`;
+        let currentCount = parseInt(localStorage.getItem(countKey) || '0');
+        currentCount += 1;
+        
+        // Store updated count
+        localStorage.setItem(countKey, currentCount.toString());
+        
+        // Prepare OneSignal tags
+        const tags = {
+          [cardName]: 'Viewed',
+          [`${cardName}_count`]: currentCount.toString()
+        };
+        
+        // Send tags to OneSignal if available
+        if (window.OneSignal && window.OneSignal.User) {
+          await window.OneSignal.User.addTags(tags);
+          console.log('✓ OneSignal card view tracked:', tags);
+          console.log(`User has viewed ${cardName} ${currentCount} times`);
+        } else {
+          console.log('OneSignal not ready, card view not tracked:', tags);
+        }
+        
+      } catch (error) {
+        console.error('Failed to track card view:', error);
+      }
+    }
+
     // Cruise modal functions
     function showCruiseDetails(cruiseId) {
       const data = cruiseData[cruiseId];
       if (!data) return;
+      
+      // Store the currently open card for tracking when closed
+      currentOpenCard = cruiseId;
       
       // Populate modal with cruise data
       document.getElementById('cruiseBreadcrumb').textContent = data.breadcrumb;
@@ -1130,6 +1182,12 @@
     }
     
     function closeCruiseModal() {
+      // Track the card view when modal is closed
+      if (currentOpenCard) {
+        trackCardView(currentOpenCard);
+        currentOpenCard = null; // Reset after tracking
+      }
+      
       document.getElementById('cruiseModal').classList.add('hidden');
       document.body.style.overflow = ''; // Restore scrolling
     }
@@ -1166,32 +1224,150 @@
       }
     });
     
-    // Handle form submission
-    document.getElementById('summaryForm').addEventListener('submit', function(e) {
+    // Function to generate random 8 alphanumeric ID
+    function generateRandomId() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < 8; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    // Function to format phone number to E164 format
+    function formatPhoneToE164(phone) {
+      // Remove all non-digit characters except +
+      let cleaned = phone.replace(/[^\d+]/g, '');
+      
+      // If it already starts with +, just clean it
+      if (cleaned.startsWith('+')) {
+        return cleaned;
+      }
+      
+      // Remove leading zeros
+      cleaned = cleaned.replace(/^0+/, '');
+      
+      // Add country code based on common patterns
+      if (cleaned.length === 10) {
+        // Assume US/Canada number
+        cleaned = '+1' + cleaned;
+      } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
+        // US/Canada with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 9 && cleaned.startsWith('971')) {
+        // UAE number with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 8) {
+        // Assume UAE local number
+        cleaned = '+971' + cleaned;
+      } else if (cleaned.length === 11 && cleaned.startsWith('44')) {
+        // UK number with country code
+        cleaned = '+' + cleaned;
+      } else if (cleaned.length === 10 && cleaned.startsWith('44')) {
+        // UK number missing +
+        cleaned = '+' + cleaned;
+      } else {
+        // Default: add + if not present
+        cleaned = '+' + cleaned;
+      }
+      
+      return cleaned;
+    }
+
+    // Submit button click listener function
+    async function handleSubmitButtonClick(e) {
       e.preventDefault();
       
-      const formData = new FormData(this);
+      const form = document.getElementById('summaryForm');
+      const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       
-      // Create full phone number
+      // Create full phone number and format to E164
       const fullPhone = data.countryCode + data.phone;
+      const formattedPhone = formatPhoneToE164(fullPhone);
       
-      // Log form data (in real app, this would be sent to server)
-      console.log('Summary form submitted:', {
-        email: data.email,
-        title: data.title,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: fullPhone
-      });
+      // Generate random 8 alphanumeric external ID
+      const externalId = generateRandomId();
+      console.log('Generated external ID:', externalId);
       
-      // Show success message
-      alert(`Thank you, ${data.firstName}! Your summary request has been submitted. We'll contact you soon at ${data.email}.`);
+      try {
+        // Step 1: Login to OneSignal with external ID (must happen first)
+        await new Promise((resolve, reject) => {
+          window.OneSignalDeferred = window.OneSignalDeferred || [];
+          window.OneSignalDeferred.push(async function(OneSignal) {
+            try {
+              await OneSignal.login(externalId);
+              console.log('OneSignal login successful with ID:', externalId);
+              resolve();
+            } catch (error) {
+              console.error('OneSignal login failed:', error);
+              reject(error);
+            }
+          });
+        });
+        
+        // Step 2: Add tags, email, and SMS (after login) - SEQUENTIAL EXECUTION
+        if (window.OneSignal && window.OneSignal.User) {
+          console.log('Starting sequential OneSignal operations...');
+          
+          // Step 2a: Add OneSignal user tags (FIRST)
+          await window.OneSignal.User.addTags({
+            title: data.title,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            fullName: `${data.title} ${data.firstName} ${data.lastName}`,
+            source: 'cruise_summary_form'
+          });
+          console.log('✓ OneSignal tags added:', {
+            title: data.title,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            fullName: `${data.title} ${data.firstName} ${data.lastName}`,
+            source: 'cruise_summary_form'
+          });
+          
+          // Step 2b: Add email to OneSignal (SECOND - after tags complete)
+          await window.OneSignal.User.addEmail(data.email);
+          console.log('✓ OneSignal email added:', data.email);
+          
+          // Step 2c: Add SMS to OneSignal (THIRD - after email completes)
+          await window.OneSignal.User.addSms(formattedPhone);
+          console.log('✓ OneSignal SMS added:', formattedPhone);
+          
+          console.log('✓ All OneSignal operations completed successfully');
+          
+        } else {
+          throw new Error('OneSignal not ready after login');
+        }
+        
+        // Log form data (in real app, this would be sent to server)
+        console.log('Summary form submitted:', {
+          email: data.email,
+          title: data.title,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: formattedPhone,
+          externalId: externalId
+        });
+        
+        // Show success message
+        alert(`Thank you, ${data.firstName}! Your summary request has been submitted. We'll contact you soon at ${data.email}.`);
+        
+      } catch (error) {
+        console.error('Summary form submission failed:', error);
+        alert(`Submission failed: ${error.message || 'Unknown error'}. Please try again.`);
+      }
       
       // Close modal and reset form
       closeSummaryForm();
-      this.reset();
-    });
+      form.reset();
+    }
+    
+    // Add click listener to the Submit button
+    document.querySelector('.submit-btn').addEventListener('click', handleSubmitButtonClick);
+    
+    // Handle form submission (keeping this for form validation and Enter key support)
+    document.getElementById('summaryForm').addEventListener('submit', handleSubmitButtonClick);
     
     // Simple grid layout - no carousel functionality needed
     </script>
