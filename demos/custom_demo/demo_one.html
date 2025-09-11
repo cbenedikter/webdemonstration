@@ -17,7 +17,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Get Inspired — Cruises</title>
+  <title>Leader in Luxury Cruising</title>
   <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
     <style>
     /* --------- Base / Reset --------- */
@@ -174,6 +174,46 @@
       }
     }
     
+    /* Refresh button */
+    .refresh-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid #ddd;
+      color: #666;
+      padding: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      font-size: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 1001;
+    }
+    
+    .refresh-button:hover {
+      background: #fff;
+      color: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    
+    .refresh-button:active {
+      transform: translateY(0) rotate(360deg);
+    }
+    
+    .refresh-button.clicked {
+      transform: rotate(360deg);
+      background: #e8f5e8;
+      color: #2e7d32;
+      border-color: #4caf50;
+    }
+    
     /* Updated header for content section */
     header {
       text-align: center;
@@ -194,6 +234,7 @@
       color: #4a4a4a;
       font-size: clamp(14px, 1.6vw, 18px);
       max-width: 68ch;
+      margin: 0 auto;
     }
 
     .btn-outline {
@@ -815,9 +856,134 @@
     /* tiny pill for limited time offer */
     .pill { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:#156f39; background:#e8f5ed; border:1px solid #cfead9; border-radius:999px; padding:6px 8px; }
     .pill svg{ width:14px; height:14px; }
+
+    /* --------- Features Section --------- */
+    .features-section {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px 0;
+    }
+    
+    .features-intro {
+      margin-bottom: 50px;
+    }
+    
+    .features-tagline {
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 500;
+      color: #333;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.3px;
+    }
+    
+    .features-subtitle {
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: #666;
+      margin: 0;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .feature-item {
+      text-align: center;
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: #f8f9fa;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c49b61;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-icon img {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .feature-item:hover .feature-icon {
+      background: #c49b61;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .feature-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 12px 0;
+      font-family: 'Georgia', serif;
+    }
+    
+    .feature-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 30px;
+      }
+      
+      .feature-icon {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .feature-icon img {
+        width: 28px;
+        height: 28px;
+      }
+      
+      .feature-title {
+        font-size: 16px;
+      }
+      
+      .feature-description {
+        font-size: 13px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .features-section {
+        margin-bottom: 40px;
+        padding: 20px 0;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+      }
+      
+      .features-intro {
+        margin-bottom: 30px;
+      }
+    }
     </style>
 </head>
 <body>
+  <!-- Refresh Button -->
+  <button class="refresh-button" id="refreshCruiseCount" title="Reset cruise view counts" aria-label="Reset cruise view counts">↻</button>
+  
   <!-- Professional Menu Bar -->
   <nav class="menu-bar">
     <div class="menu-container">
@@ -844,6 +1010,48 @@
   </nav>
 
   <div class="container">
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="features-intro">
+        <p class="features-tagline">Extraordinary journeys. Unforgettable experiences.</p>
+        <p class="features-subtitle">Discover your next Silversea voyage and prepare to step into another world.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <img src="https://cdn.sanity.io/images/rd0y3pad/production/9c70c3083d62402026a1f9a7693dbcad822d8300-65x65.svg" alt="Personalized service icon">
+          </div>
+          <h3 class="feature-title">Personalized service</h3>
+          <p class="feature-description">A ratio of nearly one dedicated crew member for every guest</p>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">
+            <img src="https://cdn.sanity.io/images/rd0y3pad/production/93a5525d04092f0e6dc54345f81a8cd601664c38-65x65.svg" alt="Unmatched comfort icon">
+          </div>
+          <h3 class="feature-title">Unmatched comfort</h3>
+          <p class="feature-description">All-suite ships with panoramic ocean views</p>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">
+            <img src="https://cdn.sanity.io/images/rd0y3pad/production/7e4136dd9298d1dcc85bc332ebe7a8e1728c44b1-65x65.svg" alt="All-inclusive icon">
+          </div>
+          <h3 class="feature-title">All-inclusive</h3>
+          <p class="feature-description">Premium drinks, fine dining, Wi-Fi and a dedicated butler</p>
+        </div>
+        
+        <div class="feature-item">
+          <div class="feature-icon">
+            <img src="https://cdn.sanity.io/images/rd0y3pad/production/9c70c3083d62402026a1f9a7693dbcad822d8300-65x65.svg" alt="Culinary innovation icon">
+          </div>
+          <h3 class="feature-title">Culinary innovation</h3>
+          <p class="feature-description">Diverse dining and immersive S.A.L.T. experiences</p>
+        </div>
+      </div>
+    </section>
+
     <header>
       <h1 class="display-serif">Get Inspired</h1>
       <p class="lede">Each year we create new itineraries for voyages that are always ready to surprise and delight. Wherever you want to go, you can get there with us.</p>
@@ -929,7 +1137,7 @@
           <span class="badge">Mediterranean Cruises</span>
         </div>
         <div class="body">
-          <h3 class="title display-serif">Barcelona to Rome</h3>
+          <h3 class="title display-serif">Athens to Rome</h3>
           <div class="meta">May 11 – 19, 2026 · 9 days</div>
           <div class="divider"></div>
           <div class="row">
@@ -1315,14 +1523,12 @@
             title: data.title,
             firstName: data.firstName,
             lastName: data.lastName,
-            fullName: `${data.title} ${data.firstName} ${data.lastName}`,
             source: 'cruise_summary_form'
           });
           console.log('✓ OneSignal tags added:', {
             title: data.title,
             firstName: data.firstName,
             lastName: data.lastName,
-            fullName: `${data.title} ${data.firstName} ${data.lastName}`,
             source: 'cruise_summary_form'
           });
           
@@ -1368,6 +1574,37 @@
     
     // Handle form submission (keeping this for form validation and Enter key support)
     document.getElementById('summaryForm').addEventListener('submit', handleSubmitButtonClick);
+    
+    // Function to reset all cruise view counts
+    function resetAllCruiseCounts() {
+      const cardNames = ['asia_cruise', 'pacific_cruise', 'antarctica_cruise', 'mediterranean_cruise'];
+      
+      // Reset all counts to 0 in localStorage
+      cardNames.forEach(cardName => {
+        localStorage.setItem(`${cardName}_count`, '0');
+      });
+      
+      console.log('✓ All cruise view counts reset to 0');
+    }
+    
+    // Refresh button functionality
+    const refreshBtn = document.getElementById('refreshCruiseCount');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', function() {
+        // Reset all cruise counts
+        resetAllCruiseCounts();
+        
+        // Visual feedback - add clicked class and rotate
+        this.classList.add('clicked');
+        
+        // Remove the visual feedback after animation
+        setTimeout(() => {
+          this.classList.remove('clicked');
+        }, 400);
+        
+        console.log('Cruise view counts have been reset');
+      });
+    }
     
     // Simple grid layout - no carousel functionality needed
     </script>
