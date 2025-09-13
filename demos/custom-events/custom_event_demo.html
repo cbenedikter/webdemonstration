@@ -328,6 +328,69 @@
             transform: none;
         }
         
+        .quantity-selector {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .quantity-selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .quantity-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+        
+        .quantity-btn:active {
+            transform: translateY(0);
+        }
+        
+        #quantity-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        #quantity-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
         @media (max-width: 768px) {
             .back-button, .demo-badge {
                 position: relative;
@@ -358,13 +421,13 @@
     </a>
     
     <div class="demo-badge">
-        Custom Events Demo
+        The Signal Shop
     </div>
 
     <div class="checkout-container">
         <div class="hero">
-            <h1>Custom Events Demo</h1>
-            <p>Select products and track the complete customer journey with OneSignal</p>
+            <h1>The Signal Shop</h1>
+            <p>Add items to your cart and place orders to try out custom events.</p>
         </div>
 
 
@@ -373,34 +436,43 @@
         <div class="product-selector">
             <label for="product-select">Choose Product:</label>
             <select id="product-select" onchange="updateProduct()">
-                <option value="coffee_maker">Premium Coffee Maker - $89.99</option>
-                <option value="vacuum">Cordless Stick Vacuum - $149.99</option>
-                <option value="blender">High-Speed Blender - $199.99</option>
-                <option value="air_fryer">Digital Air Fryer - $79.99</option>
-                <option value="lamp">Smart LED Table Lamp - $45.99</option>
+                <option value="macbook_air">Macbook Air - $1089.99</option>
+                <option value="iphone_pro">iPhone Pro - $849.99</option>
+                <option value="smart_watch">Smart Watch - $549.99</option>
+                <option value="wireless_speaker">Wireless Speaker - $129.99</option>
+                <option value="headphones">Headphones - $64.99</option>
             </select>
         </div>
 
         <div class="product-card" id="product-card">
             <div class="product-image" id="product-image">
-                📱
+                <img id="product-img" src="https://cbenedikter.github.io/demo-images/macbook-air.png" alt="Macbook Air" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
             </div>
-            <div class="product-title" id="product-title">OneSignal Pro</div>
+            <div class="product-title" id="product-title">Macbook Air</div>
             <div class="product-description" id="product-description">
-                Unlock advanced push notification features including unlimited sends, advanced targeting, 
-                detailed analytics, and priority support. Perfect for growing businesses and enterprises.
+                Ultra-thin and lightweight laptop with M2 chip, 13.6-inch Liquid Retina display, and all-day battery life. Perfect for work, creativity, and everything in between.
             </div>
-            <div class="product-price" id="product-price">$29.99/month</div>
+            <div class="product-price" id="product-price">$1089.99</div>
+            
+            <!-- Quantity Selector -->
+            <div class="quantity-selector">
+                <label for="quantity-input">Quantity:</label>
+                <div class="quantity-controls">
+                    <button type="button" class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                    <input type="number" id="quantity-input" value="1" min="1" max="99" onchange="updateQuantity(0)">
+                    <button type="button" class="quantity-btn" onclick="updateQuantity(1)">+</button>
+                </div>
+            </div>
         </div>
 
         <div class="checkout-summary" id="checkout-summary">
             <div class="summary-row">
-                <span id="summary-product">OneSignal Pro</span>
-                <span id="summary-price">$29.99</span>
+                <span id="summary-product">Macbook Air</span>
+                <span id="summary-price">$1089.99</span>
             </div>
             <div class="summary-row">
                 <span>Tax</span>
-                <span id="summary-tax">$2.40</span>
+                <span id="summary-tax">$87.20</span>
             </div>
             <div class="summary-row">
                 <span>Processing Fee</span>
@@ -408,7 +480,7 @@
             </div>
             <div class="summary-row total">
                 <span>Total</span>
-                <span id="summary-total">$33.38</span>
+                <span id="summary-total">$1178.18</span>
             </div>
         </div>
 
@@ -431,54 +503,92 @@
     <script>
         // Product data
         const products = {
-            coffee_maker: {
-                name: 'Premium Coffee Maker',
-                price: 89.99,
-                description: 'Programmable 12-cup coffee maker with thermal carafe, auto shut-off, and brew strength control. Perfect for morning routines and entertaining guests.',
-                emoji: '☕',
-                tax: 7.20
+            macbook_air: {
+                name: 'Macbook Air',
+                price: 1089.99,
+                description: 'Ultra-thin and lightweight laptop with M2 chip, 13.6-inch Liquid Retina display, and all-day battery life. Perfect for work, creativity, and everything in between.',
+                imageUrl: 'https://cbenedikter.github.io/demo-images/macbook-air.png',
+                tax: 87.20
             },
-            vacuum: {
-                name: 'Cordless Stick Vacuum',
-                price: 149.99,
-                description: 'Lightweight cordless vacuum with powerful suction, HEPA filtration, and versatile attachments. Ideal for quick cleanups and deep cleaning sessions.',
-                emoji: '🧹',
-                tax: 12.00
+            iphone_pro: {
+                name: 'iPhone Pro',
+                price: 849.99,
+                description: 'Advanced smartphone with Pro camera system, A17 Pro chip, and titanium design. Capture stunning photos and videos with professional-grade features.',
+                imageUrl: 'https://cbenedikter.github.io/demo-images/iphone-15-pro.png',
+                tax: 68.00
             },
-            blender: {
-                name: 'High-Speed Blender',
-                price: 199.99,
-                description: 'Professional-grade blender with multiple speed settings and pre-programmed cycles. Perfect for smoothies, soups, and food preparation.',
-                emoji: '🥤',
-                tax: 16.00
+            smart_watch: {
+                name: 'Smart Watch',
+                price: 549.99,
+                description: 'Fitness and health tracking smartwatch with GPS, heart rate monitoring, and comprehensive workout tracking. Stay connected and motivated all day.',
+                imageUrl: 'https://cbenedikter.github.io/demo-images/smart-watch.png',
+                tax: 44.00
             },
-            air_fryer: {
-                name: 'Digital Air Fryer',
-                price: 79.99,
-                description: 'Compact digital air fryer with 8 preset cooking functions and easy-to-clean basket. Enjoy healthier versions of your favorite fried foods.',
-                emoji: '🍟',
-                tax: 6.40
+            wireless_speaker: {
+                name: 'Wireless Speaker',
+                price: 129.99,
+                description: 'Premium Bluetooth wireless speaker with 360-degree sound, waterproof design, and 12-hour battery life. Perfect for home, outdoor adventures, and parties.',
+                imageUrl: 'https://cbenedikter.github.io/demo-images/wireless-speaker.png',
+                tax: 10.40
             },
-            lamp: {
-                name: 'Smart LED Table Lamp',
-                price: 45.99,
-                description: 'Adjustable LED desk lamp with touch controls, multiple brightness levels, and USB charging port. Modern design fits any home or office space.',
-                emoji: '💡',
-                tax: 3.68
+            headphones: {
+                name: 'Headphones',
+                price: 64.99,
+                description: 'High-quality wireless headphones with active noise cancellation, premium sound quality, and comfortable over-ear design. Perfect for music, calls, and focus.',
+                imageUrl: 'https://cbenedikter.github.io/demo-images/headphones.png',
+                tax: 5.20
             }
         };
 
         // Global state
-        let currentProduct = 'coffee_maker';
+        let currentProduct = 'macbook_air';
+        let currentQuantity = 1;
         let orderHistory = JSON.parse(sessionStorage.getItem('orderHistory') || '[]');
 
-        // Generate UUID
+        // Generate 8-character alphanumeric order ID
         function generateUUID() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = Math.random() * 16 | 0;
-                const v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // Update quantity
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById('quantity-input');
+            
+            if (change === 0) {
+                // Direct input change
+                currentQuantity = parseInt(quantityInput.value) || 1;
+            } else {
+                // Button click change
+                currentQuantity = Math.max(1, Math.min(99, currentQuantity + change));
+                quantityInput.value = currentQuantity;
+            }
+            
+            // Ensure quantity is within bounds
+            if (currentQuantity < 1) currentQuantity = 1;
+            if (currentQuantity > 99) currentQuantity = 99;
+            quantityInput.value = currentQuantity;
+            
+            // Update pricing display
+            updatePricing();
+        }
+
+        // Update pricing calculations
+        function updatePricing() {
+            const product = products[currentProduct];
+            const subtotal = product.price * currentQuantity;
+            const tax = product.tax * currentQuantity;
+            const total = subtotal + tax + 0.99; // Processing fee is fixed
+            
+            // Update summary
+            document.getElementById('summary-product').textContent = `${product.name} (x${currentQuantity})`;
+            document.getElementById('summary-price').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('summary-tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
         }
 
         // Update product display
@@ -487,17 +597,21 @@
             currentProduct = selectedProduct;
             const product = products[selectedProduct];
             
-            document.getElementById('product-image').textContent = product.emoji;
+            // Update product image
+            const productImg = document.getElementById('product-img');
+            productImg.src = product.imageUrl;
+            productImg.alt = product.name;
+            
             document.getElementById('product-title').textContent = product.name;
             document.getElementById('product-description').textContent = product.description;
-            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}/month`;
+            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
             
-            // Update summary
-            document.getElementById('summary-product').textContent = product.name;
-            document.getElementById('summary-price').textContent = `$${product.price.toFixed(2)}`;
-            document.getElementById('summary-tax').textContent = `$${product.tax.toFixed(2)}`;
-            const total = product.price + product.tax + 0.99;
-            document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
+            // Reset quantity to 1 when changing products
+            currentQuantity = 1;
+            document.getElementById('quantity-input').value = currentQuantity;
+            
+            // Update pricing with new product and reset quantity
+            updatePricing();
         }
 
 
@@ -515,7 +629,7 @@
                 <div class="order-item">
                     <div class="order-details">
                         <div class="order-id">#${order.id.substring(0, 8)}...</div>
-                        <div class="order-product">${order.product} - $${order.price.toFixed(2)}</div>
+                        <div class="order-product">${order.product} ${order.quantity ? `(x${order.quantity})` : ''} - $${order.price.toFixed(2)}</div>
                         <div class="order-timestamp">${new Date(order.timestamp).toLocaleString()}</div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -543,13 +657,19 @@
                 }
                 
                 const orderId = generateUUID();
-                const totalPrice = product.price + product.tax + 0.99;
+                const subtotal = product.price * currentQuantity;
+                const tax = product.tax * currentQuantity;
+                const totalPrice = subtotal + tax + 0.99;
                 
                 // Send OneSignal custom event
                 const properties = {
                     "order_id": orderId,
                     "product_name": product.name,
                     "product_price": product.price,
+                    "product_quantity": currentQuantity,
+                    "product_image": product.imageUrl,
+                    "quantity": currentQuantity,
+                    "subtotal": subtotal,
                     "cart_updated_date": new Date().toISOString()
                 };
                 
@@ -563,6 +683,7 @@
                 const order = {
                     id: orderId,
                     product: product.name,
+                    quantity: currentQuantity,
                     price: totalPrice,
                     state: 'cart_updated',
                     timestamp: new Date().toISOString(),
@@ -622,6 +743,8 @@
                     "order_id": orderId,
                     "product_name": order.product,
                     "product_price": order.price,
+                    "product_quantity": order.quantity || 1,
+                    "product_image": order.productData ? order.productData.imageUrl : '',
                     "purchase_date": new Date().toISOString()
                 };
                 
@@ -660,6 +783,9 @@
             
             // Initialize product display
             updateProduct();
+            
+            // Initialize pricing
+            updatePricing();
             
             // Add entrance animation
             const container = document.querySelector('.checkout-container');
