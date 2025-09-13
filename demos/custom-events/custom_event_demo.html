@@ -21,10 +21,114 @@
     
     <style>
         /* Custom styles for checkout page */
-        .checkout-container {
-            max-width: 600px;
+        .main-layout {
+            display: flex;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+        
+        .checkout-container {
+            flex: 1;
+            max-width: 600px;
+            padding: 0;
+        }
+        
+        .journey-image-container {
+            flex: 0 0 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .journey-image-container h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            opacity: 0.9;
+            text-align: center;
+        }
+        
+        .journey-image-container h3 a {
+            color: #4ade80;
+            text-decoration: underline;
+            text-decoration-color: rgba(74, 222, 128, 0.5);
+            text-underline-offset: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .journey-image-container h3 a:hover {
+            color: #22c55e;
+            text-decoration-color: #22c55e;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+        }
+        
+        .journey-image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .journey-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            display: block;
+        }
+        
+        .journey-highlight {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 8px;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .journey-highlight.active {
+            opacity: 1;
+            animation: pulseGlow 2s infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.02);
+                opacity: 1;
+            }
+        }
+        
+        /* Dynamic stacking for multiple concurrent highlights */
+        .journey-highlight.stacked-1 { z-index: 11; }
+        .journey-highlight.stacked-2 { z-index: 12; }
+        .journey-highlight.stacked-3 { z-index: 13; }
+        
+        /* Positioned highlights for different journey stages */
+        .journey-highlight.cart-added {
+            /* Second box from top - Cart Updated */
+            top: 28%;
+            left: 8%;
+            width: 84%;
+            height: 18%;
+        }
+        
+        .journey-highlight.order-placed {
+            /* Bottom left box - Purchase Made */
+            top: 75%;
+            left: 5%;
+            width: 40%;
+            height: 18%;
         }
         
         .back-button {
@@ -400,8 +504,20 @@
                 margin-bottom: 1rem;
             }
             
-            .checkout-container {
+            .main-layout {
+                flex-direction: column;
                 padding: 1rem;
+                gap: 2rem;
+            }
+            
+            .checkout-container {
+                max-width: 100%;
+            }
+            
+            .journey-image-container {
+                flex: none;
+                position: relative;
+                top: auto;
             }
         }
     </style>
@@ -424,11 +540,12 @@
         The Signal Shop
     </div>
 
-    <div class="checkout-container">
-        <div class="hero">
-            <h1>The Signal Shop</h1>
-            <p>Add items to your cart and place orders to try out custom events.</p>
-        </div>
+    <div class="main-layout">
+        <div class="checkout-container">
+            <div class="hero">
+                <h1>The Signal Shop</h1>
+                <p>Add items to your cart and place orders to try out custom events.</p>
+            </div>
 
 
 
@@ -495,6 +612,16 @@
                 <div class="no-orders">No orders yet. Start a new order to begin tracking!</div>
             </div>
         </div>
+        </div>
+        
+        <!-- Journey Image Container -->
+        <div class="journey-image-container">
+            <h3><a href="https://dashboard.onesignal.com/apps/cf532c5e-5be2-4b00-ab6d-3d3d72ca9124/journeys/fbf8952d-d986-4325-b674-be49a5d8819b/edit" target="_blank">Customer Journey (click to open)</a></h3>
+        <div class="journey-image-wrapper" id="journey-wrapper">
+            <img src="../../assets/images/abandoned_cart_journey.png" alt="Abandoned Cart Journey" class="journey-image">
+            <!-- Dynamic highlights will be created here -->
+        </div>
+        </div>
     </div>
 
     <!-- External JavaScript Files -->
@@ -545,14 +672,173 @@
         let currentQuantity = 1;
         let orderHistory = JSON.parse(sessionStorage.getItem('orderHistory') || '[]');
 
-        // Generate 8-character alphanumeric order ID
+        // Color-coded order ID system
+        const colorOrderPools = {
+            '#4ade80': ['GRN001', 'GRN002', 'GRN003', 'GRN004', 'GRN005'], // Green
+            '#3b82f6': ['BLU001', 'BLU002', 'BLU003', 'BLU004', 'BLU005'], // Blue
+            '#f59e0b': ['AMB001', 'AMB002', 'AMB003', 'AMB004', 'AMB005'], // Amber
+            '#ef4444': ['RED001', 'RED002', 'RED003', 'RED004', 'RED005'], // Red
+            '#8b5cf6': ['PUR001', 'PUR002', 'PUR003', 'PUR004', 'PUR005'], // Purple
+            '#06b6d4': ['CYN001', 'CYN002', 'CYN003', 'CYN004', 'CYN005'], // Cyan
+            '#f97316': ['ORG001', 'ORG002', 'ORG003', 'ORG004', 'ORG005'], // Orange
+            '#ec4899': ['PNK001', 'PNK002', 'PNK003', 'PNK004', 'PNK005']  // Pink
+        };
+        
+        let usedOrderIds = new Set(); // Track used order IDs
+        let currentColorIndex = 0; // Round-robin color assignment
+        
+        // Generate order ID with guaranteed unique color
         function generateUUID() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = '';
-            for (let i = 0; i < 8; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            const colors = Object.keys(colorOrderPools);
+            
+            // Try to find an available order ID starting from current color
+            for (let i = 0; i < colors.length; i++) {
+                const colorIndex = (currentColorIndex + i) % colors.length;
+                const color = colors[colorIndex];
+                const orderPool = colorOrderPools[color];
+                
+                // Find first available order ID in this color pool
+                for (const orderId of orderPool) {
+                    if (!usedOrderIds.has(orderId)) {
+                        usedOrderIds.add(orderId);
+                        currentColorIndex = (colorIndex + 1) % colors.length; // Move to next color for next order
+                        console.log(`Generated Order ID: ${orderId} → Color: ${color}`);
+                        return orderId;
+                    }
+                }
             }
-            return result;
+            
+            // Fallback: if all pools are full, reuse oldest (this shouldn't happen with cleanup)
+            const fallbackColor = colors[currentColorIndex];
+            const fallbackId = colorOrderPools[fallbackColor][0];
+            console.log(`Fallback Order ID: ${fallbackId} → Color: ${fallbackColor}`);
+            return fallbackId;
+        }
+
+        // Journey Animation Functions - Concurrent System
+        const orderColors = [
+            '#4ade80', // Green
+            '#3b82f6', // Blue  
+            '#f59e0b', // Amber
+            '#ef4444', // Red
+            '#8b5cf6', // Purple
+            '#06b6d4', // Cyan
+            '#f97316', // Orange
+            '#ec4899'  // Pink
+        ];
+        
+        let activeOrderAnimations = new Map(); // Track active order animations
+        let orderResetTimers = new Map(); // Track reset timers per order
+        let orderColorAssignments = new Map(); // Track assigned colors to avoid duplicates
+        let nextColorIndex = 0; // Sequential fallback for concurrent orders
+        
+        // Get color for order ID (direct lookup from pools)
+        function generateOrderColor(orderId) {
+            // Find which color pool this order ID belongs to
+            for (const [color, orderPool] of Object.entries(colorOrderPools)) {
+                if (orderPool.includes(orderId)) {
+                    return color;
+                }
+            }
+            
+            // Fallback to green if not found (shouldn't happen)
+            return '#4ade80';
+        }
+        
+        // Create or get highlight element for specific order
+        function getOrderHighlight(orderId, step) {
+            const highlightId = `highlight-${orderId}`;
+            let highlight = document.getElementById(highlightId);
+            
+            if (!highlight) {
+                // Create new highlight element
+                highlight = document.createElement('div');
+                highlight.id = highlightId;
+                highlight.className = 'journey-highlight';
+                document.getElementById('journey-wrapper').appendChild(highlight);
+            }
+            
+            // Set position based on step
+            highlight.classList.remove('cart-added', 'order-placed');
+            highlight.classList.add(step === 'cart' ? 'cart-added' : 'order-placed');
+            
+            // Set color
+            const color = generateOrderColor(orderId);
+            const rgbColor = hexToRgb(color);
+            highlight.style.borderColor = color;
+            highlight.style.backgroundColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.2)`;
+            highlight.style.boxShadow = `0 0 20px ${color}66`;
+            
+            return highlight;
+        }
+        
+        // Helper function to convert hex to RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // Show journey step for specific order
+        function showJourneyStep(step, orderId) {
+            // Clear any existing reset timer for this order
+            if (orderResetTimers.has(orderId)) {
+                clearTimeout(orderResetTimers.get(orderId));
+                orderResetTimers.delete(orderId);
+            }
+            
+            // Get or create highlight for this order
+            const highlight = getOrderHighlight(orderId, step);
+            
+            // Update active animations tracking
+            activeOrderAnimations.set(orderId, { step, element: highlight });
+            
+            // Show the highlight
+            setTimeout(() => {
+                highlight.classList.add('active');
+                
+                // If this is the order step, set a 5-second timer to reset
+                if (step === 'order') {
+                    const resetTimer = setTimeout(() => {
+                        hideOrderAnimation(orderId);
+                    }, 5000); // 5 seconds
+                    orderResetTimers.set(orderId, resetTimer);
+                }
+            }, 300); // Small delay for smooth transition
+        }
+        
+        // Hide animation for specific order
+        function hideOrderAnimation(orderId) {
+            const highlight = document.getElementById(`highlight-${orderId}`);
+            if (highlight) {
+                highlight.classList.remove('active');
+                setTimeout(() => {
+                    if (highlight.parentNode) {
+                        highlight.parentNode.removeChild(highlight);
+                    }
+                }, 500); // Wait for fade out animation
+            }
+            
+            // Clean up tracking
+            activeOrderAnimations.delete(orderId);
+            if (orderResetTimers.has(orderId)) {
+                clearTimeout(orderResetTimers.get(orderId));
+                orderResetTimers.delete(orderId);
+            }
+            
+            // Release order ID back to pool for reuse
+            usedOrderIds.delete(orderId);
+            console.log(`Released Order ID: ${orderId} back to pool`);
+        }
+        
+        // Hide all journey steps (legacy function for compatibility)
+        function hideAllJourneySteps() {
+            activeOrderAnimations.forEach((animation, orderId) => {
+                hideOrderAnimation(orderId);
+            });
         }
 
         // Update quantity
@@ -698,7 +984,8 @@
                 button.style.background = 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
                 button.style.borderColor = 'rgba(59, 130, 246, 0.4)';
                 
-
+                // Show journey animation for cart added with order ID
+                showJourneyStep('cart', orderId);
                 
                 setTimeout(() => {
                     button.textContent = originalText;
@@ -760,7 +1047,8 @@
                 sessionStorage.setItem('orderHistory', JSON.stringify(orderHistory));
                 updateOrderHistory();
                 
-
+                // Show journey animation for order placed with order ID
+                showJourneyStep('order', orderId);
                 
             } catch (error) {
                 button.textContent = 'Error - Try Again';
