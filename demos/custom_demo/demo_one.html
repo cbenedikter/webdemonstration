@@ -1218,6 +1218,13 @@
             
             updateCartCount();
             
+            // Trigger OneSignal push permission prompt
+            if (window.OneSignal && window.OneSignal.Slidedown) {
+              OneSignal.Slidedown.promptPushCategories();
+                // To bypass backoff logic while testing, use:
+                // OneSignal.Slidedown.promptPush({force: true});
+            }
+            
             // Visual feedback
             event.target.textContent = 'Added!';
             event.target.style.background = '#28a745';
