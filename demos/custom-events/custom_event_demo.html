@@ -702,7 +702,6 @@
                     if (!usedOrderIds.has(orderId)) {
                         usedOrderIds.add(orderId);
                         currentColorIndex = (colorIndex + 1) % colors.length; // Move to next color for next order
-                        console.log(`Generated Order ID: ${orderId} → Color: ${color}`);
                         return orderId;
                     }
                 }
@@ -711,7 +710,6 @@
             // Fallback: if all pools are full, reuse oldest (this shouldn't happen with cleanup)
             const fallbackColor = colors[currentColorIndex];
             const fallbackId = colorOrderPools[fallbackColor][0];
-            console.log(`Fallback Order ID: ${fallbackId} → Color: ${fallbackColor}`);
             return fallbackId;
         }
 
@@ -831,7 +829,6 @@
             
             // Release order ID back to pool for reuse
             usedOrderIds.delete(orderId);
-            console.log(`Released Order ID: ${orderId} back to pool`);
         }
         
         // Hide all journey steps (legacy function for compatibility)

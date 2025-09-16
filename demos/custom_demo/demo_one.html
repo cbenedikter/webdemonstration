@@ -2,1612 +2,1359 @@
 <html lang="en">
 <head>
 
-    
-    <!-- OneSignal SDK-->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+      <!-- OneSignal SDK-->
+      <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+      <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+          await OneSignal.init({
+            appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+          });
         });
-      });
-    </script>
-
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Leader in Luxury Cruising</title>
-  <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
+      </script>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Würth Trade Tools - Professional Building Supplies</title>
+    <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
+    
     <style>
-    /* --------- Base / Reset --------- */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      line-height: 1.45;
-      color: #1c1c1c;
-      background: #faf9f7;
-      padding-top: 70px; /* Add top padding for fixed menu bar */
-    }
-
-    /* Elegant display type to mimic screenshot vibe, using a generic serif stack to keep the file self‑contained */
-    .display-serif { font-family: Georgia, "Times New Roman", Times, serif; letter-spacing: .2px; }
-
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-
-    /* --------- Layout --------- */
-    .container {
-      max-width: 1180px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ededed 50%, #d7d7d7 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-      padding: 32px 20px 80px;
-    }
-
-    /* --------- Professional Menu Bar --------- */
-    .menu-bar {
-      background: #303030;
-      padding: 0;
-      margin: -20px -20px 40px -20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-    
-    .menu-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 70px;
-    }
-    
-    .menu-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .menu-logo {
-      width: 40px;
-      height: 40px;
-      background: #f7f7f7;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #303030;
-      font-size: 1.2rem;
-    }
-    
-    .menu-title {
-      color: white;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 0;
-      font-family: 'Georgia', serif;
-    }
-    
-    .menu-nav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .menu-btn {
-      background: #f7f7f7;
-      border: 1px solid #f7f7f7;
-      color: #303030;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-    
-    .menu-btn:hover {
-      background: white;
-      border-color: white;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .menu-btn.primary {
-      background: #f0bc75;
-      border-color: #f0bc75;
-      color: #303030;
-    }
-    
-    .menu-btn.primary:hover {
-      background: #edb563;
-      border-color: #edb563;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .menu-btn svg {
-      width: 16px;
-      height: 16px;
-      opacity: 0.9;
-    }
-    
-    @media (max-width: 768px) {
-      .menu-container {
-        padding: 0 15px;
-        height: 60px;
-      }
-      
-      .menu-title {
-        font-size: 1.2rem;
-      }
-      
-      .menu-btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-      }
-      
-      .menu-nav {
-        gap: 6px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .menu-nav {
-        flex-direction: column;
-        gap: 4px;
-      }
-      
-      .menu-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-      }
-    }
-    
-    /* Refresh button */
-    .refresh-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255,255,255,0.95);
-      border: 1px solid #ddd;
-      color: #666;
-      padding: 12px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      font-size: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      z-index: 1001;
-    }
-    
-    .refresh-button:hover {
-      background: #fff;
-      color: #333;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    }
-    
-    .refresh-button:active {
-      transform: translateY(0) rotate(360deg);
-    }
-    
-    .refresh-button.clicked {
-      transform: rotate(360deg);
-      background: #e8f5e8;
-      color: #2e7d32;
-      border-color: #4caf50;
-    }
-    
-    /* Updated header for content section */
-    header {
-      text-align: center;
-      margin: 0 0 40px 0;
-      padding: 20px 0;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 54px);
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-    }
-
-    .lede {
-      grid-column: 1 / -1;
-      color: #4a4a4a;
-      font-size: clamp(14px, 1.6vw, 18px);
-      max-width: 68ch;
-      margin: 0 auto;
-    }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 10px;
-      border: 1px solid #c9c6be;
-      padding: 12px 18px; border-radius: 8px;
-      font-weight: 600; font-size: 14px; letter-spacing: .3px;
-      background: white;
-      transition: all .2s ease;
-    }
-    .btn-outline:hover { background: #f4f2ed; transform: translateY(-1px); }
-
-    /* --------- Stacked Cards Layout --------- */
-    .cards-container {
-      width: 100%;
-      padding: 0 20px;
-    }
-    
-    .cards-grid {
-      position: relative;
-            display: flex;
-      height: 600px; /* Increased height for better content display */
-      width: 1260px; /* 4 cards * 300px + 3 gaps * 20px */
-      margin: 0 auto;
-      overflow-x: auto; /* Allow horizontal scroll if needed */
-    }
-
-    /* Card anchor wraps everything so the whole thing is clickable */
-    .card {
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.06);
-      display: grid;
-      grid-template-rows: auto auto;
-      transition: transform .3s ease, box-shadow .3s ease, z-index .3s ease;
-      position: absolute;
-      width: 300px;
-      height: 550px; /* Increased height to show all content */
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-    
-    /* Horizontal spacing for each card */
-    .card:nth-child(1) {
-      left: 0;
-      z-index: 1;
-    }
-    
-    .card:nth-child(2) {
-      left: 320px; /* 300px card width + 20px gap */
-      z-index: 1;
-    }
-    
-    .card:nth-child(3) {
-      left: 640px; /* 2 * (300px + 20px) */
-      z-index: 1;
-    }
-    
-    .card:nth-child(4) {
-      left: 960px; /* 3 * (300px + 20px) */
-      z-index: 1;
-    }
-    
-    .card:hover { 
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 4px 0 rgba(0,0,0,.08), 0 20px 40px rgba(0,0,0,.15);
-      z-index: 10 !important;
-    }
-
-    /* --------- Responsive Horizontal Layout --------- */
-    @media (max-width: 1300px) {
-      .cards-container {
-        padding: 0 10px;
-        overflow-x: auto;
-      }
-      
-      .cards-grid {
-        width: 1260px; /* Keep full width for horizontal scroll */
-      }
-    }
-    
-    @media (max-width: 900px) {
-      .cards-grid {
-        width: 1000px; /* 4 cards * 240px + 3 gaps * 20px */
-        height: 500px; /* Increased height */
-      }
-      
-      .card {
-        width: 240px;
-        height: 460px; /* Increased height */
-      }
-      
-      .card:nth-child(2) {
-        left: 260px; /* 240px + 20px gap */
-      }
-      
-      .card:nth-child(3) {
-        left: 520px; /* 2 * (240px + 20px) */
-      }
-      
-      .card:nth-child(4) {
-        left: 780px; /* 3 * (240px + 20px) */
-      }
-    }
-    
-    @media (max-width: 600px) {
-      .cards-grid {
-        width: 760px; /* 4 cards * 180px + 3 gaps * 20px */
-        height: 420px; /* Increased height */
-      }
-      
-      .card {
-        width: 180px;
-        height: 380px; /* Increased height */
-      }
-      
-      .card:nth-child(2) {
-        left: 200px; /* 180px + 20px gap */
-      }
-      
-      .card:nth-child(3) {
-        left: 400px; /* 2 * (180px + 20px) */
-      }
-      
-      .card:nth-child(4) {
-        left: 600px; /* 3 * (180px + 20px) */
-      }
-    }
-
-    /* --------- Summary Form Modal --------- */
-    .summary-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    
-    .summary-modal.hidden {
-      display: none !important;
-    }
-    
-    .summary-form {
-      background: #f8f9fa;
-      border-radius: 8px;
-      max-width: 580px;
-      width: 100%;
-      padding: 40px;
-            position: relative;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-    
-    .summary-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .summary-close:hover {
-      color: #333;
-    }
-    
-    .summary-title {
-      font-size: 1.8rem;
-      font-weight: 400;
-      color: #333;
-      margin: 0 0 8px 0;
-      font-family: 'Georgia', serif;
-    }
-    
-    .summary-subtitle {
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 32px;
-    }
-    
-    .form-group {
-      margin-bottom: 24px;
-    }
-    
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-    
-    .form-input {
-      background: #e9ecef;
-      border: none;
-      padding: 14px 16px;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      color: #333;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    
-    .form-input:focus {
-      outline: none;
-      background: #fff;
-      box-shadow: 0 0 0 2px rgba(196, 155, 97, 0.3);
-    }
-    
-    .form-input::placeholder {
-      color: #999;
-    }
-    
-    .phone-group {
-            display: flex;
-      gap: 8px;
-    }
-    
-    .country-select {
-      background: #e9ecef;
-            border: none;
-      padding: 14px 12px;
-            border-radius: 4px;
-      font-size: 0.95rem;
-      color: #333;
-      width: 80px;
-            cursor: pointer;
-    }
-    
-    .country-select:focus {
-      outline: none;
-      background: #fff;
-      box-shadow: 0 0 0 2px rgba(196, 155, 97, 0.3);
-    }
-    
-    .required-text {
-      color: #666;
-      font-size: 0.85rem;
-      text-align: right;
-      margin: 16px 0;
-    }
-    
-    .privacy-text {
-      color: #666;
-      font-size: 0.85rem;
-      line-height: 1.4;
-      margin: 20px 0;
-    }
-    
-    .privacy-text a {
-      color: #c49b61;
-      text-decoration: underline;
-    }
-    
-    .captcha-container {
-      margin: 20px 0;
-    }
-    
-    .submit-btn {
-      background: #4a4a4a;
-      color: white;
-      border: none;
-      padding: 16px 32px;
-            border-radius: 4px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      width: 100%;
-      text-transform: uppercase;
-            letter-spacing: 1px;
-      transition: background 0.2s ease;
-    }
-    
-    .submit-btn:hover {
-      background: #333;
-    }
-    
-    @media (max-width: 600px) {
-      .summary-form {
-        padding: 24px;
-        margin: 10px;
-      }
-      
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      
-      .phone-group {
-        flex-direction: column;
-      }
-      
-      .country-select {
-        width: 100%;
-      }
-    }
-
-    /* --------- Cruise Details Popup --------- */
-    .cruise-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-    
-    .cruise-modal.hidden {
-      display: none !important;
-    }
-    
-    .cruise-dialog {
-      background: white;
-      border-radius: 16px;
-      max-width: 900px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-    
-    .cruise-header {
-      position: relative;
-      padding: 0;
-      border-bottom: 1px solid #e5e5e5;
-    }
-    
-    .cruise-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255,255,255,0.9);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-    
-    .cruise-close:hover {
-      background: white;
-      transform: scale(1.1);
-    }
-    
-    .cruise-content {
-            display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      min-height: 500px;
-    }
-    
-    .cruise-map {
-      background: #f8f9fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
-    
-    .cruise-map img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    
-    .cruise-details {
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    
-    .cruise-breadcrumb {
-      font-size: 0.85rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-    }
-    
-    .cruise-title {
-      font-size: 2.5rem;
-            font-weight: 400;
-      color: #333;
-      margin-bottom: 8px;
-      font-family: 'Georgia', serif;
-      line-height: 1.2;
-    }
-    
-    .cruise-voyage {
-      font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 32px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .cruise-info-grid {
-      display: grid;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    
-    .cruise-info-item {
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 16px;
-    }
-    
-    .cruise-info-label {
-      font-size: 0.85rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-    
-    .cruise-info-value {
-      font-size: 1.1rem;
-      color: #333;
-      font-weight: 500;
-    }
-    
-    .cruise-pricing {
-      margin-top: auto;
-    }
-    
-    .cruise-price-label {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 4px;
-    }
-    
-    .cruise-price {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 8px;
-    }
-    
-    .cruise-price-note {
-      font-size: 0.85rem;
-      color: #888;
-      margin-bottom: 24px;
-    }
-    
-    .cruise-actions {
-            display: flex;
-      gap: 16px;
-    }
-    
-    .cruise-btn {
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-flex;
-            align-items: center;
-            justify-content: center;
-      font-size: 0.95rem;
-    }
-    
-    .cruise-btn-primary {
-      background: #c49b61;
+            padding: 0 20px;
+        }
+        
+        /* Top Banner */
+        .top-banner {
+            background: #cc0000;
             color: white;
-      border: none;
-    }
-    
-    .cruise-btn-primary:hover {
-      background: #b8905a;
-      transform: translateY(-1px);
-    }
-    
-    .cruise-btn-secondary {
-      background: transparent;
-      color: #333;
-      border: 1px solid #ddd;
-    }
-    
-    .cruise-btn-secondary:hover {
-      background: #f8f9fa;
-      border-color: #ccc;
-    }
-    
-    .cruise-badge {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      z-index: 5;
-    }
-    
-    @media (max-width: 768px) {
-      .cruise-content {
-        grid-template-columns: 1fr;
-      }
-      
-      .cruise-map {
-        padding: 24px;
-        min-height: 200px;
-      }
-      
-      .cruise-details {
-        padding: 24px;
-      }
-      
-      .cruise-title {
-        font-size: 2rem;
-      }
-      
-      .cruise-actions {
-        flex-direction: column;
-      }
-    }
-    @media (min-width: 1024px) {
-      .card { grid-column: span 4; }
-    }
+            text-align: center;
+            padding: 0.75rem 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .banner-text {
+            margin: 0;
+        }
+        
+        /* Header */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            height: 50px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav a:hover {
+            color: #0093dd;
+        }
+        
+        .cart-icon {
+            background: #0093dd;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .cart-icon:hover {
+            background: #007bb8;
+            transform: translateY(-2px);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #cc0000;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0093dd 0%, #007bb8 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: #cc0000;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: #a60000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(204, 0, 0, 0.3);
+        }
+        
+        /* Products Section */
+        .products-section {
+            padding: 4rem 0;
+            background: #ffffff;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product-card {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #0093dd;
+        }
+        
+        .product-image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin: 0 auto 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0093dd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .add-to-cart {
+            background: #cc0000;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .add-to-cart:hover {
+            background: #a60000;
+            transform: translateY(-2px);
+        }
+        
+        /* Features Section */
+        .features-section {
+            background: linear-gradient(135deg, #ededed 0%, #d7d7d7 100%);
+            padding: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0093dd;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .feature-text {
+            color: #666;
+        }
+        
+        /* Checkout Modal */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .checkout-content {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .checkout-step {
+            display: none;
+        }
+        
+        .checkout-step.active {
+            display: block;
+        }
+        
+        .step-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0093dd;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: #0093dd;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .checkout-btn:hover {
+            background: #007bb8;
+        }
+        
+        .order-summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-total {
+            border-top: 2px solid #ddd;
+            padding-top: 0.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        /* Reviews Section */
+        .reviews-section {
+            background: #ffffff;
+            padding: 4rem 0;
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .review-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #0093dd;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .review-author {
+            flex: 1;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+        
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .star-rating {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .star {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+        
+        .star.empty {
+            color: #ddd;
+        }
+        
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        
+        .review-text.preview {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        
+        .verified-badge {
+            background: #28a745;
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            margin-left: 0.5rem;
+        }
+        
+        .overall-rating {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #0093dd 0%, #007bb8 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .rating-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rating-stars {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rating-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Login Section */
+        .login-section {
+            background: #d7d7d7;
+            padding: 2rem 0;
+            color: #000000;
+        }
+        
+        .login-container {
+            background: #d7d7d7;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .login-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-with {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .login-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-tab {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .login-tab.active {
+            color: #cc0000;
+            border-bottom-color: #cc0000;
+        }
+        
+        .login-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 1rem;
+        }
+        
+        .login-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login-field label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .info-icon {
+            color: #0093dd;
+            font-size: 0.8rem;
+            cursor: help;
+        }
+        
+        .login-field input {
+            padding: 0.75rem;
+            border: 1px solid #999;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background: white;
+        }
+        
+        .login-field input::placeholder {
+            color: #999;
+        }
+        
+        .login-btn {
+            background: #0093dd;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background: #007bb8;
+        }
+        
+        .forgot-password-btn {
+            background: #cc0000;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .forgot-password-btn:hover {
+            background: #a60000;
+        }
+        
+        .signup-prompt {
+            font-size: 0.95rem;
+            color: #000000;
+        }
+        
+        .signup-link {
+            color: #cc0000;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .signup-link:hover {
+            text-decoration: underline;
+        }
 
-    /* --------- Card Media --------- */
-    .media {
-      position: relative; height: 280px; overflow: hidden;
-      background-size: cover; background-position: center;
-    }
-    .media::after {
-      content: ""; position: absolute; inset: 0; 
-      background: linear-gradient(to top, rgba(0,0,0,.45) 0%, rgba(0,0,0,.12) 55%, rgba(0,0,0,0) 90%);
-    }
-
-    .badge {
-      position: absolute; top: 16px; left: 16px; z-index: 2;
-      background: rgba(255,255,255,.9); color: #2d2d2d;
-      border: 1px solid rgba(0,0,0,.08);
-      padding: 6px 10px; border-radius: 999px;
-      font-size: 12px; font-weight: 700; letter-spacing: .35px; text-transform: uppercase;
-    }
-
-    /* --------- Card Body --------- */
-    .body { padding: 18px 18px 16px; }
-
-    .title {
-      font-size: 22px; margin: 0 0 8px; font-weight: 700;
-    }
-
-    .meta { color: #6f6e68; font-size: 13px; display: flex; align-items: center; gap: 6px; }
-
-    .divider { height: 1px; background: #eeeae1; margin: 14px 0; }
-
-    .row {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .ship-meta {
-      display: flex; align-items: center; gap: 10px; color: #5a5954; font-size: 13px;
-    }
-    .ship-meta svg { width: 16px; height: 16px; opacity: .75; }
-
-    .price {
-      font-size: 14px; color: #6b6a64; text-transform: uppercase; letter-spacing: .35px;
-    }
-    .price strong { display: block; font-size: 22px; color: #0f0f0f; letter-spacing: 0; }
-
-    .cta {
-      margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 14px; border-radius: 10px; border: 1px solid #d9d6cd; background: #ffffff;
-      font-weight: 700; font-size: 13px; letter-spacing: .3px;
-    }
-    .card:hover .cta { background: #f4f2ed; }
-
-    /* --------- Media placeholders (gradient + subtle pattern) --------- */
-    .img-hk-sg { background-image:
-      url('https://cdn.sanity.io/images/rd0y3pad/production/2ea71f10bfae8d374bcd20a4c9d94840436c7fba-1200x679.jpg?rect=91,0,1019,679&w=816&h=544&q=75&fit=max&auto=format&dpr=1.5');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat; }
-
-    .img-tahiti { background-image:
-      url('https://cdn.sanity.io/images/rd0y3pad/production/498796d211417337e7dcd3454fa78ae295adefb9-1488x791.jpg?rect=173,0,1142,791&w=231&h=160&q=75&fit=max&auto=format&dpr=3');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat; }
-
-    .img-antarctica { background-image:
-      url('https://cdn.sanity.io/images/rd0y3pad/production/634cdb3b1edcac486efa9801491ba86cbbb4ab91-1200x766.jpg?rect=26,0,1149,766&w=816&h=544&q=75&fit=max&auto=format&dpr=1.5');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat; }
-
-    .img-med { background-image:
-      url('https://cdn.sanity.io/images/rd0y3pad/production/928e5efca6810c353979498ef16153e68223d265-1200x798.jpg?rect=2,0,1197,798&w=816&h=544&q=75&fit=max&auto=format&dpr=1.5');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat; }
-
-    /* tiny pill for limited time offer */
-    .pill { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:#156f39; background:#e8f5ed; border:1px solid #cfead9; border-radius:999px; padding:6px 8px; }
-    .pill svg{ width:14px; height:14px; }
-
-    /* --------- Features Section --------- */
-    .features-section {
-      text-align: center;
-      margin-bottom: 60px;
-      padding: 40px 0;
-    }
-    
-    .features-intro {
-      margin-bottom: 50px;
-    }
-    
-    .features-tagline {
-      font-size: clamp(18px, 2.2vw, 24px);
-      font-weight: 500;
-      color: #333;
-      margin: 0 0 12px 0;
-      letter-spacing: 0.3px;
-    }
-    
-    .features-subtitle {
-      font-size: clamp(16px, 1.8vw, 20px);
-      color: #666;
-      margin: 0;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-    
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    
-    .feature-item {
-      text-align: center;
-    }
-    
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-      background: #f8f9fa;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #c49b61;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-icon img {
-      width: 32px;
-      height: 32px;
-    }
-    
-    .feature-item:hover .feature-icon {
-      background: #c49b61;
-      color: white;
-      transform: translateY(-2px);
-    }
-    
-    .feature-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-      margin: 0 0 12px 0;
-      font-family: 'Georgia', serif;
-    }
-    
-    .feature-description {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin: 0;
-      max-width: 200px;
-      margin: 0 auto;
-    }
-    
-    @media (max-width: 768px) {
-      .features-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 30px;
-      }
-      
-      .feature-icon {
-        width: 50px;
-        height: 50px;
-      }
-      
-      .feature-icon img {
-        width: 28px;
-        height: 28px;
-      }
-      
-      .feature-title {
-        font-size: 16px;
-      }
-      
-      .feature-description {
-        font-size: 13px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .features-section {
-        margin-bottom: 40px;
-        padding: 20px 0;
-      }
-      
-      .features-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 25px;
-      }
-      
-      .features-intro {
-        margin-bottom: 30px;
-      }
-    }
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            color: #333;
+            padding: 3rem 0 2rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-column ul li a {
+            color: #0093dd;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #007bb8;
+            text-decoration: underline;
+        }
+        
+        .footer-column p {
+            color: #333;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .contact-info {
+            font-weight: 600;
+        }
+        
+        .social-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkout-content {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .login-form {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .login-tabs {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
-  <!-- Refresh Button -->
-  <button class="refresh-button" id="refreshCruiseCount" title="Reset cruise view counts" aria-label="Reset cruise view counts">↻</button>
-  
-  <!-- Professional Menu Bar -->
-  <nav class="menu-bar">
-    <div class="menu-container">
-      <div class="menu-brand">
-        <div class="menu-logo">S</div>
-        <h1 class="menu-title">Silversea Cruises</h1>
-      </div>
-      
-      <div class="menu-nav">
-        <a class="menu-btn" href="#all">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-          View all cruises
-        </a>
-        <button class="menu-btn primary" onclick="openSummaryForm()">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          Get your summary
-        </button>
-      </div>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p class="banner-text" style="font-weight: bold;">DELIVERY UPDATE: FREE DELIVERY ON ALL ONLINE ORDERS</p>
+        </div>
     </div>
-  </nav>
 
-  <div class="container">
-    <!-- Features Section -->
-    <section class="features-section">
-      <div class="features-intro">
-        <p class="features-tagline">Extraordinary journeys. Unforgettable experiences.</p>
-        <p class="features-subtitle">Discover your next Silversea voyage and prepare to step into another world.</p>
-      </div>
-      
-      <div class="features-grid">
-        <div class="feature-item">
-          <div class="feature-icon">
-            <img src="https://cdn.sanity.io/images/rd0y3pad/production/9c70c3083d62402026a1f9a7693dbcad822d8300-65x65.svg" alt="Personalized service icon">
-          </div>
-          <h3 class="feature-title">Personalized service</h3>
-          <p class="feature-description">A ratio of nearly one dedicated crew member for every guest</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="https://eshop.wurth.co.uk/is-bin/intershop.static/WFS/3108-B1-Site/-/en_GB/webkit_bootstrap/dist/img/wuerth-logo.svg" alt="Würth Logo" class="logo">
+                
+                <nav>
+                    <ul class="nav">
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="#" class="cart-icon" onclick="openCheckout()">
+                    🛒 Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
         </div>
-        
-        <div class="feature-item">
-          <div class="feature-icon">
-            <img src="https://cdn.sanity.io/images/rd0y3pad/production/93a5525d04092f0e6dc54345f81a8cd601664c38-65x65.svg" alt="Unmatched comfort icon">
-          </div>
-          <h3 class="feature-title">Unmatched comfort</h3>
-          <p class="feature-description">All-suite ships with panoramic ocean views</p>
-        </div>
-        
-        <div class="feature-item">
-          <div class="feature-icon">
-            <img src="https://cdn.sanity.io/images/rd0y3pad/production/7e4136dd9298d1dcc85bc332ebe7a8e1728c44b1-65x65.svg" alt="All-inclusive icon">
-          </div>
-          <h3 class="feature-title">All-inclusive</h3>
-          <p class="feature-description">Premium drinks, fine dining, Wi-Fi and a dedicated butler</p>
-        </div>
-        
-        <div class="feature-item">
-          <div class="feature-icon">
-            <img src="https://cdn.sanity.io/images/rd0y3pad/production/9c70c3083d62402026a1f9a7693dbcad822d8300-65x65.svg" alt="Culinary innovation icon">
-          </div>
-          <h3 class="feature-title">Culinary innovation</h3>
-          <p class="feature-description">Diverse dining and immersive S.A.L.T. experiences</p>
-        </div>
-      </div>
-    </section>
-
-    <header>
-      <h1 class="display-serif">Get Inspired</h1>
-      <p class="lede">Each year we create new itineraries for voyages that are always ready to surprise and delight. Wherever you want to go, you can get there with us.</p>
     </header>
 
-    <div class="cards-container">
-      <div class="cards-grid">
-        <!-- Card 1 -->
-        <a class="card" href="#hk-sg" aria-label="Hong Kong to Singapore details" onclick="event.preventDefault(); showCruiseDetails('hk-sg')">
-        <div class="media img-hk-sg">
-          <span class="badge">Asia Cruises</span>
-        </div>
-        <div class="body">
-          <h3 class="title display-serif">Hong Kong to Singapore</h3>
-          <div class="meta">Sep 18 – 25, 2025 · 7 days</div>
-          <div class="divider"></div>
-          <div class="row">
-            <div class="ship-meta" title="Ship">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17h18l-2 3H5l-2-3Zm2.5-4.5L7 10l3 1 3-5 3 6 2 .5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Silver Nova</span>
-            </div>
-            <div class="price">From <strong>£3,450</strong></div>
-            <span class="cta">Details
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h12M13 5l7 7-7 7" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            </div>
-        </div>
-          </a>
-
-        <!-- Card 2 -->
-        <a class="card" href="#tahiti" aria-label="Lautoka to Papeete details" onclick="event.preventDefault(); showCruiseDetails('tahiti')">
-        <div class="media img-tahiti">
-          <span class="badge">French Polynesia & Pacific Cruises</span>
-        </div>
-        <div class="body">
-          <h3 class="title display-serif">Lautoka to Papeete (Tahiti)</h3>
-          <div class="meta">Sep 29 – Oct 10, 2025 · 12 days</div>
-          <div class="divider"></div>
-          <div class="row">
-            <div class="ship-meta" title="Ship">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17h18l-2 3H5l-2-3Zm2.5-4.5L7 10l3 1 3-5 3 6 2 .5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Silver Cloud · Expedition Cruise</span>
-            </div>
-            <div class="price">From <strong>£10,300</strong></div>
-            <span class="cta">Details
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h12M13 5l7 7-7 7" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-                </div>
-                </div>
-          </a>
-
-        <!-- Card 3 -->
-        <a class="card" href="#antarctica" aria-label="Buenos Aires to Puerto Williams details" onclick="event.preventDefault(); showCruiseDetails('antarctica')">
-        <div class="media img-antarctica">
-          <span class="badge">Antarctica Cruises</span>
-                </div>
-        <div class="body">
-          <h3 class="title display-serif">Buenos Aires to Puerto Williams</h3>
-          <div class="meta">Oct 5 – 26, 2025 · 21 days</div>
-          <div class="divider"></div>
-          <div class="row">
-            <div class="ship-meta" title="Ship">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17h18l-2 3H5l-2-3Zm2.5-4.5L7 10l3 1 3-5 3 6 2 .5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Silver Wind · Expedition Cruise</span>
-                </div>
-            <div style="display:flex; gap:10px; align-items:center; margin-left:auto;">
-              <span class="pill" title="Limited-time offer">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v3m0 12v3M4.2 4.2l2.2 2.2m11.4 11.4l2.2 2.2M3 12h3m12 0h3M4.2 19.8l2.2-2.2m11.4-11.4l2.2-2.2" stroke="#156f39" stroke-width="1.6" stroke-linecap="round"/></svg>
-                Limited-time offer
-              </span>
-              <div class="price">From <strong>£10,700</strong></div>
-              <span class="cta">Details
-                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h12M13 5l7 7-7 7" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-                </div>
-            </div>
-        </div>
-          </a>
-
-        <!-- Card 4 -->
-        <a class="card" href="#med" aria-label="Barcelona to Rome details" onclick="event.preventDefault(); showCruiseDetails('med')">
-        <div class="media img-med">
-          <span class="badge">Mediterranean Cruises</span>
-        </div>
-        <div class="body">
-          <h3 class="title display-serif">Athens to Rome</h3>
-          <div class="meta">May 11 – 19, 2026 · 9 days</div>
-          <div class="divider"></div>
-          <div class="row">
-            <div class="ship-meta" title="Ship">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17h18l-2 3H5l-2-3Zm2.5-4.5L7 10l3 1 3-5 3 6 2 .5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Silver Dawn</span>
-            </div>
-            <div class="price">From <strong>£4,990</strong></div>
-            <span class="cta">Details
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h12M13 5l7 7-7 7" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <div class="login-with">
+                        Login with: 
+                        <span class="login-tabs">
+                            <button class="login-tab active" onclick="switchTab('partner')">Partner Number</button>
+                            <button class="login-tab" onclick="switchTab('username')">Username</button>
+                        </span>
                     </div>
                 </div>
-          </a>
+                
+                <div class="login-form">
+                    <div class="login-field">
+                        <label for="customer-number">
+                            Customer Number
+                            <span class="info-icon">ℹ️</span>
+                        </label>
+                        <input type="text" id="customer-number" placeholder="Customer Number">
                     </div>
+                    
+                    <div class="login-field">
+                        <label for="partner-number">
+                            Partner Number
+                            <span class="info-icon">ℹ️</span>
+                        </label>
+                        <input type="text" id="partner-number" placeholder="Partner Number">
+                    </div>
+                    
+                    <div class="login-field">
+                        <label for="login-password">
+                            Password
+                            <span class="info-icon">ℹ️</span>
+                        </label>
+                        <input type="password" id="login-password" placeholder="Password">
+                    </div>
+                    
+                    <button class="login-btn" onclick="handleLogin()">Login</button>
+                    <button class="forgot-password-btn" onclick="handleForgotPassword()">Forgotten Password</button>
+                </div>
+                
+                <div class="signup-prompt">
+                    Don't currently have an online account and want access to over 60,000 products? 
+                    <a href="#" class="signup-link">Sign Up Now</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-  <!-- Summary Form Modal -->
-  <div class="summary-modal hidden" id="summaryModal">
-    <div class="summary-form">
-      <button class="summary-close" onclick="closeSummaryForm()" aria-label="Close">&times;</button>
-      
-      <h2 class="summary-title">GET YOUR SUMMARY</h2>
-      <p class="summary-subtitle">
-        By submitting this form you will receive via email your quote and detailed booking policy.<br>
-        One of our Silversea Travel Advisor will contact you soon to answer all your questions regarding your voyage and finalise your booking.
-      </p>
-      
-      <form id="summaryForm">
-        <div class="form-group">
-          <input type="email" class="form-input" name="email" placeholder="Email *" required>
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/1970431.jpg" alt="PTFE Thread-Sealing Tape" class="product-image">
+                    <h3 class="product-title">PTFE Thread-Sealing Tape</h3>
+                    <p class="product-description">Professional grade PTFE tape for secure pipe connections and leak prevention</p>
+                    <div class="product-price">£12.99</div>
+                    <button class="add-to-cart" onclick="addToCart('PTFE Thread-Sealing Tape', 12.99)">Add to Cart</button>
+                </div>
+                
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/200257.jpg" alt="Wire Rope on Light Plastic Rolls" class="product-image">
+                    <h3 class="product-title">Wire Rope - Plastic Rolls</h3>
+                    <p class="product-description">Durable wire rope on lightweight plastic rolls for various applications</p>
+                    <div class="product-price">£24.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Wire Rope - Plastic Rolls', 24.99)">Add to Cart</button>
+                </div>
+                
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/170px/3216084.jpg" alt="Sanitation Sealant" class="product-image">
+                    <h3 class="product-title">Sanitation Sealant</h3>
+                    <p class="product-description">High-quality sealant perfect for bathroom and kitchen installations</p>
+                    <div class="product-price">£8.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Sanitation Sealant', 8.99)">Add to Cart</button>
+                </div>
+                
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/170px/35966232.jpg" alt="Chrome Plated Drain Fittings" class="product-image">
+                    <h3 class="product-title">Chrome Plated Drain Fittings</h3>
+                    <p class="product-description">Premium plastic chrome plated drain fittings for modern installations</p>
+                    <div class="product-price">£34.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Chrome Plated Drain Fittings', 34.99)">Add to Cart</button>
+                </div>
+                
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/48184.jpg" alt="Zinc-plated Steel Stud Screw" class="product-image">
+                    <h3 class="product-title">Zinc-plated Steel Stud Screw</h3>
+                    <p class="product-description">High-quality zinc-plated steel stud screws for secure fastening applications</p>
+                    <div class="product-price">£18.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Zinc-plated Steel Stud Screw', 18.99)">Add to Cart</button>
+                </div>
+                
+                <div class="product-card">
+                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/37260290.jpg" alt="Anti-vibration Base for Roofs" class="product-image">
+                    <h3 class="product-title">Anti-vibration Base for Roofs</h3>
+                    <p class="product-description">Professional anti-vibration base designed for roof installations and equipment mounting</p>
+                    <div class="product-price">£42.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Anti-vibration Base for Roofs', 42.99)">Add to Cart</button>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-          <div class="form-row">
-            <select class="form-input" name="title" required>
-              <option value="">Title *</option>
-              <option value="Mr">Mr</option>
-              <option value="Mrs">Mrs</option>
-              <option value="Ms">Ms</option>
-              <option value="Dr">Dr</option>
-            </select>
-            <input type="text" class="form-input" name="firstName" placeholder="First name *" required>
-            <input type="text" class="form-input" name="lastName" placeholder="Last name *" required>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <div class="phone-group">
-            <select class="country-select" name="countryCode">
-              <option value="+44">🇬🇧 +44</option>
-              <option value="+1">🇺🇸 +1</option>
-              <option value="+33">🇫🇷 +33</option>
-              <option value="+49">🇩🇪 +49</option>
-              <option value="+39">🇮🇹 +39</option>
-              <option value="+34">🇪🇸 +34</option>
-            </select>
-            <input type="tel" class="form-input" name="phone" placeholder="Phone *" required style="flex: 1;">
-          </div>
-        </div>
-        
-        <div class="required-text">*Required fields</div>
-        
-        <div class="privacy-text">
-          By submitting this form, I agree to receive electronic messages from Silversea including the latest news and offers. I may however unsubscribe from any communications at any time by clicking on this <a href="#" onclick="return false;">link</a> or visiting my MySilversea profile. Silversea Cruises (UK) Ltd, First Floor, 7 The Heights, North Wing, Brooklands, Weybridge, England, KT13 0XW, <a href="#" onclick="return false;">www.silversea.com</a>, +44-207-340-0700.
-        </div>
-        
-        <div class="captcha-container">
-          <div style="background: #f0f0f0; padding: 12px; border-radius: 4px; text-align: center; color: #666; font-size: 0.9rem;">
-            ☑ I am human
-          </div>
-        </div>
-        
-        <button type="submit" class="submit-btn">Submit</button>
-      </form>
-    </div>
-  </div>
+    </section>
 
-  <!-- Cruise Details Modal -->
-  <div class="cruise-modal hidden" id="cruiseModal">
-    <div class="cruise-dialog">
-      <button class="cruise-close" onclick="closeCruiseModal()" aria-label="Close">&times;</button>
-      
-      <div class="cruise-content">
-        <!-- Map Section -->
-        <div class="cruise-map">
-          <img id="cruiseMapImage" src="" alt="Cruise route map">
-        </div>
-        
-        <!-- Details Section -->
-        <div class="cruise-details">
-          <div class="cruise-breadcrumb" id="cruiseBreadcrumb">BACK TO ALL ASIA CRUISES CRUISES</div>
-          <h2 class="cruise-title" id="cruiseTitle">HONG KONG TO SINGAPORE</h2>
-          <div class="cruise-voyage" id="cruiseVoyage">VOYAGE NUMBER #SN250918507</div>
-          
-          <div class="cruise-info-grid">
-            <div class="cruise-info-item">
-              <div class="cruise-info-label">CRUISE STARTS</div>
-              <div class="cruise-info-value" id="cruiseStartDate">SEP 18, 2025</div>
-            </div>
-            <div class="cruise-info-item">
-              <div class="cruise-info-label">CRUISE ENDS</div>
-              <div class="cruise-info-value" id="cruiseEndDate">SEP 25, 2025</div>
-            </div>
-            <div class="cruise-info-item">
-              <div class="cruise-info-label">DURATION</div>
-              <div class="cruise-info-value" id="cruiseDuration">7 DAYS</div>
-            </div>
-            <div class="cruise-info-item">
-              <div class="cruise-info-label">SHIP</div>
-              <div class="cruise-info-value" id="cruiseShip">SILVER NOVA</div>
-            </div>
-          </div>
-          
-          <div class="cruise-pricing">
-            <div class="cruise-price-label">FROM</div>
-            <div class="cruise-price" id="cruisePrice">£3,450</div>
-            <div class="cruise-price-note">PER GUEST<br>WITH LOWEST FARE AVAILABLE</div>
+    <!-- Customer Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Customer Reviews</h2>
             
-            <div class="cruise-actions">
-              <button class="cruise-btn cruise-btn-primary">BOOK YOUR CRUISE</button>
-              <button class="cruise-btn cruise-btn-secondary">REQUEST A QUOTE</button>
+            <!-- Overall Rating -->
+            <div class="overall-rating">
+                <div class="rating-number">4.8</div>
+                <div class="rating-stars">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="rating-text">Based on 247 verified customer reviews</div>
+            </div>
+            
+            <!-- Individual Reviews -->
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <div class="author-name">
+                                Trusted Customer
+                                <span class="verified-badge">Verified</span>
+                            </div>
+                            <div class="review-date">Wednesday 30 October 2024</div>
+                        </div>
+                        <div class="star-rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        "Excellent quality products and fast delivery. The PTFE tape worked perfectly for my plumbing project. Will definitely order again!"
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <div class="author-name">
+                                Andrew Deacon Carpentry Specialist
+                                <span class="verified-badge">Verified</span>
+                            </div>
+                            <div class="review-date">Tuesday 29 October 2024</div>
+                        </div>
+                        <div class="star-rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        "As a professional carpenter, I need reliable tools and supplies. Würth consistently delivers top-quality products that I can depend on for my projects."
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <div class="author-name">
+                                Trusted Customer
+                                <span class="verified-badge">Verified</span>
+                            </div>
+                            <div class="review-date">Tuesday 29 October 2024</div>
+                        </div>
+                        <div class="star-rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star empty">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text preview">
+                        "A company that goes the extra mile for customer satisfaction. Great products and even better service."
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <div class="author-name">
+                                Hackney Hack
+                                <span class="verified-badge">Verified</span>
+                            </div>
+                            <div class="review-date">Tuesday 29 October 2024</div>
+                        </div>
+                        <div class="star-rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        "Absolutely professional and courteous. We had a small problem but it was all sorted out by the excellent customer service team. Highly recommended!"
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkout-modal">
+        <div class="checkout-content">
+            <button class="close-btn" onclick="closeCheckout()">&times;</button>
+            
+            <!-- Step 1: Email -->
+            <div class="checkout-step active" id="step-1">
+                <h2 class="step-title">Checkout - Step 1</h2>
+                <div class="order-summary" id="order-summary">
+                    <!-- Cart items will be populated here -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
+                </div>
+                
+                <button class="checkout-btn" onclick="proceedToPayment()">Continue to Payment</button>
+            </div>
+            
+            <!-- Step 2: Payment -->
+            <div class="checkout-step" id="step-2">
+                <h2 class="step-title">Checkout - Step 2</h2>
+                <div class="order-summary" id="order-summary-2">
+                    <!-- Cart items will be populated here -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" placeholder="John Smith" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" required>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" required>
+                    </div>
+                </div>
+                
+                <button class="checkout-btn" onclick="completeOrder()">Complete Order</button>
+                <button class="checkout-btn" onclick="backToEmail()" style="background: #666; margin-top: 0.5rem;">Back to Email</button>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Würth Online Shop Column -->
+                <div class="footer-column">
+                    <h3>Würth Online Shop</h3>
+                    <ul>
+                        <li><a href="#">Forgot your password?</a></li>
+                        <li><a href="#">Register as a New Customer</a></li>
+                        <li><a href="#">Register as Existing Customer</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Würth Online Shop</a></li>
+                        <li><a href="#">Würth E-Business</a></li>
+                        <li><a href="#">Würth Mobile App</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Würth UK Column -->
+                <div class="footer-column">
+                    <h3>Würth UK</h3>
+                    <ul>
+                        <li><a href="#">About Würth UK</a></li>
+                        <li><a href="#">Quality & Compliance</a></li>
+                        <li><a href="#">Insights</a></li>
+                        <li><a href="#">Trade Stores</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social Column -->
+                <div class="footer-column">
+                    <h3>Social</h3>
+                    <ul>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">📘</span>
+                                <a href="#">Facebook</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">📷</span>
+                                <a href="#">Instagram</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">📺</span>
+                                <a href="#">YouTube</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">🐦</span>
+                                <a href="#">Twitter</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">🎵</span>
+                                <a href="#">TikTok</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-icons">
+                                <span class="social-icon">💼</span>
+                                <a href="#">LinkedIn</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Column -->
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <p>Würth UK Ltd</p>
+                        <p>1 Centurion Way, Erith</p>
+                        <p>Kent, DA18 4AE</p>
+                        <p>United Kingdom</p>
+                        <br>
+                        <p>📞 03300 555444</p>
+                        <p>✉️ <a href="mailto:customer.services@wurth.co.uk">customer.services@wurth.co.uk</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Würth UK Ltd. All rights reserved. | Professional Building Supplies</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-    // Cruise data for each destination
-    const cruiseData = {
-      'hk-sg': {
-        breadcrumb: 'BACK TO ALL ASIA CRUISES CRUISES',
-        title: 'HONG KONG TO SINGAPORE',
-        voyage: 'VOYAGE NUMBER #SN250918507',
-        startDate: 'SEP 18, 2025',
-        endDate: 'SEP 25, 2025',
-        duration: '7 DAYS',
-        ship: 'SILVER NOVA',
-        price: '£3,450',
-        mapImage: 'https://cdn.sanity.io/images/rd0y3pad/production/6f9589e9127abe58467a93d9ce53f1d2e06a2677-936x1040.jpg?w=340&q=75&fit=max&auto=format&dpr=3'
-      },
-      'tahiti': {
-        breadcrumb: 'BACK TO ALL FRENCH POLYNESIA & PACIFIC CRUISES CRUISES',
-        title: 'LAUTOKA TO PAPEETE (TAHITI)',
-        voyage: 'VOYAGE NUMBER #E425092902',
-        startDate: 'SEP 29, 2025',
-        endDate: 'OCT 10, 2025',
-        duration: '12 DAYS',
-        ship: 'SILVER CLOUD',
-        price: '£10,300',
-        mapImage: 'https://cdn.sanity.io/images/rd0y3pad/production/1ac0c5133b5b06e5ad352033677a78955ff1aee2-936x1040.jpg?w=340&q=75&fit=max&auto=format&dpr=3'
-      },
-      'antarctica': {
-        breadcrumb: 'BACK TO ALL ANTARCTICA CRUISES CRUISES',
-        title: 'BUENOS AIRES TO PUERTO WILLIAMS',
-        voyage: 'VOYAGE NUMBER #WI251005021',
-        startDate: 'OCT 5, 2025',
-        endDate: 'OCT 26, 2025',
-        duration: '21 DAYS',
-        ship: 'SILVER WIND',
-        price: '£10,700',
-        mapImage: 'https://cdn.sanity.io/images/rd0y3pad/production/68810eca20d2428ed32c4e16a9d004cef7ad60ed-936x1040.jpg?w=340&q=75&fit=max&auto=format&dpr=3'
-      },
-      'med': {
-        breadcrumb: 'BACK TO ALL MEDITERRANEAN CRUISES CRUISES',
-        title: 'ATHENS (PIRAEUS) TO ATHENS (PIRAEUS)',
-        voyage: 'VOYAGE NUMBER #SM251008009',
-        startDate: 'OCT 8, 2025',
-        endDate: 'OCT 17, 2025',
-        duration: '9 DAYS',
-        ship: 'SILVER MUSE',
-        price: '£4,150',
-        mapImage: 'https://cdn.sanity.io/images/rd0y3pad/production/6dc8eaf729ee5bf293f45601a1d0003a75202c38-936x1040.jpg?w=340&q=75&fit=max&auto=format&dpr=3'
-      }
-    };
-    
-    // Card name mapping for OneSignal tracking
-    const cardNameMapping = {
-      'hk-sg': 'Asia Cruise',
-      'tahiti': 'Pacific Cruise', 
-      'antarctica': 'Antarctica Cruise',
-      'med': 'Mediterranean Cruise'
-    };
-    
-    // Track which card is currently open
-    let currentOpenCard = null;
-    
-    // Function to track card views with OneSignal
-    async function trackCardView(cardId) {
-      const cardName = cardNameMapping[cardId];
-      if (!cardName) {
-        console.warn('Unknown card ID for tracking:', cardId);
-        return;
-      }
-      
-      try {
-        // Get current view count for this card from localStorage
-        const countKey = `${cardName.toLowerCase().replace(' ', '_')}_count`;
-        let currentCount = parseInt(localStorage.getItem(countKey) || '0');
-        currentCount += 1;
+        let cart = [];
         
-        // Store updated count
-        localStorage.setItem(countKey, currentCount.toString());
-        
-        // Prepare OneSignal tags
-        const tags = {
-          [cardName]: 'Viewed',
-          [`${cardName}_count`]: currentCount.toString()
-        };
-        
-        // Send tags to OneSignal if available
-        if (window.OneSignal && window.OneSignal.User) {
-          await window.OneSignal.User.addTags(tags);
-          console.log('✓ OneSignal card view tracked:', tags);
-          console.log(`User has viewed ${cardName} ${currentCount} times`);
-        } else {
-          console.log('OneSignal not ready, card view not tracked:', tags);
-        }
-        
-      } catch (error) {
-        console.error('Failed to track card view:', error);
-      }
-    }
-
-    // Cruise modal functions
-    function showCruiseDetails(cruiseId) {
-      const data = cruiseData[cruiseId];
-      if (!data) return;
-      
-      // Store the currently open card for tracking when closed
-      currentOpenCard = cruiseId;
-      
-      // Populate modal with cruise data
-      document.getElementById('cruiseBreadcrumb').textContent = data.breadcrumb;
-      document.getElementById('cruiseTitle').textContent = data.title;
-      document.getElementById('cruiseVoyage').textContent = data.voyage;
-      document.getElementById('cruiseStartDate').textContent = data.startDate;
-      document.getElementById('cruiseEndDate').textContent = data.endDate;
-      document.getElementById('cruiseDuration').textContent = data.duration;
-      document.getElementById('cruiseShip').textContent = data.ship;
-      document.getElementById('cruisePrice').textContent = data.price;
-      document.getElementById('cruiseMapImage').src = data.mapImage;
-      
-      // Show modal
-      document.getElementById('cruiseModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    }
-    
-    function closeCruiseModal() {
-      // Track the card view when modal is closed
-      if (currentOpenCard) {
-        trackCardView(currentOpenCard);
-        currentOpenCard = null; // Reset after tracking
-      }
-      
-      document.getElementById('cruiseModal').classList.add('hidden');
-      document.body.style.overflow = ''; // Restore scrolling
-    }
-    
-    // Close modal when clicking outside
-    document.getElementById('cruiseModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeCruiseModal();
-      }
-    });
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !document.getElementById('cruiseModal').classList.contains('hidden')) {
-        closeCruiseModal();
-      }
-    });
-
-    // Summary form modal functions
-    function openSummaryForm() {
-      document.getElementById('summaryModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closeSummaryForm() {
-      document.getElementById('summaryModal').classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-    
-    // Close modal when clicking outside
-    document.getElementById('summaryModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeSummaryForm();
-      }
-    });
-    
-    // Function to generate random 8 alphanumeric ID
-    function generateRandomId() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < 8; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
-
-    // Function to format phone number to E164 format
-    function formatPhoneToE164(phone) {
-      // Remove all non-digit characters except +
-      let cleaned = phone.replace(/[^\d+]/g, '');
-      
-      // If it already starts with +, just clean it
-      if (cleaned.startsWith('+')) {
-        return cleaned;
-      }
-      
-      // Remove leading zeros
-      cleaned = cleaned.replace(/^0+/, '');
-      
-      // Add country code based on common patterns
-      if (cleaned.length === 10) {
-        // Assume US/Canada number
-        cleaned = '+1' + cleaned;
-      } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
-        // US/Canada with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 9 && cleaned.startsWith('971')) {
-        // UAE number with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 8) {
-        // Assume UAE local number
-        cleaned = '+971' + cleaned;
-      } else if (cleaned.length === 11 && cleaned.startsWith('44')) {
-        // UK number with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 10 && cleaned.startsWith('44')) {
-        // UK number missing +
-        cleaned = '+' + cleaned;
-      } else {
-        // Default: add + if not present
-        cleaned = '+' + cleaned;
-      }
-      
-      return cleaned;
-    }
-
-    // Submit button click listener function
-    async function handleSubmitButtonClick(e) {
-      e.preventDefault();
-      
-      const form = document.getElementById('summaryForm');
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      
-      // Create full phone number and format to E164
-      const fullPhone = data.countryCode + data.phone;
-      const formattedPhone = formatPhoneToE164(fullPhone);
-      
-      // Generate random 8 alphanumeric external ID
-      const externalId = generateRandomId();
-      console.log('Generated external ID:', externalId);
-      
-      try {
-        // Step 1: Login to OneSignal with external ID (must happen first)
-        await new Promise((resolve, reject) => {
-          window.OneSignalDeferred = window.OneSignalDeferred || [];
-          window.OneSignalDeferred.push(async function(OneSignal) {
-            try {
-              await OneSignal.login(externalId);
-              console.log('OneSignal login successful with ID:', externalId);
-              resolve();
-            } catch (error) {
-              console.error('OneSignal login failed:', error);
-              reject(error);
+        // Login functionality
+        function switchTab(tabType) {
+            const tabs = document.querySelectorAll('.login-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if (tabType === 'partner') {
+                tabs[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
             }
-          });
-        });
-        
-        // Step 2: Add tags, email, and SMS (after login) - SEQUENTIAL EXECUTION
-        if (window.OneSignal && window.OneSignal.User) {
-          console.log('Starting sequential OneSignal operations...');
-          
-          // Step 2a: Add OneSignal user tags (FIRST)
-          await window.OneSignal.User.addTags({
-            title: data.title,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            source: 'cruise_summary_form'
-          });
-          console.log('✓ OneSignal tags added:', {
-            title: data.title,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            source: 'cruise_summary_form'
-          });
-          
-          // Step 2b: Add email to OneSignal (SECOND - after tags complete)
-          await window.OneSignal.User.addEmail(data.email);
-          console.log('✓ OneSignal email added:', data.email);
-          
-          // Step 2c: Add SMS to OneSignal (THIRD - after email completes)
-          await window.OneSignal.User.addSms(formattedPhone);
-          console.log('✓ OneSignal SMS added:', formattedPhone);
-          
-          console.log('✓ All OneSignal operations completed successfully');
-          
-        } else {
-          throw new Error('OneSignal not ready after login');
         }
         
-        // Log form data (in real app, this would be sent to server)
-        console.log('Summary form submitted:', {
-          email: data.email,
-          title: data.title,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: formattedPhone,
-          externalId: externalId
+        function handleLogin() {
+            const customerNumber = document.getElementById('customer-number').value;
+            const partnerNumber = document.getElementById('partner-number').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!customerNumber && !partnerNumber) {
+                alert('Please enter either Customer Number or Partner Number');
+                return;
+            }
+            
+            if (!password) {
+                alert('Please enter your password');
+                return;
+            }
+            
+            // Simulate login
+            alert('Login successful! Welcome to Würth Trade Tools.');
+        }
+        
+        function handleForgotPassword() {
+            alert('Password reset instructions will be sent to your registered email address.');
+        }
+        
+        function addToCart(productName, price) {
+            cart.push({
+                name: productName,
+                price: price
+            });
+            
+            updateCartCount();
+            
+            // Visual feedback
+            event.target.textContent = 'Added!';
+            event.target.style.background = '#28a745';
+            
+            setTimeout(() => {
+                event.target.textContent = 'Add to Cart';
+                event.target.style.background = '#cc0000';
+            }, 1500);
+        }
+        
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+        
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty! Please add some products first.');
+                return;
+            }
+            
+            document.getElementById('checkout-modal').style.display = 'flex';
+            updateOrderSummary();
+        }
+        
+        function closeCheckout() {
+            document.getElementById('checkout-modal').style.display = 'none';
+            resetCheckout();
+        }
+        
+        function resetCheckout() {
+            document.getElementById('step-1').classList.add('active');
+            document.getElementById('step-2').classList.remove('active');
+            
+            // Clear form fields
+            document.getElementById('email').value = '';
+            document.getElementById('card-name').value = '';
+            document.getElementById('card-number').value = '';
+            document.getElementById('expiry').value = '';
+            document.getElementById('cvv').value = '';
+        }
+        
+        function updateOrderSummary() {
+            const summary1 = document.getElementById('order-summary');
+            const summary2 = document.getElementById('order-summary-2');
+            
+            let subtotal = 0;
+            let summaryHTML = '<h3>Order Summary</h3>';
+            
+            cart.forEach(item => {
+                subtotal += item.price;
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span>${item.name}</span>
+                        <span>£${item.price.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            
+            const shipping = subtotal > 50 ? 0 : 5.99;
+            const total = subtotal + shipping;
+            
+            summaryHTML += `
+                <div class="summary-item">
+                    <span>Subtotal</span>
+                    <span>£${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Shipping</span>
+                    <span>${shipping === 0 ? 'FREE' : '£' + shipping.toFixed(2)}</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total</span>
+                    <span>£${total.toFixed(2)}</span>
+                </div>
+            `;
+            
+            summary1.innerHTML = summaryHTML;
+            summary2.innerHTML = summaryHTML;
+        }
+        
+        function proceedToPayment() {
+            const email = document.getElementById('email').value;
+            
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            document.getElementById('step-1').classList.remove('active');
+            document.getElementById('step-2').classList.add('active');
+        }
+        
+        function backToEmail() {
+            document.getElementById('step-2').classList.remove('active');
+            document.getElementById('step-1').classList.add('active');
+        }
+        
+        function completeOrder() {
+            const cardName = document.getElementById('card-name').value;
+            const cardNumber = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            if (!cardName || !cardNumber || !expiry || !cvv) {
+                alert('Please fill in all payment details.');
+                return;
+            }
+            
+            // Simulate order processing
+            alert('Order completed successfully! Thank you for your purchase.');
+            
+            // Reset cart and close modal
+            cart = [];
+            updateCartCount();
+            closeCheckout();
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('checkout-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckout();
+            }
         });
         
-        // Show success message
-        alert(`Thank you, ${data.firstName}! Your summary request has been submitted. We'll contact you soon at ${data.email}.`);
-        
-      } catch (error) {
-        console.error('Summary form submission failed:', error);
-        alert(`Submission failed: ${error.message || 'Unknown error'}. Please try again.`);
-      }
-      
-      // Close modal and reset form
-      closeSummaryForm();
-      form.reset();
-    }
-    
-    // Add click listener to the Submit button
-    document.querySelector('.submit-btn').addEventListener('click', handleSubmitButtonClick);
-    
-    // Handle form submission (keeping this for form validation and Enter key support)
-    document.getElementById('summaryForm').addEventListener('submit', handleSubmitButtonClick);
-    
-    // Function to reset all cruise view counts
-    function resetAllCruiseCounts() {
-      const cardNames = ['asia_cruise', 'pacific_cruise', 'antarctica_cruise', 'mediterranean_cruise'];
-      
-      // Reset all counts to 0 in localStorage
-      cardNames.forEach(cardName => {
-        localStorage.setItem(`${cardName}_count`, '0');
-      });
-      
-      console.log('✓ All cruise view counts reset to 0');
-    }
-    
-    // Refresh button functionality
-    const refreshBtn = document.getElementById('refreshCruiseCount');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', function() {
-        // Reset all cruise counts
-        resetAllCruiseCounts();
-        
-        // Visual feedback - add clicked class and rotate
-        this.classList.add('clicked');
-        
-        // Remove the visual feedback after animation
-        setTimeout(() => {
-          this.classList.remove('clicked');
-        }, 400);
-        
-        console.log('Cruise view counts have been reset');
-      });
-    }
-    
-    // Simple grid layout - no carousel functionality needed
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
-
