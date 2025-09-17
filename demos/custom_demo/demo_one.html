@@ -1597,6 +1597,9 @@
         }
         
         function handleLogout() {
+            // Store email before clearing currentUser
+            const userEmail = currentUser ? currentUser.email : null;
+            
             // Reset login state
             isLoggedIn = false;
             currentUser = null;
@@ -1606,15 +1609,23 @@
             document.getElementById('logged-in-view').classList.remove('active');
             
             // OneSignal logout sequence
-            OneSignalDeferred.push(async function(OneSignal) {
-                // First remove email
-                await OneSignal.User.removeEmail(currentUser.email);
-                
-                // Wait 1 second then logout
-                setTimeout(async () => {
-                    await OneSignal.logout();
-                }, 1000);
-            });
+            if (window.OneSignal && window.OneSignal.User && userEmail) {
+                try {
+                    // First remove email
+                    window.OneSignal.User.removeEmail(userEmail);
+                    
+                    // Wait 1 second then logout
+                    setTimeout(async () => {
+                        try {
+                            await window.OneSignal.logout();
+                        } catch (error) {
+                            // Silent error handling
+                        }
+                    }, 1000);
+                } catch (error) {
+                    // Silent error handling
+                }
+            }
             
             // Clear any sensitive data if needed
             alert('You have been logged out successfully.'); 
