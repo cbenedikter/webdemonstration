@@ -642,6 +642,242 @@
         .signup-link:hover {
             text-decoration: underline;
         }
+        
+        /* Registration Modal */
+        .registration-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .registration-content {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .registration-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .registration-close:hover {
+            color: #333;
+        }
+        
+        .registration-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .registration-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .registration-field label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .registration-field input {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .registration-field input:focus {
+            outline: none;
+            border-color: #0093dd;
+        }
+        
+        .register-btn {
+            background: #0093dd;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .register-btn:hover {
+            background: #007bb8;
+        }
+        
+        .customer-number-display {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            border: 2px solid #28a745;
+        }
+        
+        .customer-number-display h4 {
+            color: #28a745;
+            margin-bottom: 0.5rem;
+        }
+        
+        .customer-number-display p {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Logged-in State */
+        .logged-in-view {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #0093dd, #007bb8);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 147, 221, 0.3);
+        }
+        
+        .logged-in-view.active {
+            display: block;
+        }
+        
+        .welcome-message {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-details {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-details strong {
+            font-weight: 600;
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .account-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .account-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .account-btn.logout {
+            background: rgba(204, 0, 0, 0.8);
+            border-color: rgba(204, 0, 0, 0.8);
+        }
+        
+        .account-btn.logout:hover {
+            background: rgba(204, 0, 0, 1);
+            border-color: rgba(204, 0, 0, 1);
+        }
+        
+        .login-form-container {
+            display: block;
+        }
+        
+        .login-form-container.hidden {
+            display: none;
+        }
+        
+        /* Reset Button */
+        .reset-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #cc0000;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .reset-button:hover {
+            background: #b30000;
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 6px 20px rgba(204, 0, 0, 0.4);
+        }
+        
+        .reset-button:active {
+            transform: scale(0.95) rotate(180deg);
+        }
+        
+        /* Recycle icon using CSS */
+        .recycle-icon {
+            width: 28px;
+            height: 28px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .recycle-icon::before {
+            content: "♻";
+            font-size: 28px;
+            line-height: 1;
+        }
 
         /* Footer */
         .footer {
@@ -774,6 +1010,11 @@
     </style>
 </head>
 <body>
+    <!-- Reset Button -->
+    <button class="reset-button" onclick="resetAllData()" title="Reset All Customer Data">
+        <div class="recycle-icon"></div>
+    </button>
+    
     <!-- Top Banner -->
     <div class="top-banner">
         <div class="container">
@@ -808,48 +1049,65 @@
     <section class="login-section">
         <div class="container">
             <div class="login-container">
-                <div class="login-header">
-                    <div class="login-with">
-                        Login with: 
-                        <span class="login-tabs">
-                            <button class="login-tab active" onclick="switchTab('partner')">Partner Number</button>
-                            <button class="login-tab" onclick="switchTab('username')">Username</button>
-                        </span>
+                <!-- Login Form (shown when not logged in) -->
+                <div class="login-form-container" id="login-form-container">
+                    <div class="login-header">
+                        <div class="login-with">
+                            Login with: 
+                            <span class="login-tabs">
+                                <button class="login-tab active" onclick="switchTab('partner')">Partner Number</button>
+                                <button class="login-tab" onclick="switchTab('username')">Username</button>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="login-form">
+                        <div class="login-field">
+                            <label for="customer-number">
+                                Customer Number
+                                <span class="info-icon">ℹ️</span>
+                            </label>
+                            <input type="text" id="customer-number" placeholder="Customer Number">
+                        </div>
+                        
+                        <div class="login-field">
+                            <label for="partner-number">
+                                Partner Number
+                                <span class="info-icon">ℹ️</span>
+                            </label>
+                            <input type="text" id="partner-number" placeholder="Partner Number">
+                        </div>
+                        
+                        <div class="login-field">
+                            <label for="login-password">
+                                Password
+                                <span class="info-icon">ℹ️</span>
+                            </label>
+                            <input type="password" id="login-password" placeholder="Password">
+                        </div>
+                        
+                        <button class="login-btn" onclick="handleLogin()">Login</button>
+                        <button class="forgot-password-btn" onclick="handleForgotPassword()">Forgotten Password</button>
+                    </div>
+                    
+                    <div class="signup-prompt">
+                        Don't currently have an online account and want access to over 60,000 products? 
+                        <a href="#" class="signup-link" onclick="openRegistration()">Sign Up Now</a>
                     </div>
                 </div>
                 
-                <div class="login-form">
-                    <div class="login-field">
-                        <label for="customer-number">
-                            Customer Number
-                            <span class="info-icon">ℹ️</span>
-                        </label>
-                        <input type="text" id="customer-number" placeholder="Customer Number">
+                <!-- Logged-in View (shown when logged in) -->
+                <div class="logged-in-view" id="logged-in-view">
+                    <div class="welcome-message" id="welcome-message">Welcome back!</div>
+                    <div class="user-details" id="user-details">
+                        <p><strong>Customer Number:</strong> <span id="display-customer-number"></span></p>
+                        <p><strong>Email:</strong> <span id="display-email"></span></p>
                     </div>
-                    
-                    <div class="login-field">
-                        <label for="partner-number">
-                            Partner Number
-                            <span class="info-icon">ℹ️</span>
-                        </label>
-                        <input type="text" id="partner-number" placeholder="Partner Number">
+                    <div class="account-actions">
+                        <button class="account-btn" onclick="openCheckout()">View Cart & Checkout</button>
+                        <button class="account-btn" onclick="viewOrderHistory()">Order History</button>
+                        <button class="account-btn logout" onclick="handleLogout()">Logout</button>
                     </div>
-                    
-                    <div class="login-field">
-                        <label for="login-password">
-                            Password
-                            <span class="info-icon">ℹ️</span>
-                        </label>
-                        <input type="password" id="login-password" placeholder="Password">
-                    </div>
-                    
-                    <button class="login-btn" onclick="handleLogin()">Login</button>
-                    <button class="forgot-password-btn" onclick="handleForgotPassword()">Forgotten Password</button>
-                </div>
-                
-                <div class="signup-prompt">
-                    Don't currently have an online account and want access to over 60,000 products? 
-                    <a href="#" class="signup-link">Sign Up Now</a>
                 </div>
             </div>
         </div>
@@ -1027,52 +1285,64 @@
         <div class="checkout-content">
             <button class="close-btn" onclick="closeCheckout()">&times;</button>
             
-            <!-- Step 1: Email -->
-            <div class="checkout-step active" id="step-1">
-                <h2 class="step-title">Checkout - Step 1</h2>
+            <!-- Checkout -->
+            <div class="checkout-step active" id="checkout-step">
+                <h2 class="step-title">Checkout</h2>
                 <div class="order-summary" id="order-summary">
                     <!-- Cart items will be populated here -->
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email address" required>
-                </div>
-                
-                <button class="checkout-btn" onclick="proceedToPayment()">Continue to Payment</button>
-            </div>
-            
-            <!-- Step 2: Payment -->
-            <div class="checkout-step" id="step-2">
-                <h2 class="step-title">Checkout - Step 2</h2>
-                <div class="order-summary" id="order-summary-2">
-                    <!-- Cart items will be populated here -->
+                    <label for="card-name">Name on Card (Optional)</label>
+                    <input type="text" id="card-name" placeholder="John Smith">
                 </div>
                 
                 <div class="form-group">
-                    <label for="card-name">Name on Card</label>
-                    <input type="text" id="card-name" placeholder="John Smith" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="card-number">Card Number</label>
-                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                    <label for="card-number">Card Number (Optional)</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
                 </div>
                 
                 <div style="display: flex; gap: 1rem;">
                     <div class="form-group" style="flex: 1;">
-                        <label for="expiry">Expiry Date</label>
-                        <input type="text" id="expiry" placeholder="MM/YY" required>
+                        <label for="expiry">Expiry Date (Optional)</label>
+                        <input type="text" id="expiry" placeholder="MM/YY">
                     </div>
                     
                     <div class="form-group" style="flex: 1;">
-                        <label for="cvv">CVV</label>
-                        <input type="text" id="cvv" placeholder="123" required>
+                        <label for="cvv">CVV (Optional)</label>
+                        <input type="text" id="cvv" placeholder="123">
                     </div>
                 </div>
                 
                 <button class="checkout-btn" onclick="completeOrder()">Complete Order</button>
-                <button class="checkout-btn" onclick="backToEmail()" style="background: #666; margin-top: 0.5rem;">Back to Email</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="registration-modal" id="registration-modal">
+        <div class="registration-content">
+            <button class="registration-close" onclick="closeRegistration()">&times;</button>
+            
+            <h2 class="registration-title">Create Your Account</h2>
+            
+            <div class="registration-form">
+                <div class="registration-field">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="registration-field">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="Enter your email address" required>
+                </div>
+                
+                <button class="register-btn" onclick="handleRegistration()">Register</button>
+                
+                <div class="customer-number-display" id="customer-number-display" style="display: none;">
+                    <h4>Registration Successful!</h4>
+                    <p>Your Customer Number: <span id="generated-customer-number"></span></p>
+                </div>
             </div>
         </div>
     </div>
@@ -1174,6 +1444,74 @@
 
     <script>
         let cart = [];
+        let isLoggedIn = false;
+        let currentUser = null;
+        
+        // Generate 8-character alphanumeric UUID
+        function generateCustomerNumber() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // Registration functionality
+        function openRegistration() {
+            document.getElementById('registration-modal').style.display = 'flex';
+        }
+        
+        function closeRegistration() {
+            document.getElementById('registration-modal').style.display = 'none';
+            // Reset form
+            document.getElementById('reg-name').value = '';
+            document.getElementById('reg-email').value = '';
+            document.getElementById('customer-number-display').style.display = 'none';
+        }
+        
+        function handleRegistration() {
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            
+            if (!name || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Generate customer number
+            const customerNumber = generateCustomerNumber();
+            
+            // Get existing customers or initialize empty array
+            let customers = JSON.parse(localStorage.getItem('wurth_customers') || '[]');
+            
+            // Check if email already exists
+            if (customers.find(customer => customer.email === email)) {
+                alert('An account with this email already exists');
+                return;
+            }
+            
+            // Add new customer
+            const newCustomer = {
+                customerNumber: customerNumber,
+                name: name,
+                email: email,
+                password: '123',
+                registrationDate: new Date().toISOString()
+            };
+            
+            customers.push(newCustomer);
+            localStorage.setItem('wurth_customers', JSON.stringify(customers));
+            
+            // Display customer number
+            document.getElementById('generated-customer-number').textContent = customerNumber;
+            document.getElementById('customer-number-display').style.display = 'block';
+        }
         
         // Login functionality
         function switchTab(tabType) {
@@ -1188,8 +1526,8 @@
         }
         
         function handleLogin() {
-            const customerNumber = document.getElementById('customer-number').value;
-            const partnerNumber = document.getElementById('partner-number').value;
+            const customerNumber = document.getElementById('customer-number').value.trim();
+            const partnerNumber = document.getElementById('partner-number').value.trim();
             const password = document.getElementById('login-password').value;
             
             if (!customerNumber && !partnerNumber) {
@@ -1202,12 +1540,163 @@
                 return;
             }
             
-            // Simulate login
-            alert('Login successful! Welcome to Würth Trade Tools.');
+            // Get registered customers
+            const customers = JSON.parse(localStorage.getItem('wurth_customers') || '[]');
+            
+            // Find customer by customer number (primary) or partner number
+            const customer = customers.find(c => 
+                c.customerNumber === customerNumber || c.customerNumber === partnerNumber
+            );
+            
+            if (!customer) {
+                alert('Customer not found. Please check your Customer Number or register for a new account.');
+                return;
+            }
+            
+            if (customer.password !== password) {
+                alert('Invalid password. Please try again.');
+                return;
+            }
+            
+            // Successful login
+            isLoggedIn = true;
+            currentUser = customer;
+            
+            // OneSignal login with customer UUID
+            OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.login(customer.customerNumber);
+                
+                // Add email 1 second after login
+                setTimeout(async () => {
+                    await OneSignal.User.addEmail(customer.email);
+                }, 1000);
+            });
+            
+            // Clear login form
+            document.getElementById('customer-number').value = '';
+            document.getElementById('partner-number').value = '';
+            document.getElementById('login-password').value = '';
+            
+            alert(`Login successful! Welcome ${customer.name}!`);
+            updateUIForLoggedInUser();
         }
         
         function handleForgotPassword() {
             alert('Password reset instructions will be sent to your registered email address.');
+        }
+        
+        function updateUIForLoggedInUser() {
+            // Hide login form and show logged-in view
+            document.getElementById('login-form-container').classList.add('hidden');
+            document.getElementById('logged-in-view').classList.add('active');
+            
+            // Update user information display
+            document.getElementById('welcome-message').textContent = `Welcome back, ${currentUser.name}!`;
+            document.getElementById('display-customer-number').textContent = currentUser.customerNumber;
+            document.getElementById('display-email').textContent = currentUser.email;
+        }
+        
+        function handleLogout() {
+            // Reset login state
+            isLoggedIn = false;
+            currentUser = null;
+            
+            // Show login form and hide logged-in view
+            document.getElementById('login-form-container').classList.remove('hidden');
+            document.getElementById('logged-in-view').classList.remove('active');
+            
+            // OneSignal logout sequence
+            OneSignalDeferred.push(async function(OneSignal) {
+                // First remove email
+                await OneSignal.User.removeEmail(currentUser.email);
+                
+                // Wait 1 second then logout
+                setTimeout(async () => {
+                    await OneSignal.logout();
+                }, 1000);
+            });
+            
+            // Clear any sensitive data if needed
+            alert('You have been logged out successfully.'); 
+        }
+        
+        function viewOrderHistory() {
+            alert('Order History feature coming soon!');
+        }
+        
+        function resetAllData() {
+            // Confirm action with user
+            const confirmed = confirm(
+                'Are you sure you want to reset all customer data?\n\n' +
+                'This will:\n' +
+                '• Delete all registered customer accounts\n' +
+                '• Clear all saved UUIDs and email addresses\n' +
+                '• Log out current user\n' +
+                '• Reset the site to initial state\n\n' +
+                'This action cannot be undone.'
+            );
+            
+            if (!confirmed) {
+                return;
+            }
+            
+            try {
+                // Clear all localStorage data
+                localStorage.removeItem('wurth_customers');
+                
+                // Reset login state
+                isLoggedIn = false;
+                currentUser = null;
+                
+                // Clear cart
+                cart = [];
+                updateCartCount();
+                
+                // Show login form and hide logged-in view
+                document.getElementById('login-form-container').classList.remove('hidden');
+                document.getElementById('logged-in-view').classList.remove('active');
+                
+                // Clear all form fields
+                document.getElementById('customer-number').value = '';
+                document.getElementById('partner-number').value = '';
+                document.getElementById('login-password').value = '';
+                
+                // Close any open modals
+                document.getElementById('checkout-modal').style.display = 'none';
+                document.getElementById('registration-modal').style.display = 'none';
+                
+                // Reset checkout form
+                resetCheckout();
+                
+                // Show success message
+                alert('✅ All customer data has been successfully reset!\n\nThe site has been restored to its initial state.');
+                
+                // Optional: Add visual feedback
+                const resetButton = document.querySelector('.reset-button');
+                resetButton.style.background = '#28a745';
+                setTimeout(() => {
+                    resetButton.style.background = '#cc0000';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Error resetting data:', error);
+                alert('❌ An error occurred while resetting data. Please try again.');
+            }
+        }
+        
+        function openCheckout() {
+            if (!isLoggedIn) {
+                alert('Please log in to access your cart and checkout.');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty! Please add some products first.');
+                return;
+            }
+            
+            document.getElementById('checkout-modal').style.display = 'flex';
+            updateOrderSummary();
         }
         
         function addToCart(productName, price) {
@@ -1218,9 +1707,25 @@
             
             updateCartCount();
             
+            // Get product image URL from the clicked product card
+            const productCard = event.target.closest('.product-card');
+            const productImage = productCard.querySelector('.product-image');
+            const productImageUrl = productImage ? productImage.src : '';
+            
+            // Send product information to OneSignal
+            const properties = {
+                "product_name": productName,
+                "product_image": productImageUrl,
+                "product_price": price.toString()
+            };
+            
+            if (window.OneSignal && window.OneSignal.User) {
+                window.OneSignal.User.trackEvent('cart_updated', properties);
+            }
+            
             // Trigger OneSignal push permission prompt
             if (window.OneSignal && window.OneSignal.Slidedown) {
-              OneSignal.Slidedown.promptPushCategories();
+               OneSignal.Slidedown.promptPushCategories();
                 // To bypass backoff logic while testing, use:
                 // OneSignal.Slidedown.promptPush({force: true});
             }
@@ -1239,27 +1744,13 @@
             document.getElementById('cart-count').textContent = cart.length;
         }
         
-        function openCheckout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty! Please add some products first.');
-                return;
-            }
-            
-            document.getElementById('checkout-modal').style.display = 'flex';
-            updateOrderSummary();
-        }
-        
         function closeCheckout() {
             document.getElementById('checkout-modal').style.display = 'none';
             resetCheckout();
         }
         
         function resetCheckout() {
-            document.getElementById('step-1').classList.add('active');
-            document.getElementById('step-2').classList.remove('active');
-            
-            // Clear form fields
-            document.getElementById('email').value = '';
+            // Clear form fields (optional since all fields are now optional)
             document.getElementById('card-name').value = '';
             document.getElementById('card-number').value = '';
             document.getElementById('expiry').value = '';
@@ -1267,8 +1758,7 @@
         }
         
         function updateOrderSummary() {
-            const summary1 = document.getElementById('order-summary');
-            const summary2 = document.getElementById('order-summary-2');
+            const summary = document.getElementById('order-summary');
             
             let subtotal = 0;
             let summaryHTML = '<h3>Order Summary</h3>';
@@ -1301,36 +1791,20 @@
                 </div>
             `;
             
-            summary1.innerHTML = summaryHTML;
-            summary2.innerHTML = summaryHTML;
+            if (summary) summary.innerHTML = summaryHTML;
         }
         
-        function proceedToPayment() {
-            const email = document.getElementById('email').value;
-            
-            if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-            
-            document.getElementById('step-1').classList.remove('active');
-            document.getElementById('step-2').classList.add('active');
-        }
-        
-        function backToEmail() {
-            document.getElementById('step-2').classList.remove('active');
-            document.getElementById('step-1').classList.add('active');
-        }
         
         function completeOrder() {
-            const cardName = document.getElementById('card-name').value;
-            const cardNumber = document.getElementById('card-number').value;
-            const expiry = document.getElementById('expiry').value;
-            const cvv = document.getElementById('cvv').value;
+            // No validation required - all fields are optional
             
-            if (!cardName || !cardNumber || !expiry || !cvv) {
-                alert('Please fill in all payment details.');
-                return;
+            // Track OneSignal purchase event
+            if (window.OneSignal && window.OneSignal.User) {
+                try {
+                    window.OneSignal.User.trackEvent('purchase_made');
+                } catch (error) {
+                    // Silent error handling
+                }
             }
             
             // Simulate order processing
