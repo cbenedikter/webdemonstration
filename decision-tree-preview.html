@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Decision Tree Preview - OneSignal Demo</title>
+    <link rel="icon" type="image/png" href="assets/images/icon_with_25_percent_margin.png">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+        
+        .preview-container {
+            text-align: center;
+            max-width: 90%;
+            padding: 2rem;
+        }
+        
+        .preview-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #e0f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .preview-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .gif-container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .decision-tree-gif {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .navigation-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .nav-link.primary {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .nav-link.primary:hover {
+            background: linear-gradient(135deg, #45a049 0%, #4CAF50 100%);
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+        
+        .file-info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .preview-title {
+                font-size: 2rem;
+            }
+            
+            .preview-container {
+                padding: 1rem;
+            }
+            
+            .navigation-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-link {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1 class="preview-title">POC Decision Tree Preview</h1>
+        <p class="preview-subtitle">Interactive decision wizard for determining the right POC approach</p>
+        
+        <div class="gif-container">
+            <img src="assets/images/decision_tree.gif" alt="POC Decision Tree Demo" class="decision-tree-gif" loading="lazy">
+        </div>
+        
+        <div class="file-info">
+            <p>📁 File: decision_tree.gif | 📏 Size: ~10MB | 🎯 Interactive Demo Available</p>
+        </div>
+        
+        <div class="navigation-links">
+            <a href="decision-tree.html" class="nav-link primary">🎯 Try Interactive Version</a>
+            <a href="index.html" class="nav-link">← Back to Main Demo</a>
+            <a href="assets/images/decision_tree.gif" class="nav-link" download>💾 Download GIF</a>
+        </div>
+    </div>
+    
+    <script>
+        // Track preview page usage
+        function trackPreviewUsage() {
+            const usage = {
+                timestamp: new Date().toISOString(),
+                page: 'decision-tree-preview',
+                userAgent: navigator.userAgent,
+                referrer: document.referrer
+            };
+            
+            try {
+                const logs = JSON.parse(localStorage.getItem('previewPageLogs') || '[]');
+                logs.push(usage);
+                if (logs.length > 50) logs.splice(0, logs.length - 50);
+                localStorage.setItem('previewPageLogs', JSON.stringify(logs));
+            } catch (error) {
+                console.warn('Could not save preview usage log:', error);
+            }
+        }
+        
+        trackPreviewUsage();
+    </script>
+</body>
+</html>
