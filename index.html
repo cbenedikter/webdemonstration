@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/popups.css">
     <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="assets/css/decision-tree.css">
 </head>
 <body>
     <div class="floating-elements">
@@ -116,10 +117,60 @@
         </div>
     </div>
 
+    <!-- POC Decision Tree Modal -->
+    <div id="poc-decision-tree-modal" class="popup-overlay decision-tree-modal">
+        <div class="popup-content decision-tree-content">
+            <div class="popup-header">
+                <h2 id="decision-tree-title">POC Motion Decision Tree</h2>
+                <button class="close-btn" onclick="closePOCDecisionTree()">&times;</button>
+            </div>
+            <div class="popup-body">
+                <!-- Progress Indicator -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">Step 1 of 5</div>
+                </div>
+
+                <!-- Question Container -->
+                <div class="question-container" id="question-container">
+                    <h3 class="question-title" id="question-title">Loading...</h3>
+                    <div class="question-buttons" id="question-buttons">
+                        <!-- Dynamic buttons will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Result Container -->
+                <div class="result-container" id="result-container" style="display: none;">
+                    <div class="result-card">
+                        <h3 class="result-title">Recommended Motion:</h3>
+                        <div class="result-motion" id="result-motion"></div>
+                        <div class="result-description" id="result-description"></div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="popup-buttons decision-tree-nav">
+                    <button class="btn popup-cancel-btn" id="back-btn" onclick="goBackStep()" style="display: none;">Back</button>
+                    <button class="btn popup-cancel-btn" onclick="closePOCDecisionTree()">Close</button>
+                    <button class="btn popup-login-btn" id="restart-btn" onclick="restartDecisionTree()" style="display: none;">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="hero">
             <h1>Welcome to the Playground!</h1>
             <p>Interact with the buttons below to see how OneSignal's Web SDK works.</p>
+            
+            <!-- POC Decision Tree Button -->
+            <div class="decision-tree-section">
+                <button id="poc-decision-tree-btn" class="btn decision-tree-btn" onclick="openPOCDecisionTree()">
+                    Start POC Decision Tree
+                </button>
+            </div>
         </div>
 
         <div class="buttons-grid">
@@ -139,6 +190,7 @@
     <!-- External JavaScript Files -->
     <script src="assets/js/notifications.js"></script>
     <script src="assets/js/onesignal-handlers.js"></script>
+    <script src="assets/js/decision-tree.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
