@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Motion Decision Tree - OneSignal Demo</title>
+    <link rel="icon" type="image/png" href="assets/images/icon_with_25_percent_margin.png">
+    
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/decision-tree.css">
+    
+    <style>
+        /* Full page decision tree styles */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .fullpage-decision-tree {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .fullpage-content {
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 0;
+            max-width: 700px;
+            width: 95%;
+            max-height: 95vh;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .fullpage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .fullpage-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .fullpage-body {
+            padding: 1.5rem;
+            max-height: calc(95vh - 8rem);
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        .fullpage-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .fullpage-body::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .fullpage-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        .fullpage-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="fullpage-decision-tree">
+        <div class="fullpage-content">
+            <div class="fullpage-header">
+                <h2>POC Motion Decision Tree</h2>
+                <button class="close-btn" onclick="window.location.href='index.html'">&times;</button>
+            </div>
+            <div class="fullpage-body">
+                <!-- Progress Indicator -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">Step 1 of 5</div>
+                </div>
+
+                <!-- Question Container -->
+                <div class="question-container" id="question-container">
+                    <h3 class="question-title" id="question-title">Loading...</h3>
+                    <div class="question-buttons" id="question-buttons">
+                        <!-- Dynamic buttons will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Result Container -->
+                <div class="result-container" id="result-container" style="display: none;">
+                    <div class="result-card">
+                        <h3 class="result-title">Recommended Motion:</h3>
+                        <div class="result-motion" id="result-motion"></div>
+                        <div class="result-description" id="result-description"></div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="popup-buttons decision-tree-nav">
+                    <button class="btn popup-cancel-btn" id="back-btn" onclick="goBackStep()" style="display: none;">Back</button>
+                    <button class="btn popup-cancel-btn" onclick="window.location.href='index.html'">Close</button>
+                    <button class="btn popup-login-btn" id="restart-btn" onclick="restartDecisionTree()" style="display: none;">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript Files -->
+    <script src="assets/js/decision-tree.js"></script>
+    
+    <script>
+        // Initialize decision tree immediately on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the decision tree without opening a modal
+            resetDecisionTree();
+            showCurrentQuestion();
+        });
+        
+        // Override modal functions for fullpage version
+        function openPOCDecisionTree() {
+            // Already open - just reset
+            resetDecisionTree();
+            showCurrentQuestion();
+        }
+        
+        function closePOCDecisionTree() {
+            // Navigate back to index
+            window.location.href = 'index.html';
+        }
+        
+        // Enhanced analytics for standalone page
+        function trackStandaloneUsage() {
+            const usage = {
+                timestamp: new Date().toISOString(),
+                page: 'standalone-decision-tree',
+                userAgent: navigator.userAgent,
+                referrer: document.referrer
+            };
+            
+            try {
+                const logs = JSON.parse(localStorage.getItem('standaloneDecisionTreeLogs') || '[]');
+                logs.push(usage);
+                if (logs.length > 100) logs.splice(0, logs.length - 100);
+                localStorage.setItem('standaloneDecisionTreeLogs', JSON.stringify(logs));
+            } catch (error) {
+                console.warn('Could not save standalone usage log:', error);
+            }
+        }
+        
+        // Track page visit
+        trackStandaloneUsage();
+    </script>
+</body>
+</html>
