@@ -604,7 +604,12 @@
                     window.OneSignal.User.setLanguage(languageCode);
                     console.log('OneSignal: Language set to', languageCode);
 
-                    // 2. Add Tag with UNIX timestamp
+                    // 2. Add Tags
+                    // Add customer name tag
+                    window.OneSignal.User.addTag('customer_name', formData.customerName);
+                    console.log('OneSignal: Tag added - customer_name:', formData.customerName);
+
+                    // Add appointment time tag with UNIX timestamp
                     // Combine date and time to create UNIX timestamp
                     const appointmentDateTime = new Date(formData.appointmentDate + 'T' + formData.appointmentTime + ':00');
                     const unixTimestamp = Math.floor(appointmentDateTime.getTime() / 1000);
