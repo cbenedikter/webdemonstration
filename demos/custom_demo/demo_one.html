@@ -1,1845 +1,748 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-      <!-- OneSignal SDK-->
-      <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-      <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-          await OneSignal.init({
-            appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
-          });
+    <!-- OneSignal SDK-->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
         });
-      </script>
-  
+      });
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Würth Trade Tools - Professional Building Supplies</title>
+    <title>Windshield Repair Service - Book Appointment</title>
     <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffffff 0%, #ededed 50%, #d7d7d7 100%);
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #F4F4F4;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            color: #1A1A1A;
             line-height: 1.6;
         }
-        
+
         .container {
-            max-width: 1200px;
+            background: #FFFFFF;
+            max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            padding: 0 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
-        
-        /* Top Banner */
-        .top-banner {
-            background: #cc0000;
-            color: white;
-            text-align: center;
-            padding: 0.75rem 0;
-            font-size: 0.9rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-        
-        .banner-text {
-            margin: 0;
-        }
-        
-        /* Header */
+
         .header {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            height: 50px;
-        }
-        
-        .nav {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav a:hover {
-            color: #0093dd;
-        }
-        
-        .cart-icon {
-            background: #0093dd;
+            background: #0A2A66;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
+            padding: 3rem 3rem 2.5rem;
         }
-        
-        .cart-icon:hover {
-            background: #007bb8;
-            transform: translateY(-2px);
-        }
-        
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #cc0000;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #0093dd 0%, #007bb8 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-button {
-            background: #cc0000;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .cta-button:hover {
-            background: #a60000;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(204, 0, 0, 0.3);
-        }
-        
-        /* Products Section */
-        .products-section {
-            padding: 4rem 0;
-            background: #ffffff;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .product-card {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border-color: #0093dd;
-        }
-        
-        .product-image {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-            margin: 0 auto 1.5rem;
-            border-radius: 10px;
-        }
-        
-        .product-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .product-description {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-        
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #0093dd;
-            margin-bottom: 1.5rem;
-        }
-        
-        .add-to-cart {
-            background: #cc0000;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .add-to-cart:hover {
-            background: #a60000;
-            transform: translateY(-2px);
-        }
-        
-        /* Features Section */
-        .features-section {
-            background: linear-gradient(135deg, #ededed 0%, #d7d7d7 100%);
-            padding: 4rem 0;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #0093dd;
-        }
-        
-        .feature-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .feature-text {
-            color: #666;
-        }
-        
-        /* Checkout Modal */
-        .checkout-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .checkout-content {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
+
+        .header h1 {
             font-size: 2rem;
-            cursor: pointer;
-            color: #999;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
-        
-        .close-btn:hover {
-            color: #333;
+
+        .header p {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
         }
-        
-        .checkout-step {
-            display: none;
+
+        .form-container {
+            padding: 3rem;
         }
-        
-        .checkout-step.active {
-            display: block;
+
+        .form-section {
+            margin-bottom: 3rem;
         }
-        
-        .step-title {
-            font-size: 1.8rem;
+
+        .form-section:last-of-type {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0A2A66;
             margin-bottom: 1.5rem;
-            color: #333;
-            text-align: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #0A2A66;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
-        
+
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
+
         .form-group label {
             display: block;
+            font-weight: 600;
+            color: #1A1A1A;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
+            font-size: 0.9375rem;
+            line-height: 1.4;
         }
-        
-        .form-group input {
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            border: 1px solid #D0D0D0;
+            border-radius: 2px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+            background: #FFFFFF;
+            color: #1A1A1A;
         }
-        
-        .form-group input:focus {
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: #0093dd;
+            border-color: #0A2A66;
         }
-        
-        .checkout-btn {
-            width: 100%;
-            background: #0093dd;
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #6F6F6F;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .addon-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
             margin-top: 1rem;
         }
-        
-        .checkout-btn:hover {
-            background: #007bb8;
-        }
-        
-        .order-summary {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-        }
-        
-        .summary-item {
+
+        .addon-item {
+            background: #FFFFFF;
+            border: 1px solid #D0D0D0;
+            border-radius: 2px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-        
-        .summary-total {
-            border-top: 2px solid #ddd;
-            padding-top: 0.5rem;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        /* Reviews Section */
-        .reviews-section {
-            background: #ffffff;
-            padding: 4rem 0;
-        }
-        
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .review-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border-left: 4px solid #0093dd;
-        }
-        
-        .review-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        .review-header {
-            display: flex;
-            justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            gap: 0.875rem;
         }
-        
-        .review-author {
+
+        .addon-item:hover {
+            border-color: #0A2A66;
+            background: #FAFAFA;
+        }
+
+        .addon-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .addon-content {
             flex: 1;
         }
-        
-        .author-name {
+
+        .addon-name {
             font-weight: 600;
-            color: #333;
+            color: #1A1A1A;
             margin-bottom: 0.25rem;
-            font-size: 1.1rem;
+            font-size: 0.9375rem;
+            line-height: 1.4;
         }
-        
-        .review-date {
-            color: #666;
-            font-size: 0.9rem;
+
+        .addon-price {
+            color: #0A2A66;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
         }
-        
-        .star-rating {
-            display: flex;
-            gap: 2px;
+
+        .addon-description {
+            color: #6F6F6F;
+            font-size: 0.875rem;
+            line-height: 1.4;
         }
-        
-        .star {
-            color: #ffc107;
-            font-size: 1.2rem;
-        }
-        
-        .star.empty {
-            color: #ddd;
-        }
-        
-        .review-text {
-            color: #555;
-            line-height: 1.6;
-            font-style: italic;
+
+        .submit-btn {
+            width: 100%;
+            background: #D62828;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
             margin-top: 1rem;
+            letter-spacing: 0.01em;
         }
-        
-        .review-text.preview {
-            color: #888;
-            font-size: 0.95rem;
+
+        .submit-btn:hover {
+            background: #B82020;
         }
-        
-        .verified-badge {
-            background: #28a745;
-            color: white;
-            font-size: 0.8rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            margin-left: 0.5rem;
+
+        .submit-btn:active {
+            background: #A01C1C;
         }
-        
-        .overall-rating {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, #0093dd 0%, #007bb8 100%);
-            border-radius: 15px;
-            color: white;
-        }
-        
-        .rating-number {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .rating-stars {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .rating-text {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        /* Login Section */
-        .login-section {
-            background: #d7d7d7;
-            padding: 2rem 0;
-            color: #000000;
-        }
-        
-        .login-container {
-            background: #d7d7d7;
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-        
-        .login-header {
-            margin-bottom: 1.5rem;
-        }
-        
-        .login-with {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .login-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .login-tab {
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 0.5rem 0;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .login-tab.active {
-            color: #cc0000;
-            border-bottom-color: #cc0000;
-        }
-        
-        .login-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto auto;
-            gap: 1rem;
-            align-items: end;
-            margin-bottom: 1rem;
-        }
-        
-        .login-field {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .login-field label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #000000;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .info-icon {
-            color: #0093dd;
-            font-size: 0.8rem;
-            cursor: help;
-        }
-        
-        .login-field input {
-            padding: 0.75rem;
-            border: 1px solid #999;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            background: white;
-        }
-        
-        .login-field input::placeholder {
-            color: #999;
-        }
-        
-        .login-btn {
-            background: #0093dd;
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .login-btn:hover {
-            background: #007bb8;
-        }
-        
-        .forgot-password-btn {
-            background: #cc0000;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .forgot-password-btn:hover {
-            background: #a60000;
-        }
-        
-        .signup-prompt {
-            font-size: 0.95rem;
-            color: #000000;
-        }
-        
-        .signup-link {
-            color: #cc0000;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        
-        .signup-link:hover {
-            text-decoration: underline;
-        }
-        
-        /* Registration Modal */
-        .registration-modal {
+
+        /* Success Modal */
+        .success-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .registration-content {
-            background: #ffffff;
-            border-radius: 15px;
-            padding: 2rem;
-            max-width: 450px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-        
-        .registration-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #999;
-        }
-        
-        .registration-close:hover {
-            color: #333;
-        }
-        
-        .registration-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        .registration-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .registration-field {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .registration-field label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .registration-field input {
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        
-        .registration-field input:focus {
-            outline: none;
-            border-color: #0093dd;
-        }
-        
-        .register-btn {
-            background: #0093dd;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .register-btn:hover {
-            background: #007bb8;
-        }
-        
-        .customer-number-display {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 1rem;
-            border: 2px solid #28a745;
-        }
-        
-        .customer-number-display h4 {
-            color: #28a745;
-            margin-bottom: 0.5rem;
-        }
-        
-        .customer-number-display p {
-            font-family: 'Courier New', monospace;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        /* Logged-in State */
-        .logged-in-view {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #0093dd, #007bb8);
-            border-radius: 15px;
-            color: white;
-            box-shadow: 0 8px 25px rgba(0, 147, 221, 0.3);
-        }
-        
-        .logged-in-view.active {
-            display: block;
-        }
-        
-        .welcome-message {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .user-details {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-        }
-        
-        .user-details strong {
-            font-weight: 600;
-        }
-        
-        .account-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .account-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .account-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .account-btn.logout {
-            background: rgba(204, 0, 0, 0.8);
-            border-color: rgba(204, 0, 0, 0.8);
-        }
-        
-        .account-btn.logout:hover {
-            background: rgba(204, 0, 0, 1);
-            border-color: rgba(204, 0, 0, 1);
-        }
-        
-        .login-form-container {
-            display: block;
-        }
-        
-        .login-form-container.hidden {
-            display: none;
-        }
-        
-        /* Reset Button */
-        .reset-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: #cc0000;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
-        }
-        
-        .reset-button:hover {
-            background: #b30000;
-            transform: scale(1.1) rotate(180deg);
-            box-shadow: 0 6px 20px rgba(204, 0, 0, 0.4);
-        }
-        
-        .reset-button:active {
-            transform: scale(0.95) rotate(180deg);
-        }
-        
-        /* Recycle icon using CSS */
-        .recycle-icon {
-            width: 28px;
-            height: 28px;
-            position: relative;
-            display: flex;
-            align-items: center;
             justify-content: center;
-        }
-        
-        .recycle-icon::before {
-            content: "♻";
-            font-size: 28px;
-            line-height: 1;
+            align-items: center;
+            padding: 2rem;
         }
 
-        /* Footer */
-        .footer {
-            background: #f5f5f5;
-            color: #333;
-            padding: 3rem 0 2rem;
-            border-top: 1px solid #ddd;
+        .success-content {
+            background: white;
+            border-radius: 2px;
+            padding: 3rem;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.75rem;
-        }
-        
-        .footer-column ul li a {
-            color: #0093dd;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column ul li a:hover {
-            color: #007bb8;
-            text-decoration: underline;
-        }
-        
-        .footer-column p {
-            color: #333;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-        
-        .contact-info {
-            font-weight: 600;
-        }
-        
-        .social-icons {
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: #0A2A66;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        .social-icon {
-            width: 20px;
-            height: 20px;
-            display: inline-flex;
-            align-items: center;
             justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
         }
-        
-        .footer-bottom {
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #ddd;
-            color: #666;
-            font-size: 0.9rem;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
-        
+
+        .success-message {
+            font-size: 1rem;
+            color: #6F6F6F;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .booking-details {
+            background: #F4F4F4;
+            border-radius: 2px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .booking-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #D0D0D0;
+            gap: 1rem;
+        }
+
+        .booking-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #6F6F6F;
+            font-size: 0.9375rem;
+        }
+
+        .detail-value {
+            color: #1A1A1A;
+            font-weight: 600;
+            text-align: right;
+            font-size: 0.9375rem;
+        }
+
+        .close-modal-btn {
+            background: #0A2A66;
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            letter-spacing: 0.01em;
+        }
+
+        .close-modal-btn:hover {
+            background: #082050;
+        }
+
+        .required {
+            color: #D62828;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
+            body {
+                padding: 1.5rem 1rem;
             }
-            
-            .nav {
-                gap: 1rem;
+
+            .header {
+                padding: 2rem 1.5rem;
             }
-            
-            .hero h1 {
-                font-size: 2rem;
+
+            .header h1 {
+                font-size: 1.75rem;
             }
-            
-            .hero p {
-                font-size: 1rem;
+
+            .header p {
+                font-size: 0.9375rem;
             }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
+
+            .form-container {
+                padding: 2rem 1.5rem;
             }
-            
-            .checkout-content {
-                margin: 1rem;
-                width: calc(100% - 2rem);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-            
-            .login-form {
+
+            .form-row {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
-            .login-tabs {
-                flex-wrap: wrap;
+
+            .addon-options {
+                grid-template-columns: 1fr;
+            }
+
+            .success-content {
+                padding: 2rem 1.5rem;
             }
         }
-        
+
         @media (max-width: 480px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .header {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .form-container {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .success-content {
+                padding: 1.5rem 1.25rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Reset Button -->
-    <button class="reset-button" onclick="resetAllData()" title="Reset All Customer Data">
-        <div class="recycle-icon"></div>
-    </button>
-    
-    <!-- Top Banner -->
-    <div class="top-banner">
-        <div class="container">
-            <p class="banner-text" style="font-weight: bold;">DELIVERY UPDATE: FREE DELIVERY ON ALL ONLINE ORDERS</p>
+    <div class="container">
+        <div class="header">
+            <h1>Windshield Repair Service</h1>
+            <p>Schedule your appointment with our certified technicians nationwide</p>
+        </div>
+
+        <div class="form-container">
+            <form id="booking-form">
+                <!-- Vehicle Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Vehicle Information</h2>
+
+                    <div class="form-group">
+                        <label for="registration">Vehicle Registration Number <span class="required">*</span></label>
+                        <input type="text" id="registration" placeholder="AB12 CDE" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="window-type">Glass Type <span class="required">*</span></label>
+                        <select id="window-type" required>
+                            <option value="">Select glass type</option>
+                            <option value="windshield">Windshield (Front)</option>
+                            <option value="rear-windshield">Rear Windshield</option>
+                            <option value="driver-side">Driver Side Window</option>
+                            <option value="passenger-side">Passenger Side Window</option>
+                            <option value="rear-driver-side">Rear Driver Side Window</option>
+                            <option value="rear-passenger-side">Rear Passenger Side Window</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Contact Information</h2>
+
+                    <div class="form-group">
+                        <label for="customer-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="customer-name" placeholder="John Smith" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="customer-phone" value="+447437190274" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customer-email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="customer-email" value="claudio@onesignal.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer-language">Preferred Language <span class="required">*</span></label>
+                        <select id="customer-language" required>
+                            <option value="english" selected>English</option>
+                            <option value="danish">Danish</option>
+                            <option value="swedish">Swedish</option>
+                            <option value="norwegian">Norwegian</option>
+                            <option value="german">German</option>
+                            <option value="french">French</option>
+                            <option value="spanish">Spanish</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Workshop Location -->
+                <div class="form-section">
+                    <h2 class="section-title">Service Location</h2>
+
+                    <div class="form-group">
+                        <label for="workshop">Select Workshop <span class="required">*</span></label>
+                        <select id="workshop" required>
+                            <option value="">Choose nearest location</option>
+                            <option value="london-central">London Central - 123 High St, London, EC1A 1BB</option>
+                            <option value="manchester">Manchester North - 456 Market St, Manchester, M1 1AE</option>
+                            <option value="birmingham">Birmingham City - 789 Bull St, Birmingham, B1 1AA</option>
+                            <option value="glasgow">Glasgow West End - 321 Sauchiehall St, Glasgow, G2 3AA</option>
+                            <option value="edinburgh">Edinburgh Centre - 654 Princes St, Edinburgh, EH2 2DQ</option>
+                            <option value="leeds">Leeds Downtown - 987 The Headrow, Leeds, LS1 3AB</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Appointment Details -->
+                <div class="form-section">
+                    <h2 class="section-title">Appointment Schedule</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointment-date">Date <span class="required">*</span></label>
+                            <input type="date" id="appointment-date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointment-time">Time <span class="required">*</span></label>
+                            <select id="appointment-time" required>
+                                <option value="">Select time slot</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add-on Services -->
+                <div class="form-section">
+                    <h2 class="section-title">Additional Services</h2>
+
+                    <div class="addon-options">
+                        <label class="addon-item">
+                            <input type="checkbox" name="addon" value="rain-repellent" data-price="15.00">
+                            <div class="addon-content">
+                                <div class="addon-name">Rain Repellent Treatment</div>
+                                <div class="addon-price">+£15.00</div>
+                                <div class="addon-description">Hydrophobic coating for improved visibility</div>
+                            </div>
+                        </label>
+
+                        <label class="addon-item">
+                            <input type="checkbox" name="addon" value="windshield-protection" data-price="25.00">
+                            <div class="addon-content">
+                                <div class="addon-name">Chip Protection Film</div>
+                                <div class="addon-price">+£25.00</div>
+                                <div class="addon-description">Protective film against stone chips</div>
+                            </div>
+                        </label>
+
+                        <label class="addon-item">
+                            <input type="checkbox" name="addon" value="uv-protection" data-price="20.00">
+                            <div class="addon-content">
+                                <div class="addon-name">UV Protection</div>
+                                <div class="addon-price">+£20.00</div>
+                                <div class="addon-description">Advanced UV-blocking treatment</div>
+                            </div>
+                        </label>
+
+                        <label class="addon-item">
+                            <input type="checkbox" name="addon" value="premium-cleaning" data-price="10.00">
+                            <div class="addon-content">
+                                <div class="addon-name">Complete Vehicle Cleaning</div>
+                                <div class="addon-price">+£10.00</div>
+                                <div class="addon-description">Interior and exterior cleaning service</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="form-section">
+                    <h2 class="section-title">Additional Information</h2>
+
+                    <div class="form-group">
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea id="notes" rows="4" placeholder="Include any specific requirements or damage details"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">CONFIRM BOOKING</button>
+            </form>
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <img src="https://eshop.wurth.co.uk/is-bin/intershop.static/WFS/3108-B1-Site/-/en_GB/webkit_bootstrap/dist/img/wuerth-logo.svg" alt="Würth Logo" class="logo">
-                
-                <nav>
-                    <ul class="nav">
-                        <li><a href="#products">Products</a></li>
-                        <li><a href="#reviews">Reviews</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-                
-                <a href="#" class="cart-icon" onclick="openCheckout()">
-                    🛒 Cart
-                    <span class="cart-count" id="cart-count">0</span>
-                </a>
-            </div>
-        </div>
-    </header>
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Booking Confirmed</h2>
+            <p class="success-message">Your appointment has been registered. You will receive a confirmation email with booking details and service information.</p>
 
-    <!-- Login Section -->
-    <section class="login-section">
-        <div class="container">
-            <div class="login-container">
-                <!-- Login Form (shown when not logged in) -->
-                <div class="login-form-container" id="login-form-container">
-                    <div class="login-header">
-                        <div class="login-with">
-                            Login with: 
-                            <span class="login-tabs">
-                                <button class="login-tab active" onclick="switchTab('partner')">Partner Number</button>
-                                <button class="login-tab" onclick="switchTab('username')">Username</button>
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="login-form">
-                        <div class="login-field">
-                            <label for="customer-number">
-                                Customer Number
-                                <span class="info-icon">ℹ️</span>
-                            </label>
-                            <input type="text" id="customer-number" placeholder="Customer Number">
-                        </div>
-                        
-                        <div class="login-field">
-                            <label for="partner-number">
-                                Partner Number
-                                <span class="info-icon">ℹ️</span>
-                            </label>
-                            <input type="text" id="partner-number" placeholder="Partner Number">
-                        </div>
-                        
-                        <div class="login-field">
-                            <label for="login-password">
-                                Password
-                                <span class="info-icon">ℹ️</span>
-                            </label>
-                            <input type="password" id="login-password" placeholder="Password">
-                        </div>
-                        
-                        <button class="login-btn" onclick="handleLogin()">Login</button>
-                        <button class="forgot-password-btn" onclick="handleForgotPassword()">Forgotten Password</button>
-                    </div>
-                    
-                    <div class="signup-prompt">
-                        Don't currently have an online account and want access to over 60,000 products? 
-                        <a href="#" class="signup-link" onclick="openRegistration()">Sign Up Now</a>
-                    </div>
-                </div>
-                
-                <!-- Logged-in View (shown when logged in) -->
-                <div class="logged-in-view" id="logged-in-view">
-                    <div class="welcome-message" id="welcome-message">Welcome back!</div>
-                    <div class="user-details" id="user-details">
-                        <p><strong>Customer Number:</strong> <span id="display-customer-number"></span></p>
-                        <p><strong>Email:</strong> <span id="display-email"></span></p>
-                    </div>
-                    <div class="account-actions">
-                        <button class="account-btn" onclick="openCheckout()">View Cart & Checkout</button>
-                        <button class="account-btn" onclick="viewOrderHistory()">Order History</button>
-                        <button class="account-btn logout" onclick="handleLogout()">Logout</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="booking-details" id="booking-summary"></div>
 
-    <!-- Products Section -->
-    <section class="products-section" id="products">
-        <div class="container">
-            <h2 class="section-title">Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/1970431.jpg" alt="PTFE Thread-Sealing Tape" class="product-image">
-                    <h3 class="product-title">PTFE Thread-Sealing Tape</h3>
-                    <p class="product-description">Professional grade PTFE tape for secure pipe connections and leak prevention</p>
-                    <div class="product-price">£12.99</div>
-                    <button class="add-to-cart" onclick="addToCart('PTFE Thread-Sealing Tape', 12.99)">Add to Cart</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/200257.jpg" alt="Wire Rope on Light Plastic Rolls" class="product-image">
-                    <h3 class="product-title">Wire Rope - Plastic Rolls</h3>
-                    <p class="product-description">Durable wire rope on lightweight plastic rolls for various applications</p>
-                    <div class="product-price">£24.99</div>
-                    <button class="add-to-cart" onclick="addToCart('Wire Rope - Plastic Rolls', 24.99)">Add to Cart</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/170px/3216084.jpg" alt="Sanitation Sealant" class="product-image">
-                    <h3 class="product-title">Sanitation Sealant</h3>
-                    <p class="product-description">High-quality sealant perfect for bathroom and kitchen installations</p>
-                    <div class="product-price">£8.99</div>
-                    <button class="add-to-cart" onclick="addToCart('Sanitation Sealant', 8.99)">Add to Cart</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/170px/35966232.jpg" alt="Chrome Plated Drain Fittings" class="product-image">
-                    <h3 class="product-title">Chrome Plated Drain Fittings</h3>
-                    <p class="product-description">Premium plastic chrome plated drain fittings for modern installations</p>
-                    <div class="product-price">£34.99</div>
-                    <button class="add-to-cart" onclick="addToCart('Chrome Plated Drain Fittings', 34.99)">Add to Cart</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/48184.jpg" alt="Zinc-plated Steel Stud Screw" class="product-image">
-                    <h3 class="product-title">Zinc-plated Steel Stud Screw</h3>
-                    <p class="product-description">High-quality zinc-plated steel stud screws for secure fastening applications</p>
-                    <div class="product-price">£18.99</div>
-                    <button class="add-to-cart" onclick="addToCart('Zinc-plated Steel Stud Screw', 18.99)">Add to Cart</button>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://media.witglobal.net/source/eshop/stmedia/0100/images/std.lang.all/resolutions/category/200px/37260290.jpg" alt="Anti-vibration Base for Roofs" class="product-image">
-                    <h3 class="product-title">Anti-vibration Base for Roofs</h3>
-                    <p class="product-description">Professional anti-vibration base designed for roof installations and equipment mounting</p>
-                    <div class="product-price">£42.99</div>
-                    <button class="add-to-cart" onclick="addToCart('Anti-vibration Base for Roofs', 42.99)">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Customer Reviews Section -->
-    <section class="reviews-section" id="reviews">
-        <div class="container">
-            <h2 class="section-title">Customer Reviews</h2>
-            
-            <!-- Overall Rating -->
-            <div class="overall-rating">
-                <div class="rating-number">4.8</div>
-                <div class="rating-stars">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="rating-text">Based on 247 verified customer reviews</div>
-            </div>
-            
-            <!-- Individual Reviews -->
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">
-                            <div class="author-name">
-                                Trusted Customer
-                                <span class="verified-badge">Verified</span>
-                            </div>
-                            <div class="review-date">Wednesday 30 October 2024</div>
-                        </div>
-                        <div class="star-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Excellent quality products and fast delivery. The PTFE tape worked perfectly for my plumbing project. Will definitely order again!"
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">
-                            <div class="author-name">
-                                Andrew Deacon Carpentry Specialist
-                                <span class="verified-badge">Verified</span>
-                            </div>
-                            <div class="review-date">Tuesday 29 October 2024</div>
-                        </div>
-                        <div class="star-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "As a professional carpenter, I need reliable tools and supplies. Würth consistently delivers top-quality products that I can depend on for my projects."
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">
-                            <div class="author-name">
-                                Trusted Customer
-                                <span class="verified-badge">Verified</span>
-                            </div>
-                            <div class="review-date">Tuesday 29 October 2024</div>
-                        </div>
-                        <div class="star-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star empty">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text preview">
-                        "A company that goes the extra mile for customer satisfaction. Great products and even better service."
-                    </div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-author">
-                            <div class="author-name">
-                                Hackney Hack
-                                <span class="verified-badge">Verified</span>
-                            </div>
-                            <div class="review-date">Tuesday 29 October 2024</div>
-                        </div>
-                        <div class="star-rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                    </div>
-                    <div class="review-text">
-                        "Absolutely professional and courteous. We had a small problem but it was all sorted out by the excellent customer service team. Highly recommended!"
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Checkout Modal -->
-    <div class="checkout-modal" id="checkout-modal">
-        <div class="checkout-content">
-            <button class="close-btn" onclick="closeCheckout()">&times;</button>
-            
-            <!-- Checkout -->
-            <div class="checkout-step active" id="checkout-step">
-                <h2 class="step-title">Checkout</h2>
-                <div class="order-summary" id="order-summary">
-                    <!-- Cart items will be populated here -->
-                </div>
-                
-                <div class="form-group">
-                    <label for="card-name">Name on Card (Optional)</label>
-                    <input type="text" id="card-name" placeholder="John Smith">
-                </div>
-                
-                <div class="form-group">
-                    <label for="card-number">Card Number (Optional)</label>
-                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
-                </div>
-                
-                <div style="display: flex; gap: 1rem;">
-                    <div class="form-group" style="flex: 1;">
-                        <label for="expiry">Expiry Date (Optional)</label>
-                        <input type="text" id="expiry" placeholder="MM/YY">
-                    </div>
-                    
-                    <div class="form-group" style="flex: 1;">
-                        <label for="cvv">CVV (Optional)</label>
-                        <input type="text" id="cvv" placeholder="123">
-                    </div>
-                </div>
-                
-                <button class="checkout-btn" onclick="completeOrder()">Complete Order</button>
-            </div>
+            <button class="close-modal-btn" onclick="closeModal()">CLOSE</button>
         </div>
     </div>
-
-    <!-- Registration Modal -->
-    <div class="registration-modal" id="registration-modal">
-        <div class="registration-content">
-            <button class="registration-close" onclick="closeRegistration()">&times;</button>
-            
-            <h2 class="registration-title">Create Your Account</h2>
-            
-            <div class="registration-form">
-                <div class="registration-field">
-                    <label for="reg-name">Full Name</label>
-                    <input type="text" id="reg-name" placeholder="Enter your full name" required>
-                </div>
-                
-                <div class="registration-field">
-                    <label for="reg-email">Email Address</label>
-                    <input type="email" id="reg-email" placeholder="Enter your email address" required>
-                </div>
-                
-                <button class="register-btn" onclick="handleRegistration()">Register</button>
-                
-                <div class="customer-number-display" id="customer-number-display" style="display: none;">
-                    <h4>Registration Successful!</h4>
-                    <p>Your Customer Number: <span id="generated-customer-number"></span></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <!-- Würth Online Shop Column -->
-                <div class="footer-column">
-                    <h3>Würth Online Shop</h3>
-                    <ul>
-                        <li><a href="#">Forgot your password?</a></li>
-                        <li><a href="#">Register as a New Customer</a></li>
-                        <li><a href="#">Register as Existing Customer</a></li>
-                        <li><a href="#">Frequently Asked Questions</a></li>
-                        <li><a href="#">Würth Online Shop</a></li>
-                        <li><a href="#">Würth E-Business</a></li>
-                        <li><a href="#">Würth Mobile App</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Würth UK Column -->
-                <div class="footer-column">
-                    <h3>Würth UK</h3>
-                    <ul>
-                        <li><a href="#">About Würth UK</a></li>
-                        <li><a href="#">Quality & Compliance</a></li>
-                        <li><a href="#">Insights</a></li>
-                        <li><a href="#">Trade Stores</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Social Column -->
-                <div class="footer-column">
-                    <h3>Social</h3>
-                    <ul>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">📘</span>
-                                <a href="#">Facebook</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">📷</span>
-                                <a href="#">Instagram</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">📺</span>
-                                <a href="#">YouTube</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">🐦</span>
-                                <a href="#">Twitter</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">🎵</span>
-                                <a href="#">TikTok</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="social-icons">
-                                <span class="social-icon">💼</span>
-                                <a href="#">LinkedIn</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Contact Column -->
-                <div class="footer-column">
-                    <h3>Contact</h3>
-                    <div class="contact-info">
-                        <p>Würth UK Ltd</p>
-                        <p>1 Centurion Way, Erith</p>
-                        <p>Kent, DA18 4AE</p>
-                        <p>United Kingdom</p>
-                        <br>
-                        <p>📞 03300 555444</p>
-                        <p>✉️ <a href="mailto:customer.services@wurth.co.uk">customer.services@wurth.co.uk</a></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Würth UK Ltd. All rights reserved. | Professional Building Supplies</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
-        let cart = [];
-        let isLoggedIn = false;
-        let currentUser = null;
-        
-        // Generate 8-character alphanumeric UUID
-        function generateCustomerNumber() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = '';
-            for (let i = 0; i < 8; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-        
-        // Registration functionality
-        function openRegistration() {
-            document.getElementById('registration-modal').style.display = 'flex';
-        }
-        
-        function closeRegistration() {
-            document.getElementById('registration-modal').style.display = 'none';
-            // Reset form
-            document.getElementById('reg-name').value = '';
-            document.getElementById('reg-email').value = '';
-            document.getElementById('customer-number-display').style.display = 'none';
-        }
-        
-        function handleRegistration() {
-            const name = document.getElementById('reg-name').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            
-            if (!name || !email) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            if (!email.includes('@')) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            // Generate customer number
-            const customerNumber = generateCustomerNumber();
-            
-            // Get existing customers or initialize empty array
-            let customers = JSON.parse(localStorage.getItem('wurth_customers') || '[]');
-            
-            // Check if email already exists
-            if (customers.find(customer => customer.email === email)) {
-                alert('An account with this email already exists');
-                return;
-            }
-            
-            // Add new customer
-            const newCustomer = {
-                customerNumber: customerNumber,
-                name: name,
-                email: email,
-                password: '123',
-                registrationDate: new Date().toISOString()
+        // Set minimum date to today
+        const dateInput = document.getElementById('appointment-date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        // Form submission handler
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = {
+                registration: document.getElementById('registration').value,
+                windowType: document.getElementById('window-type').value,
+                customerName: document.getElementById('customer-name').value,
+                customerPhone: document.getElementById('customer-phone').value,
+                customerEmail: document.getElementById('customer-email').value,
+                customerLanguage: document.getElementById('customer-language').value,
+                workshop: document.getElementById('workshop').value,
+                appointmentDate: document.getElementById('appointment-date').value,
+                appointmentTime: document.getElementById('appointment-time').value,
+                notes: document.getElementById('notes').value,
+                addons: []
             };
-            
-            customers.push(newCustomer);
-            localStorage.setItem('wurth_customers', JSON.stringify(customers));
-            
-            // Display customer number
-            document.getElementById('generated-customer-number').textContent = customerNumber;
-            document.getElementById('customer-number-display').style.display = 'block';
-        }
-        
-        // Login functionality
-        function switchTab(tabType) {
-            const tabs = document.querySelectorAll('.login-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            if (tabType === 'partner') {
-                tabs[0].classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-            }
-        }
-        
-        function handleLogin() {
-            const customerNumber = document.getElementById('customer-number').value.trim();
-            const partnerNumber = document.getElementById('partner-number').value.trim();
-            const password = document.getElementById('login-password').value;
-            
-            if (!customerNumber && !partnerNumber) {
-                alert('Please enter either Customer Number or Partner Number');
-                return;
-            }
-            
-            if (!password) {
-                alert('Please enter your password');
-                return;
-            }
-            
-            // Get registered customers
-            const customers = JSON.parse(localStorage.getItem('wurth_customers') || '[]');
-            
-            // Find customer by customer number (primary) or partner number
-            const customer = customers.find(c => 
-                c.customerNumber === customerNumber || c.customerNumber === partnerNumber
-            );
-            
-            if (!customer) {
-                alert('Customer not found. Please check your Customer Number or register for a new account.');
-                return;
-            }
-            
-            if (customer.password !== password) {
-                alert('Invalid password. Please try again.');
-                return;
-            }
-            
-            // Successful login
-            isLoggedIn = true;
-            currentUser = customer;
-            
-            // OneSignal login with customer UUID
-            OneSignalDeferred.push(async function(OneSignal) {
-                await OneSignal.login(customer.customerNumber);
-                
-                // Add email 1 second after login
-                setTimeout(async () => {
-                    await OneSignal.User.addEmail(customer.email);
-                }, 1000);
+
+            // Collect selected add-ons
+            const addonCheckboxes = document.querySelectorAll('input[name="addon"]:checked');
+            addonCheckboxes.forEach(checkbox => {
+                formData.addons.push({
+                    name: checkbox.value,
+                    price: checkbox.dataset.price
+                });
             });
-            
-            // Clear login form
-            document.getElementById('customer-number').value = '';
-            document.getElementById('partner-number').value = '';
-            document.getElementById('login-password').value = '';
-            
-            alert(`Login successful! Welcome ${customer.name}!`);
-            updateUIForLoggedInUser();
-        }
-        
-        function handleForgotPassword() {
-            alert('Password reset instructions will be sent to your registered email address.');
-        }
-        
-        function updateUIForLoggedInUser() {
-            // Hide login form and show logged-in view
-            document.getElementById('login-form-container').classList.add('hidden');
-            document.getElementById('logged-in-view').classList.add('active');
-            
-            // Update user information display
-            document.getElementById('welcome-message').textContent = `Welcome back, ${currentUser.name}!`;
-            document.getElementById('display-customer-number').textContent = currentUser.customerNumber;
-            document.getElementById('display-email').textContent = currentUser.email;
-        }
-        
-        function handleLogout() {
-            // Store email before clearing currentUser
-            const userEmail = currentUser ? currentUser.email : null;
-            
-            // Reset login state
-            isLoggedIn = false;
-            currentUser = null;
-            
-            // Show login form and hide logged-in view
-            document.getElementById('login-form-container').classList.remove('hidden');
-            document.getElementById('logged-in-view').classList.remove('active');
-            
-            // OneSignal logout sequence
-            if (window.OneSignal && window.OneSignal.User && userEmail) {
+
+            // OneSignal SDK Integration
+            if (window.OneSignal) {
                 try {
-                    // First remove email
-                    window.OneSignal.User.removeEmail(userEmail);
-                    
-                    // Wait 1 second then logout
-                    setTimeout(async () => {
-                        try {
-                            await window.OneSignal.logout();
-                        } catch (error) {
-                            // Silent error handling
-                        }
-                    }, 1000);
+                    // 1. Set Language
+                    const languageMap = {
+                        'english': 'en',
+                        'danish': 'da',
+                        'swedish': 'sv',
+                        'norwegian': 'no',
+                        'german': 'de',
+                        'french': 'fr',
+                        'spanish': 'es'
+                    };
+                    const languageCode = languageMap[formData.customerLanguage] || 'en';
+                    window.OneSignal.User.setLanguage(languageCode);
+                    console.log('OneSignal: Language set to', languageCode);
+
+                    // 2. Add Tag with UNIX timestamp
+                    // Combine date and time to create UNIX timestamp
+                    const appointmentDateTime = new Date(formData.appointmentDate + 'T' + formData.appointmentTime + ':00');
+                    const unixTimestamp = Math.floor(appointmentDateTime.getTime() / 1000);
+                    window.OneSignal.User.addTag('appointment_time', unixTimestamp.toString());
+                    console.log('OneSignal: Tag added - appointment_time:', unixTimestamp);
+
+                    // 3. Track Event with all booking information
+                    const workshopText = document.getElementById('workshop').selectedOptions[0].text;
+                    const workshopName = workshopText.split(' - ')[0];
+
+                    // Build event properties
+                    const eventProperties = {
+                        // Vehicle Information
+                        vehicle_registration: formData.registration,
+                        glass_type: formData.windowType,
+
+                        // Service Location
+                        workshop_id: formData.workshop,
+                        workshop_name: workshopName,
+
+                        // Appointment Details
+                        appointment_date: formData.appointmentDate,
+                        appointment_time: formData.appointmentTime,
+
+                        // Additional Services (individual boolean flags)
+                        addon_rain_repellent: formData.addons.some(a => a.name === 'rain-repellent'),
+                        addon_chip_protection: formData.addons.some(a => a.name === 'windshield-protection'),
+                        addon_uv_protection: formData.addons.some(a => a.name === 'uv-protection'),
+                        addon_premium_cleaning: formData.addons.some(a => a.name === 'premium-cleaning')
+                    };
+
+                    // Add notes only if not empty
+                    if (formData.notes && formData.notes.trim() !== '') {
+                        eventProperties.notes = formData.notes.trim();
+                    }
+
+                    window.OneSignal.User.trackEvent('appointment_booked', eventProperties);
+                    console.log('OneSignal: Event tracked - appointment_booked', eventProperties);
+
                 } catch (error) {
-                    // Silent error handling
+                    console.error('OneSignal SDK Error:', error);
                 }
             }
-            
-            // Clear any sensitive data if needed
-            alert('You have been logged out successfully.'); 
-        }
-        
-        function viewOrderHistory() {
-            alert('Order History feature coming soon!');
-        }
-        
-        function resetAllData() {
-            // Confirm action with user
-            const confirmed = confirm(
-                'Are you sure you want to reset all customer data?\n\n' +
-                'This will:\n' +
-                '• Delete all registered customer accounts\n' +
-                '• Clear all saved UUIDs and email addresses\n' +
-                '• Log out current user\n' +
-                '• Reset the site to initial state\n\n' +
-                'This action cannot be undone.'
-            );
-            
-            if (!confirmed) {
-                return;
-            }
-            
-            try {
-                // Clear all localStorage data
-                localStorage.removeItem('wurth_customers');
-                
-                // Reset login state
-                isLoggedIn = false;
-                currentUser = null;
-                
-                // Clear cart
-                cart = [];
-                updateCartCount();
-                
-                // Show login form and hide logged-in view
-                document.getElementById('login-form-container').classList.remove('hidden');
-                document.getElementById('logged-in-view').classList.remove('active');
-                
-                // Clear all form fields
-                document.getElementById('customer-number').value = '';
-                document.getElementById('partner-number').value = '';
-                document.getElementById('login-password').value = '';
-                
-                // Close any open modals
-                document.getElementById('checkout-modal').style.display = 'none';
-                document.getElementById('registration-modal').style.display = 'none';
-                
-                // Reset checkout form
-                resetCheckout();
-                
-                // Show success message
-                alert('✅ All customer data has been successfully reset!\n\nThe site has been restored to its initial state.');
-                
-                // Optional: Add visual feedback
-                const resetButton = document.querySelector('.reset-button');
-                resetButton.style.background = '#28a745';
-                setTimeout(() => {
-                    resetButton.style.background = '#cc0000';
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Error resetting data:', error);
-                alert('❌ An error occurred while resetting data. Please try again.');
-            }
-        }
-        
-        function openCheckout() {
-            if (!isLoggedIn) {
-                alert('Please log in to access your cart and checkout.');
-                return;
-            }
-            
-            if (cart.length === 0) {
-                alert('Your cart is empty! Please add some products first.');
-                return;
-            }
-            
-            document.getElementById('checkout-modal').style.display = 'flex';
-            updateOrderSummary();
-        }
-        
-        function addToCart(productName, price) {
-            cart.push({
-                name: productName,
-                price: price
+
+            // Display success modal with booking details
+            showSuccessModal(formData);
+
+            // Log to console (for demo purposes)
+            console.log('Booking submitted:', formData);
+        });
+
+        function showSuccessModal(data) {
+            const modal = document.getElementById('success-modal');
+            const summary = document.getElementById('booking-summary');
+
+            // Format window type
+            const windowTypeText = document.getElementById('window-type').selectedOptions[0].text;
+            const workshopText = document.getElementById('workshop').selectedOptions[0].text;
+
+            // Format date
+            const dateObj = new Date(data.appointmentDate);
+            const formattedDate = dateObj.toLocaleDateString('en-GB', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
-            
-            updateCartCount();
-            
-            // Get product image URL from the clicked product card
-            const productCard = event.target.closest('.product-card');
-            const productImage = productCard.querySelector('.product-image');
-            const productImageUrl = productImage ? productImage.src : '';
-            
-            // Send product information to OneSignal
-            const properties = {
-                "product_name": productName,
-                "product_image": productImageUrl,
-                "product_price": price.toString()
-            };
-            
-            if (window.OneSignal && window.OneSignal.User) {
-                window.OneSignal.User.trackEvent('cart_updated', properties);
-            }
-            
-            
-            // Visual feedback
-            event.target.textContent = 'Added!';
-            event.target.style.background = '#28a745';
-            
-            setTimeout(() => {
-                event.target.textContent = 'Add to Cart';
-                event.target.style.background = '#cc0000';
-            }, 1500);
-        }
-        
-        function updateCartCount() {
-            document.getElementById('cart-count').textContent = cart.length;
-        }
-        
-        function closeCheckout() {
-            document.getElementById('checkout-modal').style.display = 'none';
-            resetCheckout();
-        }
-        
-        function resetCheckout() {
-            // Clear form fields (optional since all fields are now optional)
-            document.getElementById('card-name').value = '';
-            document.getElementById('card-number').value = '';
-            document.getElementById('expiry').value = '';
-            document.getElementById('cvv').value = '';
-        }
-        
-        function updateOrderSummary() {
-            const summary = document.getElementById('order-summary');
-            
-            let subtotal = 0;
-            let summaryHTML = '<h3>Order Summary</h3>';
-            
-            cart.forEach(item => {
-                subtotal += item.price;
-                summaryHTML += `
-                    <div class="summary-item">
-                        <span>${item.name}</span>
-                        <span>£${item.price.toFixed(2)}</span>
-                    </div>
-                `;
-            });
-            
-            const shipping = subtotal > 50 ? 0 : 5.99;
-            const total = subtotal + shipping;
-            
-            summaryHTML += `
-                <div class="summary-item">
-                    <span>Subtotal</span>
-                    <span>£${subtotal.toFixed(2)}</span>
+
+            // Format language
+            const languageText = document.getElementById('customer-language').selectedOptions[0].text;
+
+            // Build summary HTML
+            let summaryHTML = `
+                <div class="booking-detail-item">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">${data.customerName}</span>
                 </div>
-                <div class="summary-item">
-                    <span>Shipping</span>
-                    <span>${shipping === 0 ? 'FREE' : '£' + shipping.toFixed(2)}</span>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value">${data.customerPhone}</span>
                 </div>
-                <div class="summary-item summary-total">
-                    <span>Total</span>
-                    <span>£${total.toFixed(2)}</span>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">${data.customerEmail}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Language:</span>
+                    <span class="detail-value">${languageText}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Registration:</span>
+                    <span class="detail-value">${data.registration}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Glass Type:</span>
+                    <span class="detail-value">${windowTypeText}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Workshop:</span>
+                    <span class="detail-value">${workshopText.split(' - ')[0]}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Date:</span>
+                    <span class="detail-value">${formattedDate}</span>
+                </div>
+                <div class="booking-detail-item">
+                    <span class="detail-label">Time:</span>
+                    <span class="detail-value">${data.appointmentTime}</span>
                 </div>
             `;
-            
-            if (summary) summary.innerHTML = summaryHTML;
-        }
-        
-        
-        function completeOrder() {
-            // No validation required - all fields are optional
-            
-            // Track OneSignal purchase event
-            if (window.OneSignal && window.OneSignal.User) {
-                try {
-                    window.OneSignal.User.trackEvent('purchase_made');
-                } catch (error) {
-                    // Silent error handling
-                }
+
+            if (data.addons.length > 0) {
+                const addonNames = data.addons.map(a => a.name.replace(/-/g, ' ')).join(', ');
+                summaryHTML += `
+                    <div class="booking-detail-item">
+                        <span class="detail-label">Additional Services:</span>
+                        <span class="detail-value">${addonNames}</span>
+                    </div>
+                `;
             }
-            
-            // Simulate order processing
-            alert('Order completed successfully! Thank you for your purchase.');
-            
-            // Reset cart and close modal
-            cart = [];
-            updateCartCount();
-            closeCheckout();
+
+            summary.innerHTML = summaryHTML;
+            modal.style.display = 'flex';
         }
-        
+
+        function closeModal() {
+            const modal = document.getElementById('success-modal');
+            modal.style.display = 'none';
+
+            // Reset form
+            document.getElementById('booking-form').reset();
+        }
+
         // Close modal when clicking outside
-        document.getElementById('checkout-modal').addEventListener('click', function(e) {
+        document.getElementById('success-modal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeCheckout();
+                closeModal();
             }
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
         });
     </script>
 </body>
