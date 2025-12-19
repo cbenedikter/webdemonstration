@@ -326,10 +326,10 @@
 
     <script>
         /**
-         * Retrieve the current booking event ID from sessionStorage
+         * Retrieve the current appointment ID from sessionStorage
          */
-        function getCurrentEventId() {
-            return sessionStorage.getItem('current_booking_event_id');
+        function getCurrentAppointmentId() {
+            return sessionStorage.getItem('current_appointment_id');
         }
 
         /**
@@ -348,13 +348,13 @@
         }
 
         /**
-         * Generic function to track OneSignal events with event_id
+         * Generic function to track OneSignal events with appointment_id
          */
         function trackEvent(eventName, additionalProperties = {}) {
-            const eventId = getCurrentEventId();
+            const appointmentId = getCurrentAppointmentId();
 
-            if (!eventId) {
-                console.error('No booking event ID found');
+            if (!appointmentId) {
+                console.error('No appointment ID found');
                 showSuccessMessage('Error: No booking reference found');
                 return;
             }
@@ -362,7 +362,7 @@
             if (window.OneSignal) {
                 try {
                     const eventProperties = {
-                        event_id: eventId,
+                        appointment_id: appointmentId,
                         timestamp: new Date().toISOString(),
                         ...additionalProperties
                     };
@@ -401,37 +401,18 @@
         }
 
         /**
-         * Generate 8-character alphanumeric booking reference from event ID
-         */
-        function generateBookingReference(eventId) {
-            // Extract timestamp and random parts from event ID
-            // Format: booking_[timestamp]_[random]
-            const parts = eventId.split('_');
-            if (parts.length >= 3) {
-                const timestamp = parts[1];
-                const random = parts[2];
-                // Take last 4 digits of timestamp + first 4 of random part
-                const reference = (timestamp.slice(-4) + random.slice(0, 4)).toUpperCase();
-                return reference;
-            }
-            // Fallback: take first 8 alphanumeric characters
-            return eventId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8).toUpperCase();
-        }
-
-        /**
          * Initialize page on load
          */
         document.addEventListener('DOMContentLoaded', function() {
-            const eventId = getCurrentEventId();
-            const eventIdDisplay = document.getElementById('event-id-display');
+            const appointmentId = getCurrentAppointmentId();
+            const appointmentIdDisplay = document.getElementById('event-id-display');
 
-            if (eventId) {
-                // Display shortened booking reference
-                const bookingRef = generateBookingReference(eventId);
-                eventIdDisplay.textContent = bookingRef;
+            if (appointmentId) {
+                // Display the appointment ID
+                appointmentIdDisplay.textContent = appointmentId;
             } else {
-                // No event ID found - redirect back to booking form
-                eventIdDisplay.textContent = 'NO BOOKING FOUND';
+                // No appointment ID found - redirect back to booking form
+                appointmentIdDisplay.textContent = 'NO BOOKING FOUND';
                 setTimeout(() => {
                     if (confirm('No booking reference found. Would you like to create a new booking?')) {
                         window.location.href = 'demo_one.html';

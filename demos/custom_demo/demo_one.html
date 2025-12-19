@@ -555,29 +555,30 @@
 
     <script>
         /**
-         * Generate a unique event ID for tracking appointment-related events
-         * Format: booking_[timestamp]_[random]
-         * Example: booking_1703001234567_k3j8n2m9x
+         * Generate a unique 8-character alphanumeric appointment ID
+         * Format: [4 digits from timestamp][4 random alphanumeric]
+         * Example: 4567K3J8
          */
-        function generateEventId() {
-            const timestamp = Date.now();
-            const randomPart = Math.random().toString(36).substr(2, 9);
-            return `booking_${timestamp}_${randomPart}`;
+        function generateAppointmentId() {
+            const timestamp = Date.now().toString();
+            const timestampPart = timestamp.slice(-4);
+            const randomPart = Math.random().toString(36).substr(2, 4).toUpperCase();
+            return timestampPart + randomPart;
         }
 
         /**
-         * Store event ID in sessionStorage for use across the booking journey
+         * Store appointment ID in sessionStorage for use across the booking journey
          */
-        function storeEventId(eventId) {
-            sessionStorage.setItem('current_booking_event_id', eventId);
-            console.log('Event ID stored:', eventId);
+        function storeAppointmentId(appointmentId) {
+            sessionStorage.setItem('current_appointment_id', appointmentId);
+            console.log('Appointment ID stored:', appointmentId);
         }
 
         /**
-         * Retrieve the current booking event ID from sessionStorage
+         * Retrieve the current appointment ID from sessionStorage
          */
-        function getCurrentEventId() {
-            return sessionStorage.getItem('current_booking_event_id');
+        function getCurrentAppointmentId() {
+            return sessionStorage.getItem('current_appointment_id');
         }
 
         // Set minimum date to today
@@ -613,9 +614,9 @@
                 });
             });
 
-            // Generate unique event ID for this booking
-            const bookingEventId = generateEventId();
-            storeEventId(bookingEventId);
+            // Generate unique appointment ID for this booking
+            const appointmentId = generateAppointmentId();
+            storeAppointmentId(appointmentId);
 
             // OneSignal SDK Integration
             if (window.OneSignal) {
@@ -652,8 +653,8 @@
 
                     // Build event properties
                     const eventProperties = {
-                        // Unique Event ID for tracking related events
-                        event_id: bookingEventId,
+                        // Unique Appointment ID for tracking related events
+                        appointment_id: appointmentId,
 
                         // Vehicle Information
                         vehicle_registration: formData.registration,
