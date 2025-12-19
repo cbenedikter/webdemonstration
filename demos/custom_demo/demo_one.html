@@ -651,6 +651,18 @@
                     const workshopText = document.getElementById('workshop').selectedOptions[0].text;
                     const workshopName = workshopText.split(' - ')[0];
 
+                    // Format appointment date to dd-mm-yyyy
+                    const dateObj = new Date(formData.appointmentDate);
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const year = dateObj.getFullYear();
+                    const formattedDate = `${day}-${month}-${year}`;
+
+                    // Calculate end time (assuming 1 hour duration)
+                    const [startHour, startMinute] = formData.appointmentTime.split(':');
+                    const endHour = String((parseInt(startHour) + 1) % 24).padStart(2, '0');
+                    const endTime = `${endHour}:${startMinute}`;
+
                     // Build event properties
                     const eventProperties = {
                         // Unique Appointment ID for tracking related events
@@ -665,8 +677,10 @@
                         workshop_name: workshopName,
 
                         // Appointment Details
-                        appointment_date: formData.appointmentDate,
-                        appointment_time: formData.appointmentTime,
+                        appointment_date: formattedDate,
+                        start_time: formData.appointmentTime,
+                        end_time: endTime,
+                        booking_email: formData.customerEmail,
 
                         // Additional Services (individual boolean flags)
                         addon_rain_repellent: formData.addons.some(a => a.name === 'rain-repellent'),
