@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- OneSignal SDK-->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+        });
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Tracking - Windshield Repair Service</title>
+    <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #F4F4F4;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            color: #1A1A1A;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: #FFFFFF;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            background: #0A2A66;
+            color: white;
+            padding: 3rem 3rem 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header p {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        .content {
+            padding: 3rem;
+        }
+
+        .success-banner {
+            background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+        }
+
+        .success-banner h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .success-banner p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        .booking-reference {
+            background: #F8F9FA;
+            border: 2px solid #0A2A66;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .reference-label {
+            font-size: 0.875rem;
+            color: #6F6F6F;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-number {
+            font-size: 1.75rem;
+            color: #0A2A66;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0A2A66;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #0A2A66;
+        }
+
+        .tracking-section {
+            margin-bottom: 3rem;
+        }
+
+        .event-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-btn {
+            background: #0A2A66;
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(10, 42, 102, 0.2);
+            text-align: center;
+        }
+
+        .event-btn:hover {
+            background: #082050;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 42, 102, 0.3);
+        }
+
+        .event-btn:active {
+            transform: translateY(0);
+        }
+
+        .event-btn:disabled {
+            background: #D0D0D0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .event-btn-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .success-message.show {
+            display: flex;
+        }
+
+        .success-message-icon {
+            font-size: 1.5rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #6F6F6F;
+            color: white;
+            text-decoration: none;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: #5A5A5A;
+        }
+
+        /* Event Status Indicators */
+        .event-status {
+            display: inline-block;
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .event-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .event-status.sent {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .header {
+                padding: 2rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+
+            .event-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .success-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 2.5rem;
+            }
+
+            .success-banner h2 {
+                font-size: 1.5rem;
+            }
+
+            .reference-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Appointment Tracking</h1>
+            <p>Track your windshield repair service appointment</p>
+        </div>
+
+        <div class="content">
+            <!-- Success Banner -->
+            <div class="success-banner">
+                <div class="success-icon">✓</div>
+                <h2>Appointment Successfully Booked!</h2>
+                <p>Your appointment has been confirmed and scheduled</p>
+            </div>
+
+            <!-- Booking Reference -->
+            <div class="booking-reference">
+                <div class="reference-label">Booking Reference</div>
+                <div class="reference-number" id="event-id-display">Loading...</div>
+            </div>
+
+            <!-- Success Message (hidden by default) -->
+            <div class="success-message" id="success-message">
+                <span class="success-message-icon">✓</span>
+                <span id="success-message-text">Event tracked successfully!</span>
+            </div>
+
+            <!-- Tracking Section -->
+            <div class="tracking-section">
+                <h2 class="section-title">Service Progress Events</h2>
+
+                <div class="event-buttons">
+                    <!-- Windshield Delivered Button -->
+                    <button class="event-btn" id="windshield-btn" onclick="trackWindshieldDelivered()">
+                        <span class="event-btn-text">Windshield Delivered</span>
+                    </button>
+
+                    <!-- D1 Reminder Button -->
+                    <button class="event-btn" id="d1-btn" onclick="trackD1Reminder()">
+                        <span class="event-btn-text">D1 Reminder</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <a href="demo_one.html" class="back-btn">← Back to Booking Form</a>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Retrieve the current booking event ID from sessionStorage
+         */
+        function getCurrentEventId() {
+            return sessionStorage.getItem('current_booking_event_id');
+        }
+
+        /**
+         * Display success message temporarily
+         */
+        function showSuccessMessage(message) {
+            const messageEl = document.getElementById('success-message');
+            const messageText = document.getElementById('success-message-text');
+
+            messageText.textContent = message;
+            messageEl.classList.add('show');
+
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 4000);
+        }
+
+        /**
+         * Generic function to track OneSignal events with event_id
+         */
+        function trackEvent(eventName, additionalProperties = {}) {
+            const eventId = getCurrentEventId();
+
+            if (!eventId) {
+                console.error('No booking event ID found');
+                showSuccessMessage('Error: No booking reference found');
+                return;
+            }
+
+            if (window.OneSignal) {
+                try {
+                    const eventProperties = {
+                        event_id: eventId,
+                        timestamp: new Date().toISOString(),
+                        ...additionalProperties
+                    };
+
+                    window.OneSignal.User.trackEvent(eventName, eventProperties);
+                    console.log(`OneSignal: Event tracked - ${eventName}`, eventProperties);
+                    showSuccessMessage(`Event "${eventName}" tracked successfully!`);
+                } catch (error) {
+                    console.error('OneSignal SDK Error:', error);
+                    showSuccessMessage('Error tracking event. Check console for details.');
+                }
+            } else {
+                console.error('OneSignal SDK not loaded');
+                showSuccessMessage('Error: OneSignal SDK not available');
+            }
+        }
+
+        /**
+         * Track windshield delivered event
+         */
+        function trackWindshieldDelivered() {
+            trackEvent('windshield_delivered', {
+                delivery_status: 'completed',
+                delivery_timestamp: Math.floor(Date.now() / 1000)
+            });
+        }
+
+        /**
+         * Track D1 (1-day before) reminder event
+         */
+        function trackD1Reminder() {
+            trackEvent('d1_reminder', {
+                reminder_type: 'one_day_before',
+                notification_channel: 'web_push'
+            });
+        }
+
+        /**
+         * Generate 8-character alphanumeric booking reference from event ID
+         */
+        function generateBookingReference(eventId) {
+            // Extract timestamp and random parts from event ID
+            // Format: booking_[timestamp]_[random]
+            const parts = eventId.split('_');
+            if (parts.length >= 3) {
+                const timestamp = parts[1];
+                const random = parts[2];
+                // Take last 4 digits of timestamp + first 4 of random part
+                const reference = (timestamp.slice(-4) + random.slice(0, 4)).toUpperCase();
+                return reference;
+            }
+            // Fallback: take first 8 alphanumeric characters
+            return eventId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8).toUpperCase();
+        }
+
+        /**
+         * Initialize page on load
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventId = getCurrentEventId();
+            const eventIdDisplay = document.getElementById('event-id-display');
+
+            if (eventId) {
+                // Display shortened booking reference
+                const bookingRef = generateBookingReference(eventId);
+                eventIdDisplay.textContent = bookingRef;
+            } else {
+                // No event ID found - redirect back to booking form
+                eventIdDisplay.textContent = 'NO BOOKING FOUND';
+                setTimeout(() => {
+                    if (confirm('No booking reference found. Would you like to create a new booking?')) {
+                        window.location.href = 'demo_one.html';
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

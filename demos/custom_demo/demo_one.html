@@ -554,6 +554,32 @@
     </div>
 
     <script>
+        /**
+         * Generate a unique event ID for tracking appointment-related events
+         * Format: booking_[timestamp]_[random]
+         * Example: booking_1703001234567_k3j8n2m9x
+         */
+        function generateEventId() {
+            const timestamp = Date.now();
+            const randomPart = Math.random().toString(36).substr(2, 9);
+            return `booking_${timestamp}_${randomPart}`;
+        }
+
+        /**
+         * Store event ID in sessionStorage for use across the booking journey
+         */
+        function storeEventId(eventId) {
+            sessionStorage.setItem('current_booking_event_id', eventId);
+            console.log('Event ID stored:', eventId);
+        }
+
+        /**
+         * Retrieve the current booking event ID from sessionStorage
+         */
+        function getCurrentEventId() {
+            return sessionStorage.getItem('current_booking_event_id');
+        }
+
         // Set minimum date to today
         const dateInput = document.getElementById('appointment-date');
         const today = new Date().toISOString().split('T')[0];
@@ -586,6 +612,10 @@
                     price: checkbox.dataset.price
                 });
             });
+
+            // Generate unique event ID for this booking
+            const bookingEventId = generateEventId();
+            storeEventId(bookingEventId);
 
             // OneSignal SDK Integration
             if (window.OneSignal) {
@@ -622,6 +652,9 @@
 
                     // Build event properties
                     const eventProperties = {
+                        // Unique Event ID for tracking related events
+                        event_id: bookingEventId,
+
                         // Vehicle Information
                         vehicle_registration: formData.registration,
                         glass_type: formData.windowType,
@@ -654,11 +687,11 @@
                 }
             }
 
-            // Display success modal with booking details
-            showSuccessModal(formData);
-
             // Log to console (for demo purposes)
             console.log('Booking submitted:', formData);
+
+            // Redirect to appointment tracking page
+            window.location.href = 'appointment_tracking.html';
         });
 
         function showSuccessModal(data) {
