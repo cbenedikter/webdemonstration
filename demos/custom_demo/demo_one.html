@@ -647,6 +647,11 @@
                     window.OneSignal.User.addTag('appointment_time', unixTimestamp.toString());
                     console.log('OneSignal: Tag added - appointment_time:', unixTimestamp);
 
+                    // Add rebooking link tag with personalized URL
+                    const rebookingUrl = `https://webdemonstration-cbenedikters-projects.vercel.app/demos/custom_demo/rebooking.html?appointment_id=${appointmentId}`;
+                    window.OneSignal.User.addTag('rebooking_link', rebookingUrl);
+                    console.log('OneSignal: Tag added - rebooking_link:', rebookingUrl);
+
                     // 3. Track Event with all booking information
                     const workshopText = document.getElementById('workshop').selectedOptions[0].text;
                     const workshopName = workshopText.split(' - ')[0];
