@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- OneSignal SDK-->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
+        });
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reschedule Appointment</title>
+    <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #051b2c 0%, #1e614e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 2rem 1rem;
+        }
+
+        /* Floating Elements Animation */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #ffffff, #e0f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .appointment-id-display {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .appointment-id-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-id-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Date and Time input specific styling */
+        .form-group input[type="date"],
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #051b2c;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid rgba(34, 197, 94, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-text {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Reschedule Appointment</h1>
+            <p>Select a new date and time for your appointment</p>
+        </div>
+
+        <div class="error-message" id="error-message">
+            No appointment ID provided. Please use a valid rebooking link.
+        </div>
+
+        <div class="appointment-id-display" id="appointment-id-display">
+            <div class="appointment-id-label">Appointment ID</div>
+            <div class="appointment-id-value" id="appointment-id-value">-</div>
+        </div>
+
+        <form id="rebooking-form">
+            <div class="form-group">
+                <label for="new-date">New Date</label>
+                <input type="date" id="new-date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="new-time">New Time</label>
+                <select id="new-time" required>
+                    <option value="">Select time slot</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">CONFIRM NEW APPOINTMENT</button>
+        </form>
+
+        <div class="success-message" id="success-message">
+            <div class="success-icon">✓</div>
+            <div class="success-title">Appointment Rescheduled</div>
+            <div class="success-text">Your appointment has been successfully rescheduled. You will receive a confirmation shortly.</div>
+        </div>
+    </div>
+
+    <script>
+        // Parse appointment_id from URL query parameters
+        function getAppointmentIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('appointment_id');
+        }
+
+        // Initialize page
+        const appointmentId = getAppointmentIdFromURL();
+        const appointmentIdDisplay = document.getElementById('appointment-id-value');
+        const errorMessage = document.getElementById('error-message');
+        const appointmentIdSection = document.getElementById('appointment-id-display');
+        const rebookingForm = document.getElementById('rebooking-form');
+
+        if (!appointmentId) {
+            // No appointment ID in URL - show error
+            errorMessage.classList.add('show');
+            appointmentIdSection.style.display = 'none';
+            rebookingForm.style.display = 'none';
+        } else {
+            // Display the appointment ID
+            appointmentIdDisplay.textContent = appointmentId;
+        }
+
+        // Set minimum date to today
+        const dateInput = document.getElementById('new-date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+        dateInput.value = today; // Default to today
+
+        // Form submission handler
+        document.getElementById('rebooking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newDate = document.getElementById('new-date').value;
+            const newTime = document.getElementById('new-time').value;
+
+            // Format date to dd-mm-yyyy
+            const dateObj = new Date(newDate);
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            const formattedDate = `${day}-${month}-${year}`;
+
+            // Calculate end time (assuming 1 hour duration)
+            const [startHour, startMinute] = newTime.split(':');
+            const endHour = String((parseInt(startHour) + 1) % 24).padStart(2, '0');
+            const endTime = `${endHour}:${startMinute}`;
+
+            // Log rebooking data
+            console.log('Rebooking submitted:', {
+                appointment_id: appointmentId,
+                new_date: formattedDate,
+                new_time: newTime,
+                end_time: endTime
+            });
+
+            // Optional: Track with OneSignal (if needed in the future)
+            // You can uncomment this section if you want to track rebooking events
+            /*
+            if (window.OneSignal) {
+                try {
+                    window.OneSignal.User.trackEvent('appointment_rebooked', {
+                        appointment_id: appointmentId,
+                        new_appointment_date: formattedDate,
+                        start_time: newTime,
+                        end_time: endTime
+                    });
+                    console.log('OneSignal: Event tracked - appointment_rebooked');
+                } catch (error) {
+                    console.error('OneSignal SDK Error:', error);
+                }
+            }
+            */
+
+            // Hide form and show success message
+            rebookingForm.style.display = 'none';
+            document.getElementById('success-message').classList.add('show');
+        });
+    </script>
+</body>
+</html>
