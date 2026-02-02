@@ -1,595 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villager Service - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- OneSignal SDK-->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "cf532c5e-5be2-4b00-ab6d-3d3d72ca9124",
-        });
-      });
-    </script>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #f5d0fe 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sayidaty Kitchen — Web Push Demo</title>
-  <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
-  <style>
-    :root{
-      --primary:#e91e63;
-      --chip:#ffeef4;
-      --chip-border:#f5c8d6;
-      --shadow:0 2px 6px rgba(0,0,0,.06);
-      --radius:.75rem;
-    }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#faf7f8;color:#222}
-    header,footer{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-    .container{max-width:1100px;margin:auto;padding:0 1rem}
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    /* Topbar */
-    .topbar{display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:0.75rem 0}
-    .icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;cursor:pointer}
-    .icon-btn svg{width:22px;height:22px}
-    .actions{display:flex;align-items:center;gap:.5rem;justify-self:center}
-    .search input{padding:.5rem 1rem;border-radius:2rem;border:1px solid #ddd;min-width:250px}
-    .btn{padding:.5rem 1rem;border:none;border-radius:2rem;cursor:pointer}
-    .btn-primary{background:var(--primary);color:#fff}
-    .logo-link{justify-self:end}
-    .logo-img{height:40px;display:block}
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+        }
 
-    /* Chips */
-    .chips{display:flex;gap:.5rem;overflow-x:auto;padding:.5rem 0;background:#fff}
-    .chip{background:var(--chip);border:1px solid var(--chip-border);border-radius:1rem;padding:.4rem .8rem;white-space:nowrap}
+        .logo svg {
+            width: 45px;
+            height: 45px;
+            fill: white;
+        }
 
-    /* Grid */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin:1rem 0}
-    .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card img{width:100%;height:200px;object-fit:cover}
-    .card .body{padding:1rem;flex:1;display:flex;flex-direction:column}
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #be185d 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
 
-    footer{margin-top:2rem;padding:1rem 0;text-align:center;font-size:.9rem;color:#666}
+        .header p {
+            color: #9333ea;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
 
-    /* Modal */
-    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.4);padding:1rem}
-    .hidden{display:none !important}
-    .dialog{width:min(520px,96vw);background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.15);overflow:hidden}
-    .dialog header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;box-shadow:none;border-bottom:1px solid #eee}
-    .dialog h2{margin:0;font-size:1.1rem}
-    .close-btn{background:transparent;border:0;font-size:1.25rem;cursor:pointer}
-    form{padding:1rem 1.25rem;display:grid;gap:.75rem}
-    label{font-weight:600;font-size:.9rem}
-    input,select{width:100%;padding:.6rem .7rem;border:1px solid #ddd;border-radius:.5rem}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-    .form-actions{display:flex;justify-content:flex-end;gap:.5rem;padding:0 1.25rem 1rem}
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15);
+            margin-bottom: 24px;
+        }
 
-    /* Recipe Modal */
-    .recipe-modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.4);padding:1rem;z-index:1002}
-    .modal-backdrop{position:absolute;inset:0;cursor:pointer}
-    .recipe-dialog{width:min(900px,95vw);background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.15);overflow:hidden;max-height:95vh;overflow-y:auto;position:relative;z-index:1}
-    .recipe-dialog header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;box-shadow:none;border-bottom:1px solid #eee;background:var(--primary);color:#fff}
-    .recipe-dialog h2{margin:0;font-size:1.5rem;color:#fff}
-    .recipe-dialog .close-btn{color:#fff;font-size:1.5rem;padding:0.25rem;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background-color 0.2s}
-    .recipe-dialog .close-btn:hover{background:rgba(255,255,255,0.2)}
-    .recipe-content{padding:2rem}
-    .recipe-video{width:100%;aspect-ratio:16/9;border-radius:8px;margin-bottom:2rem;border:none}
-    .recipe-image{width:100%;height:300px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem}
-    .recipe-section{margin-bottom:2rem}
-    .recipe-section h3{color:var(--primary);font-size:1.4rem;margin-bottom:1rem;font-weight:600}
-    .ingredients-list{list-style:none;padding:0}
-    .ingredients-list li{padding:0.75rem 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;font-size:1.1rem}
-    .ingredients-list li:last-child{border-bottom:none}
-    .ingredient-name{font-weight:500}
-    .ingredient-amount{color:#666;font-size:1rem}
-    .steps-list{list-style:none;padding:0;counter-reset:step-counter}
-    .steps-list li{padding:1.25rem 0;border-bottom:1px solid #f0f0f0;counter-increment:step-counter;position:relative;padding-left:3.5rem;font-size:1.1rem;line-height:1.6}
-    .steps-list li:last-child{border-bottom:none}
-    .steps-list li::before{content:counter(step-counter);position:absolute;left:0;top:1.25rem;background:var(--primary);color:#fff;width:2.25rem;height:2.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1rem}
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #581c87;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    /* Back button */
-    .back-button{position:absolute;top:1rem;left:1rem;background:rgba(255,255,255,0.9);border:1px solid #ddd;color:#333;padding:0.5rem 1rem;border-radius:2rem;cursor:pointer;transition:all 0.3s ease;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;font-size:0.9rem;box-shadow:0 2px 6px rgba(0,0,0,0.1);z-index:1000}
-    .back-button:hover{background:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
-    
-    /* Refresh button */
-    .refresh-button{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.9);border:1px solid #ddd;color:#666;padding:0.5rem;border-radius:50%;cursor:pointer;transition:all 0.3s ease;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;font-size:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.1);z-index:1000}
-    .refresh-button:hover{background:#fff;color:#333;transform:translateY(-1px) rotate(180deg);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
-    .refresh-button:active{transform:translateY(0) rotate(360deg)}
+        .card-title .icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #f9a8d4 0%, #c4b5fd 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    @media (max-width:640px){
-      .topbar{grid-template-columns:auto 1fr auto}
-      .search input{min-width:160px}
-      .row{grid-template-columns:1fr}
-    }
-  </style>
+        .card-title .icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #7c3aed;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #6b21a8;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #f3e8ff;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s ease;
+            background: #faf5ff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: #c4b5fd;
+        }
+
+        .villagers-section {
+            margin-top: 8px;
+        }
+
+        .villager-card {
+            background: linear-gradient(135deg, #fdf4ff 0%, #faf5ff 100%);
+            border: 2px solid #f3e8ff;
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 16px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .villager-card:hover {
+            border-color: #e9d5ff;
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.1);
+        }
+
+        .villager-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .villager-number {
+            font-weight: 700;
+            color: #7c3aed;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .villager-number .badge {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .remove-villager {
+            background: none;
+            border: none;
+            color: #f472b6;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .remove-villager:hover {
+            background: #fdf2f8;
+            color: #db2777;
+        }
+
+        .remove-villager svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .topics-section {
+            margin-top: 16px;
+        }
+
+        .topics-label {
+            font-weight: 600;
+            color: #6b21a8;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .topic-checkbox {
+            display: none;
+        }
+
+        .topic-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #f3e8ff;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #7c3aed;
+            font-size: 0.9rem;
+        }
+
+        .topic-label:hover {
+            border-color: #e9d5ff;
+            background: #faf5ff;
+        }
+
+        .topic-checkbox:checked + .topic-label {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .topic-label .check-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d8b4fe;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .topic-checkbox:checked + .topic-label .check-icon {
+            background: white;
+            border-color: white;
+        }
+
+        .topic-checkbox:checked + .topic-label .check-icon svg {
+            opacity: 1;
+        }
+
+        .check-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: #a855f7;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .add-villager-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #fdf4ff 0%, #faf5ff 100%);
+            border: 2px dashed #d8b4fe;
+            border-radius: 16px;
+            color: #9333ea;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .add-villager-btn:hover {
+            background: #faf5ff;
+            border-color: #c084fc;
+            color: #7c3aed;
+        }
+
+        .add-villager-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px 32px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(168, 85, 247, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #fdf4ff 0%, #f5f3ff 100%);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            border: 1px solid #f3e8ff;
+        }
+
+        .info-banner .info-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #f9a8d4 0%, #c4b5fd 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-banner .info-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #7c3aed;
+        }
+
+        .info-banner .info-text h3 {
+            color: #6b21a8;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .info-banner .info-text p {
+            color: #9333ea;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            color: #9333ea;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .villager-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(88, 28, 135, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(168, 85, 247, 0.3);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .modal .success-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .modal h2 {
+            color: #581c87;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .modal p {
+            color: #9333ea;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Spinner Animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .card {
+                padding: 24px;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <a href="../../index.html" class="back-button">← Back to Demo</a>
-  <button class="refresh-button" id="refreshCount" title="Reset article count" aria-label="Reset article count">↻</button>
-  
-  <header>
-    <div class="container topbar">
-      <!-- Left: User icon -->
-      <button class="icon-btn" id="userBtn" title="Register / Sign In" aria-label="Register or sign in" onclick="openModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 21a8 8 0 0 0-16 0"/>
-          <circle cx="12" cy="8" r="4"/>
-        </svg>
-      </button>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <h1>Villager Service</h1>
+            <p>It takes a village to raise a child</p>
+        </header>
 
-      <!-- Center: search + push buttons -->
-      <div class="actions">
-        <div class="search"><input type="search" placeholder="Search recipes…" aria-label="Search"></div>
-        <button class="btn btn-primary" id="testNotifyBtn">Discover</button>
-      </div>
+        <div class="info-banner">
+            <div class="info-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+            </div>
+            <div class="info-text">
+                <h3>Build Your Support Network</h3>
+                <p>Add the special people in your life who'll be part of your journey. They'll receive helpful updates and ways to support you.</p>
+            </div>
+        </div>
 
-      <!-- Right: Logo banner -->
-      <a class="logo-link" href="#" aria-label="Sayidaty Kitchen homepage">
-        <img class="logo-img" src="https://kitchen.sayidaty.net/assets/frontend/img/logo.png?a2" alt="Sayidaty Kitchen logo">
-      </a>
+        <form id="villagerForm">
+            <div class="card">
+                <div class="card-title">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    Your Information
+                </div>
+
+                <div class="form-group">
+                    <label for="motherName">Your Name</label>
+                    <input type="text" id="motherName" name="motherName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Expected Due Date</label>
+                    <input type="date" id="dueDate" name="dueDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="motherPhone">Mobile Phone Number</label>
+                    <input type="tel" id="motherPhone" name="motherPhone" placeholder="+1 (555) 000-0000" required>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                    </div>
+                    Your Villagers
+                </div>
+
+                <div class="villagers-section" id="villagersContainer">
+                    <!-- Villager cards will be added here -->
+                </div>
+
+                <button type="button" class="add-villager-btn" onclick="addVillager()">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    Add a Villager
+                </button>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                Complete Sign Up
+            </button>
+        </form>
+
+        <footer class="footer">
+            <p>By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+        </footer>
     </div>
-  </header>
 
-  <nav class="chips container" aria-label="Categories">
-    <span class="chip">Main Dishes</span>
-    <span class="chip">Desserts</span>
-    <span class="chip">Salads</span>
-    <span class="chip">Soups</span>
-    <span class="chip">Pizza</span>
-    <span class="chip">Appetizers</span>
-  </nav>
-
-  <main class="container">
-    <div class="grid" id="recipeGrid"></div>
-  </main>
-
-  <footer>
-    © 2025 Web Push Demo — Mimicking Sayidaty Kitchen look & feel.
-  </footer>
-
-  <!-- Registration Modal -->
-  <div class="modal hidden" id="regModal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
-    <div class="dialog">
-      <header>
-        <h2 id="regTitle">Create your account</h2>
-        <button class="close-btn" id="regClose" aria-label="Close" onclick="closeModal()">×</button>
-      </header>
-      <form id="regForm">
-        <div class="row">
-          <div>
-            <label for="name">Full name</label>
-            <input id="name" name="name" type="text" required placeholder="e.g. Maria Ahmed" />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required placeholder="name@example.com" />
-          </div>
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </div>
+            <h2>Welcome to Your Village!</h2>
+            <p>Your support network has been created. We'll send invitations to your villagers so they can start supporting your journey.</p>
+            <button class="modal-btn" onclick="closeModal()">Got It</button>
         </div>
-        <div class="row">
-          <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" required placeholder="+971 55 123 4567" />
-          </div>
-          <div>
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-              <option value="" disabled selected>Select…</option>
-              <option>Female</option>
-              <option>Male</option>
-              <option>Prefer not to say</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label for="country">Country</label>
-          <select id="country" name="country" required>
-            <option value="" disabled selected>Select your country…</option>
-            <option>Saudi Arabia</option>
-            <option>United Arab Emirates</option>
-            <option>United Kingdom</option>
-            <option>United States</option>
-            <option>Egypt</option>
-            <option>India</option>
-            <option>Germany</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn" id="regCancel" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Register</button>
-        </div>
-      </form>
     </div>
-  </div>
 
-  <!-- Recipe Modal -->
-  <div class="recipe-modal hidden" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="recipeTitle">
-    <div class="modal-backdrop" onclick="closeRecipeModal()"></div>
-    <div class="recipe-dialog">
-      <header>
-        <h2 id="recipeTitle">Recipe Details</h2>
-        <button class="close-btn" id="recipeClose" aria-label="Close" onclick="closeRecipeModal()">×</button>
-      </header>
-      <div class="recipe-content">
-        <iframe id="recipeVideo" class="recipe-video" src="" title="Recipe video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none;"></iframe>
-        <img id="recipeImage" class="recipe-image" src="" alt="">
-        <div class="recipe-section">
-          <h3>Ingredients</h3>
-          <ul class="ingredients-list" id="ingredientsList">
-            <!-- Ingredients will be populated by JavaScript -->
-          </ul>
-        </div>
-        <div class="recipe-section">
-          <h3>Preparation Method</h3>
-          <ol class="steps-list" id="stepsList">
-            <!-- Steps will be populated by JavaScript -->
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
+    <script>
+        // =====================================================
+        // OneSignal API Configuration
+        // =====================================================
+        const ONESIGNAL_CONFIG = {
+            appId: 'cf532c5e-5be2-4b00-ab6d-3d3d72ca9124',
+            apiUrl: 'https://api.onesignal.com/apps'
+        };
 
-  <script>
-    // Recipe data with full details
-    const recipeData = {
-      "Sesame and pistachio video": {
-        videoUrl: "https://www.youtube.com/embed/aTZqmbL-Pv4?si=oGfqipchr3ghFeAJ",
-        ingredients: [
-          {name: "Honey", amount: "2 cups"},
-          {name: "Sugar", amount: "2 cups"},
-          {name: "Lemon juice", amount: "1 teaspoon"},
-          {name: "Sesame", amount: "2 cups"},
-          {name: "Pistachios", amount: "2 cups"}
-        ],
-        steps: [
-          "To prepare the sesame: Melt a cup of honey and sugar in a saucepan over low heat, then squeeze a little lemon juice, then add 2 cups of sesame and stir until the ingredients are combined.",
-          "To prepare the pistachio: Melt a cup of honey and sugar in a saucepan over low heat, then squeeze a little lemon juice, then add 2 cups of peeled pistachios and stir until the ingredients are combined.",
-          "Line 2 baking sheets with parchment paper, and spray the parchment paper with a little cooking spray.",
-          "Spread the sesame mixture in the first tray, and the pistachio mixture in the other tray.",
-          "Place the pistachio and sesame trays in the refrigerator for 2 hours."
-        ]
-      }
-    };
+        // =====================================================
+        // Utility Functions
+        // =====================================================
 
-    // Populate recipes with provided real images
-    const recipes = [
-      {title:"Sesame and pistachio video", img:"https://kitchen.sayidaty.net/uploads/small/74/745e25a0b0dabfd01e861bd9e87bd306_w360_h360.jpg"},
-      {title:"How to make delicious cauliflower dishes", img:"https://kitchen.sayidaty.net/uploads/small/2e/2e17158549e1ce0562c69bdb1a469895_w360_h360.jpg"},
-      {title:"Healthy chickpea salad", img:"https://kitchen.sayidaty.net/uploads/small/fd/fd6b8446dcc2e5e2a22133d637948471_w360_h360.jpg"},
-      {title:"Avocado, banana, and almond juice", img:"https://kitchen.sayidaty.net/uploads/small/3f/3fc12d1779e29650f6a3a1ca5150a024_w360_h360.jpg"},
-      {title:"Spicy Roasted Chicken Masala", img:"https://kitchen.sayidaty.net/uploads/small/0e/0e9eea4ab7b84945a4c774b4cc8e75a7_w360_h360.jpg"}
-    ];
-
-    const grid = document.getElementById('recipeGrid');
-    recipes.forEach(r => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.style.cursor = recipeData[r.title] ? 'pointer' : 'default';
-      card.innerHTML = `<img src="${r.img}" alt="${r.title}"><div class="body"><h3>${r.title}</h3><p>A special recipe for a special occasion</p></div>`;
-      
-      // Add click handler for recipes with data
-      if (recipeData[r.title]) {
-        card.addEventListener('click', () => showRecipe(r.title, r.img));
-      }
-      
-      grid.appendChild(card);
-    });
-
-    // Service worker for notification demo (no external file)
-    const swCode = `self.addEventListener('install', e => self.skipWaiting());
-self.addEventListener('activate', e => self.clients.claim());
-self.addEventListener('push', e => {
-  const data = e.data ? e.data.json() : {title:'Demo Notification', body:'This is a web push simulation.'};
-  e.waitUntil(self.registration.showNotification(data.title, {body: data.body, icon: data.icon||undefined, dir:'ltr'}));
-});`;
-    const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'}));
-    async function ensureSW(){
-      if(!('serviceWorker' in navigator)){alert('Service Workers not supported');return null}
-      return await navigator.serviceWorker.register(swUrl)
-    }
-
-    const testNotifyBtn = document.getElementById('testNotifyBtn');
-    if (testNotifyBtn) {
-      testNotifyBtn.addEventListener('click', async () => {
-        const reg = await ensureSW();
-        if(!reg) return;
-        
-        // Request permission if not granted
-        if(Notification.permission !== 'granted') {
-          const perm = await Notification.requestPermission();
-          if(perm !== 'granted') return alert('Notification permission denied.');
+        /**
+         * Generate a unique village_key identifier
+         * Format: village_YYYYMMDD_RANDOMHEX
+         */
+        function generateVillageKey() {
+            const date = new Date();
+            const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+            const randomHex = Math.random().toString(16).substring(2, 10);
+            return `village_${dateStr}_${randomHex}`;
         }
-        
-        // Show test notification
-        if(reg) {
-          reg.showNotification('Hello from Sayidaty Kitchen!', {body:'This is a demo push notification.'});
-        }
-      });
-    }
 
-    // Recipe modal functions
-    function showRecipe(title, imgSrc) {
-      const recipe = recipeData[title];
-      if (!recipe) return;
-      
-      // Set modal content
-      document.getElementById('recipeTitle').textContent = title;
-      
-      // Handle video or image display
-      const videoElement = document.getElementById('recipeVideo');
-      const imageElement = document.getElementById('recipeImage');
-      
-      if (recipe.videoUrl) {
-        videoElement.src = recipe.videoUrl;
-        videoElement.style.display = 'block';
-        imageElement.style.display = 'none';
-      } else {
-        videoElement.style.display = 'none';
-        imageElement.src = imgSrc;
-        imageElement.alt = title;
-        imageElement.style.display = 'block';
-      }
-      
-      // Populate ingredients
-      const ingredientsList = document.getElementById('ingredientsList');
-      ingredientsList.innerHTML = '';
-      recipe.ingredients.forEach(ingredient => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <span class="ingredient-name">${ingredient.name}</span>
-          <span class="ingredient-amount">${ingredient.amount}</span>
-        `;
-        ingredientsList.appendChild(li);
-      });
-      
-      // Populate steps
-      const stepsList = document.getElementById('stepsList');
-      stepsList.innerHTML = '';
-      recipe.steps.forEach(step => {
-        const li = document.createElement('li');
-        li.textContent = step;
-        stepsList.appendChild(li);
-      });
-      
-      // Show modal
-      const modal = document.getElementById('recipeModal');
-      modal.classList.remove('hidden');
-      modal.style.display = 'grid'; // Reset display style
-      
-      // Track OneSignal event when modal opens with article count
-      // Get current article count from localStorage and increment
-      let articleCount = parseInt(localStorage.getItem('user_article_count') || '0');
-      articleCount += 1;
-      localStorage.setItem('user_article_count', articleCount.toString());
-      
-      const properties = {
-        "article_category": "desert",
-        "article_title": "Sesame and Pistachio",
-        "article_author": "Claudio",
-        "article_count": articleCount.toString()
-      };
-      
-      if (window.OneSignal && window.OneSignal.User) {
-        window.OneSignal.User.trackEvent('article_read', properties);
-        console.log('OneSignal event tracked: article_read', properties);
-        console.log(`User has read ${articleCount} articles total`);
-      } else {
-        console.log('OneSignal not ready yet, event not tracked');
-      }
-    }
-    
-    function closeRecipeModal() {
-      // Dead simple - just hide it
-      document.getElementById('recipeModal').style.display = 'none';
-      document.getElementById('recipeVideo').src = '';
-    }
-    
-    // Test function - you can call this from browser console
-    window.testCloseModal = function() {
-      console.log('Test close function called');
-      closeRecipeModal();
-    };
-    
-    // Simple event listeners - with null checks
-    const recipeCloseBtn = document.getElementById('recipeClose');
-    if (recipeCloseBtn) {
-      recipeCloseBtn.onclick = closeRecipeModal;
-    }
-    
-    // Refresh button to reset article count
-    const refreshBtn = document.getElementById('refreshCount');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', function() {
-        // Reset article count to 0
-        localStorage.setItem('user_article_count', '0');
-        
-        // Show confirmation
-        const currentCount = localStorage.getItem('user_article_count');
-        console.log('Article count reset to:', currentCount);
-        
-        // Optional: Brief visual feedback
-        this.style.transform = 'rotate(360deg)';
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 300);
-        
-        alert('Article count has been reset to 0');
-      });
-    }
+        /**
+         * Convert a phone number to E.164 format
+         * Strips all non-numeric characters except leading +
+         * Adds +1 for US numbers if no country code present
+         */
+        function formatPhoneToE164(phone) {
+            // Remove all non-numeric characters except +
+            let cleaned = phone.replace(/[^\d+]/g, '');
 
-    // Registration modal functions - defined first for HTML onclick
-    function openModal(){
-      console.log('openModal called');
-      const modal = document.getElementById('regModal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        // focus first field after short delay to ensure paint
-        setTimeout(()=>{
-          const nameField = document.getElementById('name');
-          if (nameField) nameField.focus();
-        }, 50);
-      }
-    }
-    
-    function closeModal(){ 
-      console.log('closeModal called');
-      const modal = document.getElementById('regModal');
-      if (modal) modal.classList.add('hidden'); 
-    }
-
-    // Registration modal logic
-    const modal = document.getElementById('regModal');
-    const openBtn = document.getElementById('userBtn');
-    const closeBtn = document.getElementById('regClose');
-    const cancelBtn = document.getElementById('regCancel');
-    const form = document.getElementById('regForm');
-
-    console.log('Registration modal elements found:');
-    console.log('Modal:', !!modal);
-    console.log('Open button:', !!openBtn);
-    console.log('Close button:', !!closeBtn);
-    console.log('Cancel button:', !!cancelBtn);
-    console.log('Form:', !!form);
-
-    if (openBtn) openBtn.addEventListener('click', openModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
-
-    if (modal) {
-      modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    }
-    
-    document.addEventListener('keydown', (e)=>{ 
-      if(e.key === 'Escape') {
-        if(modal && !modal.classList.contains('hidden')) closeModal();
-        const recipeModal = document.getElementById('recipeModal');
-        if(recipeModal && !recipeModal.classList.contains('hidden')) closeRecipeModal();
-      }
-    });
-
-    // Function to generate random 8 alphanumeric ID
-    function generateRandomId() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < 8; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
-
-    // Function to format phone number to E164 format
-    function formatPhoneToE164(phone) {
-      // Remove all non-digit characters except +
-      let cleaned = phone.replace(/[^\d+]/g, '');
-      
-      // If it already starts with +, just clean it
-      if (cleaned.startsWith('+')) {
-        return cleaned;
-      }
-      
-      // Remove leading zeros
-      cleaned = cleaned.replace(/^0+/, '');
-      
-      // Add country code based on common patterns
-      if (cleaned.length === 10) {
-        // Assume US/Canada number
-        cleaned = '+1' + cleaned;
-      } else if (cleaned.length === 11 && cleaned.startsWith('1')) {
-        // US/Canada with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 9 && cleaned.startsWith('971')) {
-        // UAE number with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 8) {
-        // Assume UAE local number
-        cleaned = '+971' + cleaned;
-      } else if (cleaned.length === 11 && cleaned.startsWith('44')) {
-        // UK number with country code
-        cleaned = '+' + cleaned;
-      } else if (cleaned.length === 10 && cleaned.startsWith('44')) {
-        // UK number missing +
-        cleaned = '+' + cleaned;
-      } else {
-        // Default: add + if not present
-        cleaned = '+' + cleaned;
-      }
-      
-      return cleaned;
-    }
-
-    if (form) {
-      form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-      
-      // Format phone to E164
-      const formattedPhone = formatPhoneToE164(data.phone);
-      
-      // Generate random 8 alphanumeric external ID
-      const externalId = generateRandomId();
-      console.log('Generated external ID:', externalId);
-      
-      try {
-        // Step 1: Login to OneSignal with external ID (must happen first)
-        await new Promise((resolve, reject) => {
-          window.OneSignalDeferred = window.OneSignalDeferred || [];
-          window.OneSignalDeferred.push(async function(OneSignal) {
-            try {
-              await OneSignal.login(externalId);
-              console.log('OneSignal login successful with ID:', externalId);
-              resolve();
-            } catch (error) {
-              console.error('OneSignal login failed:', error);
-              reject(error);
+            // If it doesn't start with +, assume US and add +1
+            if (!cleaned.startsWith('+')) {
+                // Remove leading 1 if present (to avoid +11...)
+                if (cleaned.startsWith('1') && cleaned.length === 11) {
+                    cleaned = '+' + cleaned;
+                } else {
+                    cleaned = '+1' + cleaned;
+                }
             }
-          });
-        });
-        
-        // Step 2: Add tags, email, and SMS (after login) - SEQUENTIAL EXECUTION
-        if (window.OneSignal && window.OneSignal.User) {
-          console.log('Starting sequential OneSignal operations...');
-          
-          // Step 2a: Add OneSignal user tags (FIRST)
-          await window.OneSignal.User.addTags({
-            name: data.name,
-            gender: data.gender,
-            country: data.country
-          });
-          console.log('✓ OneSignal tags added:', {
-            name: data.name,
-            gender: data.gender,
-            country: data.country
-          });
-          
-          // Step 2b: Add email to OneSignal (SECOND - after tags complete)
-          await window.OneSignal.User.addEmail(data.email);
-          console.log('✓ OneSignal email added:', data.email);
-          
-          // Step 2c: Add SMS to OneSignal (THIRD - after email completes)
-          await window.OneSignal.User.addSms(formattedPhone);
-          console.log('✓ OneSignal SMS added:', formattedPhone);
-          
-          console.log('✓ All OneSignal operations completed successfully');
-          
-        } else {
-          throw new Error('OneSignal not ready after login');
+
+            return cleaned;
         }
-        
-        // Show simple success confirmation
-        alert(`Registration successful! Welcome, ${data.name}!`);
-        
-      } catch (error) {
-        console.error('Registration process failed:', error);
-        alert(`Registration failed: ${error.message || 'Unknown error'}`);
-      }
-      
-      closeModal();
-      form.reset();
-      });
-    }
-  </script>
+
+        /**
+         * Convert a date string (YYYY-MM-DD) to UNIX timestamp
+         */
+        function dateToUnixTimestamp(dateString) {
+            const date = new Date(dateString);
+            return Math.floor(date.getTime() / 1000);
+        }
+
+        /**
+         * Generate a unique external_id for a user
+         */
+        function generateExternalId(prefix, villageKey) {
+            const randomSuffix = Math.random().toString(36).substring(2, 8);
+            return `${prefix}_${villageKey}_${randomSuffix}`;
+        }
+
+        // =====================================================
+        // OneSignal API Functions
+        // =====================================================
+
+        /**
+         * Create a user in OneSignal with SMS subscription and tags
+         * @param {Object} userData - User data object
+         * @param {string} userData.externalId - Unique identifier for the user
+         * @param {string} userData.phone - Phone number (will be converted to E164)
+         * @param {Object} userData.tags - Key-value pairs for user tags
+         * @returns {Promise<Object>} - API response
+         */
+        async function createOneSignalUser(userData) {
+            const e164Phone = formatPhoneToE164(userData.phone);
+
+            const payload = {
+                identity: {
+                    external_id: userData.externalId
+                },
+                properties: {
+                    tags: userData.tags
+                },
+                subscriptions: [
+                    {
+                        type: 'SMS',
+                        token: e164Phone,
+                        enabled: true
+                    }
+                ]
+            };
+
+            console.log('Creating OneSignal user:', {
+                externalId: userData.externalId,
+                phone: e164Phone,
+                tags: userData.tags
+            });
+
+            try {
+                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/users`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error('OneSignal API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to create user');
+                }
+
+                console.log('OneSignal user created successfully:', result);
+                return result;
+            } catch (error) {
+                console.error('Error creating OneSignal user:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * Register all village members (mother + villagers) with OneSignal
+         * @param {Object} formData - Form data containing mother and villagers info
+         * @returns {Promise<Object>} - Results of all API calls
+         */
+        async function registerVillageWithOneSignal(formData) {
+            // Generate a unique village_key for this village
+            const villageKey = generateVillageKey();
+            console.log('Generated village_key:', villageKey);
+
+            const results = {
+                villageKey: villageKey,
+                mother: null,
+                villagers: [],
+                errors: []
+            };
+
+            // 1. Create the mother's user
+            try {
+                const motherData = {
+                    externalId: generateExternalId('mother', villageKey),
+                    phone: formData.mother.phone,
+                    tags: {
+                        village_key: villageKey,
+                        role: 'mother',
+                        name: formData.mother.name,
+                        due_date: dateToUnixTimestamp(formData.mother.dueDate)
+                    }
+                };
+
+                results.mother = await createOneSignalUser(motherData);
+                console.log('Mother registered successfully');
+            } catch (error) {
+                results.errors.push({
+                    type: 'mother',
+                    error: error.message
+                });
+                console.error('Failed to register mother:', error);
+            }
+
+            // 2. Create users for each villager
+            for (let i = 0; i < formData.villagers.length; i++) {
+                const villager = formData.villagers[i];
+
+                try {
+                    // Determine topic values (true/false)
+                    const topicMealSupport = villager.topics.includes('meal-support');
+                    const topicErrandsHelp = villager.topics.includes('errands');
+                    const topicEmotionalSupport = villager.topics.includes('emotional');
+
+                    const villagerData = {
+                        externalId: generateExternalId(`villager_${i + 1}`, villageKey),
+                        phone: villager.phone,
+                        tags: {
+                            village_key: villageKey,
+                            role: 'villager',
+                            name: villager.name,
+                            mother_name: formData.mother.name,
+                            mother_due_date: dateToUnixTimestamp(formData.mother.dueDate),
+                            topic_meal_support: topicMealSupport.toString(),
+                            topic_errands_help: topicErrandsHelp.toString(),
+                            topic_emotional_support: topicEmotionalSupport.toString()
+                        }
+                    };
+
+                    const result = await createOneSignalUser(villagerData);
+                    results.villagers.push({
+                        name: villager.name,
+                        result: result
+                    });
+                    console.log(`Villager ${i + 1} (${villager.name}) registered successfully`);
+                } catch (error) {
+                    results.errors.push({
+                        type: 'villager',
+                        index: i,
+                        name: villager.name,
+                        error: error.message
+                    });
+                    console.error(`Failed to register villager ${i + 1}:`, error);
+                }
+            }
+
+            // Log summary
+            console.log('=== Village Registration Summary ===');
+            console.log('Village Key:', villageKey);
+            console.log('Mother registered:', results.mother ? 'Yes' : 'No');
+            console.log('Villagers registered:', results.villagers.length);
+            console.log('Errors:', results.errors.length);
+            console.log('====================================');
+
+            return results;
+        }
+
+        // =====================================================
+        // UI Functions
+        // =====================================================
+
+        let villagerCount = 0;
+
+        function addVillager() {
+            villagerCount++;
+            const container = document.getElementById('villagersContainer');
+
+            const villagerHtml = `
+                <div class="villager-card" id="villager-${villagerCount}">
+                    <div class="villager-header">
+                        <span class="villager-number">
+                            <span class="badge">${villagerCount}</span>
+                            Villager ${villagerCount}
+                        </span>
+                        <button type="button" class="remove-villager" onclick="removeVillager(${villagerCount})">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                            Remove
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="villagerName-${villagerCount}">Villager's Name</label>
+                        <input type="text" id="villagerName-${villagerCount}" name="villagerName-${villagerCount}" placeholder="Enter their name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="villagerPhone-${villagerCount}">Mobile Phone Number</label>
+                        <input type="tel" id="villagerPhone-${villagerCount}" name="villagerPhone-${villagerCount}" placeholder="+1 (555) 000-0000" required>
+                    </div>
+
+                    <div class="topics-section">
+                        <div class="topics-label">Participating Topics</div>
+                        <div class="topics-grid">
+                            <div>
+                                <input type="checkbox" class="topic-checkbox" id="topic-x-${villagerCount}" name="topics-${villagerCount}" value="meal-support">
+                                <label class="topic-label" for="topic-x-${villagerCount}">
+                                    <span class="check-icon">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                    </span>
+                                    Meal Support
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="topic-checkbox" id="topic-y-${villagerCount}" name="topics-${villagerCount}" value="errands">
+                                <label class="topic-label" for="topic-y-${villagerCount}">
+                                    <span class="check-icon">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                    </span>
+                                    Errands Help
+                                </label>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="topic-checkbox" id="topic-z-${villagerCount}" name="topics-${villagerCount}" value="emotional">
+                                <label class="topic-label" for="topic-z-${villagerCount}">
+                                    <span class="check-icon">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                        </svg>
+                                    </span>
+                                    Emotional Support
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', villagerHtml);
+        }
+
+        function removeVillager(id) {
+            const villagerCard = document.getElementById(`villager-${id}`);
+            if (villagerCard) {
+                villagerCard.style.animation = 'fadeIn 0.3s ease reverse';
+                setTimeout(() => {
+                    villagerCard.remove();
+                    updateVillagerNumbers();
+                }, 280);
+            }
+        }
+
+        function updateVillagerNumbers() {
+            const villagerCards = document.querySelectorAll('.villager-card');
+            villagerCards.forEach((card, index) => {
+                const badge = card.querySelector('.badge');
+                const title = card.querySelector('.villager-number');
+                if (badge) badge.textContent = index + 1;
+                if (title) {
+                    title.innerHTML = `<span class="badge">${index + 1}</span> Villager ${index + 1}`;
+                }
+            });
+        }
+
+        // Form submission
+        document.getElementById('villagerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalBtnText = submitBtn.innerHTML;
+
+            // Collect form data
+            const formData = {
+                mother: {
+                    name: document.getElementById('motherName').value,
+                    dueDate: document.getElementById('dueDate').value,
+                    phone: document.getElementById('motherPhone').value
+                },
+                villagers: []
+            };
+
+            const villagerCards = document.querySelectorAll('.villager-card');
+            villagerCards.forEach((card, index) => {
+                const villagerNum = index + 1;
+                const nameInput = card.querySelector(`input[id^="villagerName"]`);
+                const phoneInput = card.querySelector(`input[id^="villagerPhone"]`);
+                const topicCheckboxes = card.querySelectorAll('.topic-checkbox:checked');
+
+                const topics = [];
+                topicCheckboxes.forEach(cb => topics.push(cb.value));
+
+                formData.villagers.push({
+                    name: nameInput ? nameInput.value : '',
+                    phone: phoneInput ? phoneInput.value : '',
+                    topics: topics
+                });
+            });
+
+            console.log('Form submitted:', formData);
+
+            // Show loading state
+            submitBtn.innerHTML = `
+                <svg class="spinner" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="animation: spin 1s linear infinite;">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                </svg>
+                Creating Your Village...
+            `;
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.8';
+
+            try {
+                // Register all users with OneSignal
+                const results = await registerVillageWithOneSignal(formData);
+
+                // Store results for display
+                window.villageRegistrationResults = results;
+
+                // Update modal with results
+                updateSuccessModal(results);
+
+                // Show success modal
+                document.getElementById('successModal').classList.add('active');
+            } catch (error) {
+                console.error('Registration failed:', error);
+                alert('There was an error creating your village. Please check the console for details.');
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+        });
+
+        /**
+         * Update the success modal with registration results
+         */
+        function updateSuccessModal(results) {
+            const modal = document.querySelector('.modal');
+            const totalMembers = 1 + results.villagers.length; // mother + villagers
+            const successfulRegistrations = (results.mother ? 1 : 0) + results.villagers.length;
+
+            let statusMessage = '';
+            if (results.errors.length === 0) {
+                statusMessage = `All ${totalMembers} members have been registered successfully!`;
+            } else {
+                statusMessage = `${successfulRegistrations} of ${totalMembers} members registered. Check console for details.`;
+            }
+
+            modal.querySelector('h2').textContent = 'Welcome to Your Village!';
+            modal.querySelector('p').innerHTML = `
+                Your support network has been created.<br><br>
+                <strong>Village Key:</strong> <code style="background: #f3e8ff; padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">${results.villageKey}</code><br><br>
+                ${statusMessage}
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // Set min date to today for due date field
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dueDate').setAttribute('min', today);
+
+            // Add first villager automatically
+            addVillager();
+        });
+
+        // Close modal on overlay click
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
