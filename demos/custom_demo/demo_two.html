@@ -512,6 +512,233 @@
             animation: spin 1s linear infinite;
         }
 
+        /* Results Panel */
+        .results-panel {
+            display: none;
+            margin-top: 24px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .results-panel.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .results-header h3 {
+            color: #581c87;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .results-header .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.partial {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .village-key-display {
+            background: linear-gradient(135deg, #fdf4ff 0%, #f5f3ff 100%);
+            border: 1px solid #e9d5ff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .village-key-display .label {
+            font-weight: 600;
+            color: #6b21a8;
+            font-size: 0.9rem;
+        }
+
+        .village-key-display .key-value {
+            font-family: 'Monaco', 'Consolas', monospace;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #7c3aed;
+            border: 1px solid #e9d5ff;
+        }
+
+        .user-result-card {
+            background: white;
+            border: 1px solid #f3e8ff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .user-result-card:hover {
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1);
+        }
+
+        .user-result-card.mother {
+            border-left: 4px solid #ec4899;
+        }
+
+        .user-result-card.villager {
+            border-left: 4px solid #a855f7;
+        }
+
+        .user-result-card.error {
+            border-left: 4px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .user-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .user-result-name {
+            font-weight: 700;
+            color: #581c87;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-result-name .role-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .role-badge.mother {
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            color: white;
+        }
+
+        .role-badge.villager {
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            color: white;
+        }
+
+        .onesignal-id {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.75rem;
+            color: #9333ea;
+            background: #faf5ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #e9d5ff;
+        }
+
+        .tags-section {
+            margin-top: 12px;
+        }
+
+        .tags-section .tags-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b21a8;
+            margin-bottom: 8px;
+        }
+
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: #f3e8ff;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .tag-item .tag-key {
+            color: #7c3aed;
+            font-weight: 600;
+        }
+
+        .tag-item .tag-value {
+            color: #581c87;
+        }
+
+        .tag-item.true {
+            background: #dcfce7;
+        }
+
+        .tag-item.true .tag-key {
+            color: #166534;
+        }
+
+        .tag-item.false {
+            background: #fee2e2;
+        }
+
+        .tag-item.false .tag-key {
+            color: #991b1b;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #fef2f2;
+            border-radius: 8px;
+        }
+
+        .clear-results-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #e9d5ff;
+            border-radius: 10px;
+            color: #9333ea;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-results-btn:hover {
+            background: #faf5ff;
+            border-color: #c084fc;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .card {
@@ -608,6 +835,30 @@
                 Complete Sign Up
             </button>
         </form>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+            <div class="card">
+                <div class="results-header">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#7c3aed">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                        OneSignal API Response
+                    </h3>
+                    <button class="clear-results-btn" onclick="clearResults()">Clear Results</button>
+                </div>
+
+                <div class="village-key-display">
+                    <span class="label">Village Key:</span>
+                    <span class="key-value" id="resultVillageKey">-</span>
+                </div>
+
+                <div id="userResultsContainer">
+                    <!-- User result cards will be inserted here -->
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">
             <p>By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
@@ -781,7 +1032,12 @@
                     }
                 };
 
-                results.mother = await createOneSignalUser(motherData);
+                const motherResponse = await createOneSignalUser(motherData);
+                // Store both the response and the request data for display
+                results.mother = {
+                    ...motherResponse,
+                    requestData: { tags: motherData.tags }
+                };
                 console.log('Mother registered successfully');
             } catch (error) {
                 results.errors.push({
@@ -819,7 +1075,8 @@
                     const result = await createOneSignalUser(villagerData);
                     results.villagers.push({
                         name: villager.name,
-                        result: result
+                        result: result,
+                        requestData: { tags: villagerData.tags }
                     });
                     console.log(`Villager ${i + 1} (${villager.name}) registered successfully`);
                 } catch (error) {
@@ -999,6 +1256,9 @@
                 // Store results for display
                 window.villageRegistrationResults = results;
 
+                // Render the results panel with API response data
+                renderResultsPanel(results);
+
                 // Update modal with results
                 updateSuccessModal(results);
 
@@ -1036,6 +1296,137 @@
                 <strong>Village Key:</strong> <code style="background: #f3e8ff; padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">${results.villageKey}</code><br><br>
                 ${statusMessage}
             `;
+        }
+
+        /**
+         * Render the results panel with API response data
+         */
+        function renderResultsPanel(results) {
+            const panel = document.getElementById('resultsPanel');
+            const villageKeyEl = document.getElementById('resultVillageKey');
+            const container = document.getElementById('userResultsContainer');
+
+            // Show panel
+            panel.classList.add('active');
+
+            // Set village key
+            villageKeyEl.textContent = results.villageKey;
+
+            // Clear previous results
+            container.innerHTML = '';
+
+            // Render mother result
+            if (results.mother) {
+                const motherTags = results.mother.requestData?.tags || {};
+                container.innerHTML += renderUserCard({
+                    role: 'mother',
+                    name: motherTags.name || 'Mother',
+                    onesignalId: results.mother.identity?.onesignal_id,
+                    tags: motherTags,
+                    success: true
+                });
+            }
+
+            // Check for mother error
+            const motherError = results.errors.find(e => e.type === 'mother');
+            if (motherError) {
+                container.innerHTML += renderUserCard({
+                    role: 'mother',
+                    name: 'Mother',
+                    error: motherError.error,
+                    success: false
+                });
+            }
+
+            // Render villager results
+            results.villagers.forEach((villager, index) => {
+                const villagerTags = villager.requestData?.tags || {};
+                container.innerHTML += renderUserCard({
+                    role: 'villager',
+                    name: villager.name,
+                    onesignalId: villager.result?.identity?.onesignal_id,
+                    tags: villagerTags,
+                    success: true
+                });
+            });
+
+            // Check for villager errors
+            results.errors
+                .filter(e => e.type === 'villager')
+                .forEach(error => {
+                    container.innerHTML += renderUserCard({
+                        role: 'villager',
+                        name: error.name || `Villager ${error.index + 1}`,
+                        error: error.error,
+                        success: false
+                    });
+                });
+
+            // Scroll to results
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        /**
+         * Render a single user result card
+         */
+        function renderUserCard(user) {
+            const cardClass = user.success ? user.role : 'error';
+
+            let tagsHtml = '';
+            if (user.tags && Object.keys(user.tags).length > 0) {
+                const tagItems = Object.entries(user.tags).map(([key, value]) => {
+                    // Determine tag styling based on value
+                    let tagClass = '';
+                    if (value === 'true' || value === true) tagClass = 'true';
+                    else if (value === 'false' || value === false) tagClass = 'false';
+
+                    // Format the value for display
+                    let displayValue = value;
+                    if (typeof value === 'number' && key.includes('date')) {
+                        // Convert unix timestamp to readable date
+                        displayValue = new Date(value * 1000).toLocaleDateString();
+                    }
+
+                    return `<span class="tag-item ${tagClass}">
+                        <span class="tag-key">${key}:</span>
+                        <span class="tag-value">${displayValue}</span>
+                    </span>`;
+                }).join('');
+
+                tagsHtml = `
+                    <div class="tags-section">
+                        <div class="tags-label">Tags</div>
+                        <div class="tags-grid">${tagItems}</div>
+                    </div>
+                `;
+            }
+
+            let errorHtml = '';
+            if (!user.success && user.error) {
+                errorHtml = `<div class="error-message">⚠️ ${user.error}</div>`;
+            }
+
+            return `
+                <div class="user-result-card ${cardClass}">
+                    <div class="user-result-header">
+                        <div class="user-result-name">
+                            ${user.name}
+                            <span class="role-badge ${user.role}">${user.role}</span>
+                        </div>
+                        ${user.onesignalId ? `<span class="onesignal-id">${user.onesignalId}</span>` : ''}
+                    </div>
+                    ${tagsHtml}
+                    ${errorHtml}
+                </div>
+            `;
+        }
+
+        /**
+         * Clear the results panel
+         */
+        function clearResults() {
+            document.getElementById('resultsPanel').classList.remove('active');
+            document.getElementById('userResultsContainer').innerHTML = '';
         }
 
         function closeModal() {
