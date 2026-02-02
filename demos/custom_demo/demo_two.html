@@ -420,84 +420,6 @@
             animation: fadeIn 0.4s ease;
         }
 
-        /* Success Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(88, 28, 135, 0.5);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            border-radius: 28px;
-            padding: 40px;
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 25px 80px rgba(168, 85, 247, 0.3);
-            animation: fadeIn 0.4s ease;
-        }
-
-        .modal .success-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-        }
-
-        .modal .success-icon svg {
-            width: 40px;
-            height: 40px;
-            fill: white;
-        }
-
-        .modal h2 {
-            color: #581c87;
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-        }
-
-        .modal p {
-            color: #9333ea;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .modal-btn {
-            padding: 14px 32px;
-            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
-            border: none;
-            border-radius: 14px;
-            color: white;
-            font-family: 'Nunito', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .modal-btn:hover {
-            transform: scale(1.05);
-        }
-
         /* Spinner Animation */
         @keyframes spin {
             from {
@@ -512,15 +434,10 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Results Panel */
+        /* Results Panel - Always visible */
         .results-panel {
-            display: none;
             margin-top: 24px;
             animation: fadeIn 0.4s ease;
-        }
-
-        .results-panel.active {
-            display: block;
         }
 
         .results-header {
@@ -739,6 +656,218 @@
             border-color: #c084fc;
         }
 
+        /* API Steps */
+        .api-step {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f3e8ff;
+        }
+
+        .api-step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .api-step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-weight: 700;
+            color: #581c87;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .step-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .step-status.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .step-status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .step-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .api-result-card {
+            background: linear-gradient(135deg, #fdf4ff 0%, #faf5ff 100%);
+            border: 1px solid #e9d5ff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .api-result-card .result-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b21a8;
+            margin-bottom: 8px;
+        }
+
+        .api-result-card .result-value {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #581c87;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .sms-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sms-info .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .sms-info .info-label {
+            font-weight: 600;
+            color: #6b21a8;
+            font-size: 0.85rem;
+        }
+
+        .sms-info .info-value {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #7c3aed;
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .reset-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .reset-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9333ea;
+        }
+
+        .empty-state .empty-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .empty-state .empty-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: #c4b5fd;
+        }
+
+        .empty-state h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #6b21a8;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+            color: #9333ea;
+        }
+
+        /* Loading indicator for steps */
+        .step-loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .step-loading .mini-spinner {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #fcd34d;
+            border-top-color: #92400e;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Header buttons container */
+        .results-header-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .card {
@@ -836,7 +965,7 @@
             </button>
         </form>
 
-        <!-- Results Panel -->
+        <!-- Results Panel - Always Visible -->
         <div class="results-panel" id="resultsPanel">
             <div class="card">
                 <div class="results-header">
@@ -844,18 +973,84 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="#7c3aed">
                             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
                         </svg>
-                        OneSignal API Response
+                        OneSignal API Console
                     </h3>
-                    <button class="clear-results-btn" onclick="clearResults()">Clear Results</button>
+                    <div class="results-header-buttons">
+                        <button class="clear-results-btn" onclick="clearResults()">Clear</button>
+                        <button class="reset-btn" id="resetBtn" onclick="resetVillage()" disabled>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                            </svg>
+                            Reset (Delete Users)
+                        </button>
+                    </div>
                 </div>
 
-                <div class="village-key-display">
-                    <span class="label">Village Key:</span>
-                    <span class="key-value" id="resultVillageKey">-</span>
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                    </div>
+                    <h4>No API Responses Yet</h4>
+                    <p>Fill out the form and click "Complete Sign Up" to see API responses here in real-time.</p>
                 </div>
 
-                <div id="userResultsContainer">
-                    <!-- User result cards will be inserted here -->
+                <!-- API Results Container (hidden initially) -->
+                <div id="apiResultsWrapper" style="display: none;">
+                    <div class="village-key-display">
+                        <span class="label">Village Key:</span>
+                        <span class="key-value" id="resultVillageKey">-</span>
+                    </div>
+
+                    <!-- Step 1: Create Users -->
+                    <div class="api-step">
+                        <div class="api-step-header">
+                            <span class="step-number">1</span>
+                            <span class="step-title">Create Users</span>
+                            <span id="createUsersStatus"></span>
+                        </div>
+                        <div id="userResultsContainer">
+                            <!-- User result cards will be inserted here in real-time -->
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Update Mother with Villager IDs -->
+                    <div class="api-step" id="motherUpdateStep" style="display: none;">
+                        <div class="api-step-header">
+                            <span class="step-number">2</span>
+                            <span class="step-title">Update Mother with Villager IDs</span>
+                            <span id="motherUpdateStatus"></span>
+                        </div>
+                        <div id="motherUpdateContainer">
+                            <!-- Mother update result will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Send SMS to Villagers -->
+                    <div class="api-step" id="smsStep" style="display: none;">
+                        <div class="api-step-header">
+                            <span class="step-number">3</span>
+                            <span class="step-title">Send SMS to Villagers</span>
+                            <span id="smsStatus"></span>
+                        </div>
+                        <div id="smsResultContainer">
+                            <!-- SMS result will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Reset/Delete Users (shown after reset) -->
+                    <div class="api-step" id="deleteStep" style="display: none;">
+                        <div class="api-step-header">
+                            <span class="step-number">4</span>
+                            <span class="step-title">Delete Users (Reset)</span>
+                            <span id="deleteStatus"></span>
+                        </div>
+                        <div id="deleteResultsContainer">
+                            <!-- Delete results will be inserted here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -865,19 +1060,6 @@
         </footer>
     </div>
 
-    <!-- Success Modal -->
-    <div class="modal-overlay" id="successModal">
-        <div class="modal">
-            <div class="success-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
-            </div>
-            <h2>Welcome to Your Village!</h2>
-            <p>Your support network has been created. We'll send invitations to your villagers so they can start supporting your journey.</p>
-            <button class="modal-btn" onclick="closeModal()">Got It</button>
-        </div>
-    </div>
 
     <script>
         // =====================================================
@@ -885,8 +1067,13 @@
         // =====================================================
         const ONESIGNAL_CONFIG = {
             appId: 'cf532c5e-5be2-4b00-ab6d-3d3d72ca9124',
-            apiUrl: 'https://api.onesignal.com/apps'
+            apiUrl: 'https://api.onesignal.com/apps',
+            notificationsUrl: 'https://api.onesignal.com/notifications',
+            smsTemplateId: 'f4123707-22b4-4396-a2d7-e920d5446522'
         };
+
+        // Store created users for potential deletion
+        let createdUsers = [];
 
         // =====================================================
         // Utility Functions
@@ -1003,14 +1190,191 @@
         }
 
         /**
+         * Update a user in OneSignal (add tags to existing user)
+         * @param {string} onesignalId - The OneSignal ID of the user to update
+         * @param {Object} tags - Key-value pairs of tags to add
+         * @returns {Promise<Object>} - API response
+         */
+        async function updateOneSignalUser(onesignalId, tags) {
+            const payload = {
+                properties: {
+                    tags: tags
+                }
+            };
+
+            console.log('Updating OneSignal user:', {
+                onesignalId: onesignalId,
+                tags: tags
+            });
+
+            try {
+                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/users/by/onesignal_id/${onesignalId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error('OneSignal Update User API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to update user');
+                }
+
+                console.log('OneSignal user updated successfully:', result);
+                return result;
+            } catch (error) {
+                console.error('Error updating OneSignal user:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * Send SMS message to villagers using a template
+         * @param {Array<string>} onesignalIds - Array of OneSignal IDs to send to
+         * @returns {Promise<Object>} - API response
+         */
+        async function sendSmsToVillagers(onesignalIds) {
+            const payload = {
+                app_id: ONESIGNAL_CONFIG.appId,
+                template_id: ONESIGNAL_CONFIG.smsTemplateId,
+                target_channel: 'sms',
+                include_aliases: {
+                    onesignal_id: onesignalIds
+                }
+            };
+
+            console.log('Sending SMS to villagers:', {
+                onesignalIds: onesignalIds,
+                templateId: ONESIGNAL_CONFIG.smsTemplateId
+            });
+
+            try {
+                const response = await fetch(ONESIGNAL_CONFIG.notificationsUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error('OneSignal Create Message API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to send SMS');
+                }
+
+                console.log('SMS sent successfully:', result);
+                return result;
+            } catch (error) {
+                console.error('Error sending SMS:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * Delete a user from OneSignal
+         * @param {string} onesignalId - The OneSignal ID of the user to delete
+         * @returns {Promise<Object>} - API response
+         */
+        async function deleteOneSignalUser(onesignalId) {
+            console.log('Deleting OneSignal user:', onesignalId);
+
+            try {
+                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/users/by/onesignal_id/${onesignalId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const result = await response.json();
+                    console.error('OneSignal Delete User API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to delete user');
+                }
+
+                console.log('OneSignal user deleted successfully:', onesignalId);
+                return { success: true, onesignalId };
+            } catch (error) {
+                console.error('Error deleting OneSignal user:', error);
+                throw error;
+            }
+        }
+
+        // =====================================================
+        // Real-time UI Update Functions
+        // =====================================================
+
+        /**
+         * Show the API results wrapper and hide empty state
+         */
+        function showApiResults() {
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('apiResultsWrapper').style.display = 'block';
+        }
+
+        /**
+         * Set loading state for a step
+         */
+        function setStepLoading(stepId, message = 'Processing...') {
+            const statusEl = document.getElementById(stepId);
+            if (statusEl) {
+                statusEl.innerHTML = `<span class="step-loading"><span class="mini-spinner"></span>${message}</span>`;
+            }
+        }
+
+        /**
+         * Set success state for a step
+         */
+        function setStepSuccess(stepId, message = 'Success') {
+            const statusEl = document.getElementById(stepId);
+            if (statusEl) {
+                statusEl.innerHTML = `<span class="step-status success">${message}</span>`;
+            }
+        }
+
+        /**
+         * Set error state for a step
+         */
+        function setStepError(stepId, message = 'Failed') {
+            const statusEl = document.getElementById(stepId);
+            if (statusEl) {
+                statusEl.innerHTML = `<span class="step-status error">${message}</span>`;
+            }
+        }
+
+        /**
+         * Add a user card to the results in real-time
+         */
+        function addUserCardToResults(userData) {
+            const container = document.getElementById('userResultsContainer');
+            container.innerHTML += renderUserCard(userData);
+        }
+
+        /**
          * Register all village members (mother + villagers) with OneSignal
          * @param {Object} formData - Form data containing mother and villagers info
          * @returns {Promise<Object>} - Results of all API calls
          */
         async function registerVillageWithOneSignal(formData) {
+            // Reset created users array
+            createdUsers = [];
+
             // Generate a unique village_key for this village
             const villageKey = generateVillageKey();
             console.log('Generated village_key:', villageKey);
+
+            // Show API results and set village key
+            showApiResults();
+            document.getElementById('resultVillageKey').textContent = villageKey;
+            document.getElementById('userResultsContainer').innerHTML = '';
+
+            // Set Step 1 to loading
+            setStepLoading('createUsersStatus', 'Creating users...');
 
             const results = {
                 villageKey: villageKey,
@@ -1038,11 +1402,37 @@
                     ...motherResponse,
                     requestData: { tags: motherData.tags }
                 };
+
+                // Store for potential deletion
+                if (motherResponse.identity?.onesignal_id) {
+                    createdUsers.push({
+                        onesignalId: motherResponse.identity.onesignal_id,
+                        name: formData.mother.name,
+                        role: 'mother'
+                    });
+                }
+
+                // Update UI in real-time
+                addUserCardToResults({
+                    role: 'mother',
+                    name: motherData.tags.name,
+                    onesignalId: motherResponse.identity?.onesignal_id,
+                    tags: motherData.tags,
+                    success: true
+                });
+
                 console.log('Mother registered successfully');
             } catch (error) {
                 results.errors.push({
                     type: 'mother',
                     error: error.message
+                });
+                // Update UI with error
+                addUserCardToResults({
+                    role: 'mother',
+                    name: 'Mother',
+                    error: error.message,
+                    success: false
                 });
                 console.error('Failed to register mother:', error);
             }
@@ -1078,6 +1468,25 @@
                         result: result,
                         requestData: { tags: villagerData.tags }
                     });
+
+                    // Store for potential deletion
+                    if (result.identity?.onesignal_id) {
+                        createdUsers.push({
+                            onesignalId: result.identity.onesignal_id,
+                            name: villager.name,
+                            role: 'villager'
+                        });
+                    }
+
+                    // Update UI in real-time
+                    addUserCardToResults({
+                        role: 'villager',
+                        name: villagerData.tags.name,
+                        onesignalId: result.identity?.onesignal_id,
+                        tags: villagerData.tags,
+                        success: true
+                    });
+
                     console.log(`Villager ${i + 1} (${villager.name}) registered successfully`);
                 } catch (error) {
                     results.errors.push({
@@ -1086,8 +1495,157 @@
                         name: villager.name,
                         error: error.message
                     });
+                    // Update UI with error
+                    addUserCardToResults({
+                        role: 'villager',
+                        name: villager.name || `Villager ${i + 1}`,
+                        error: error.message,
+                        success: false
+                    });
                     console.error(`Failed to register villager ${i + 1}:`, error);
                 }
+            }
+
+            // Update Step 1 status
+            const userCreateErrors = results.errors.filter(e => e.type === 'mother' || e.type === 'villager');
+            if (userCreateErrors.length === 0) {
+                setStepSuccess('createUsersStatus', 'Success');
+            } else {
+                setStepError('createUsersStatus', 'Partial');
+
+            // 3. Update Mother with villager onesignal_ids as tags
+            if (results.mother && results.villagers.length > 0) {
+                // Show and set Step 2 to loading
+                document.getElementById('motherUpdateStep').style.display = 'block';
+                setStepLoading('motherUpdateStatus', 'Updating...');
+
+                try {
+                    const motherOnesignalId = results.mother.identity?.onesignal_id;
+
+                    // Build tags object with villager onesignal_ids
+                    const villagerTags = {};
+                    results.villagers.forEach((villager, index) => {
+                        const villagerOnesignalId = villager.result?.identity?.onesignal_id;
+                        if (villagerOnesignalId) {
+                            villagerTags[`villager_${index + 1}`] = villagerOnesignalId;
+                        }
+                    });
+
+                    console.log('Updating mother with villager tags:', villagerTags);
+
+                    const updateResult = await updateOneSignalUser(motherOnesignalId, villagerTags);
+                    results.motherUpdate = {
+                        success: true,
+                        result: updateResult,
+                        tagsAdded: villagerTags
+                    };
+
+                    // Update UI
+                    setStepSuccess('motherUpdateStatus', 'Success');
+                    const tagsHtml = Object.entries(villagerTags)
+                        .map(([key, value]) => `
+                            <span class="tag-item">
+                                <span class="tag-key">${key}:</span>
+                                <span class="tag-value">${value}</span>
+                            </span>
+                        `).join('');
+                    document.getElementById('motherUpdateContainer').innerHTML = `
+                        <div class="api-result-card">
+                            <div class="result-label">Tags Added to Mother</div>
+                            <div class="tags-grid">${tagsHtml}</div>
+                        </div>
+                    `;
+
+                    console.log('Mother updated with villager onesignal_ids');
+                } catch (error) {
+                    results.errors.push({
+                        type: 'mother_update',
+                        error: error.message
+                    });
+                    results.motherUpdate = {
+                        success: false,
+                        error: error.message
+                    };
+
+                    // Update UI with error
+                    setStepError('motherUpdateStatus', 'Failed');
+                    document.getElementById('motherUpdateContainer').innerHTML = `
+                        <div class="error-message">⚠️ ${error.message}</div>
+                    `;
+
+                    console.error('Failed to update mother with villager tags:', error);
+                }
+            }
+
+            // 4. Send SMS to all villagers using the template
+            if (results.villagers.length > 0) {
+                // Show and set Step 3 to loading
+                document.getElementById('smsStep').style.display = 'block';
+                setStepLoading('smsStatus', 'Sending...');
+
+                try {
+                    // Collect all villager onesignal_ids
+                    const villagerOnesignalIds = results.villagers
+                        .map(v => v.result?.identity?.onesignal_id)
+                        .filter(id => id); // Filter out any undefined/null
+
+                    if (villagerOnesignalIds.length > 0) {
+                        console.log('Sending SMS to villagers:', villagerOnesignalIds);
+
+                        const smsResult = await sendSmsToVillagers(villagerOnesignalIds);
+                        results.smsNotification = {
+                            success: true,
+                            result: smsResult,
+                            recipients: villagerOnesignalIds
+                        };
+
+                        // Update UI
+                        setStepSuccess('smsStatus', 'Sent');
+                        const notificationId = smsResult?.id || 'N/A';
+                        document.getElementById('smsResultContainer').innerHTML = `
+                            <div class="api-result-card">
+                                <div class="sms-info">
+                                    <div class="info-row">
+                                        <span class="info-label">Template ID</span>
+                                        <span class="info-value">${ONESIGNAL_CONFIG.smsTemplateId}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Notification ID</span>
+                                        <span class="info-value">${notificationId}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Recipients</span>
+                                        <span class="info-value">${villagerOnesignalIds.length} villager(s)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        console.log('SMS sent to all villagers');
+                    }
+                } catch (error) {
+                    results.errors.push({
+                        type: 'sms_notification',
+                        error: error.message
+                    });
+                    results.smsNotification = {
+                        success: false,
+                        error: error.message
+                    };
+
+                    // Update UI with error
+                    setStepError('smsStatus', 'Failed');
+                    document.getElementById('smsResultContainer').innerHTML = `
+                        <div class="error-message">⚠️ ${error.message}</div>
+                    `;
+
+                    console.error('Failed to send SMS to villagers:', error);
+                }
+            }
+
+            // Enable Reset button if we have created users
+            if (createdUsers.length > 0) {
+                document.getElementById('resetBtn').disabled = false;
             }
 
             // Log summary
@@ -1095,7 +1653,10 @@
             console.log('Village Key:', villageKey);
             console.log('Mother registered:', results.mother ? 'Yes' : 'No');
             console.log('Villagers registered:', results.villagers.length);
+            console.log('Mother updated with villager IDs:', results.motherUpdate?.success ? 'Yes' : 'No');
+            console.log('SMS sent to villagers:', results.smsNotification?.success ? 'Yes' : 'No');
             console.log('Errors:', results.errors.length);
+            console.log('Created users stored for reset:', createdUsers.length);
             console.log('====================================');
 
             return results;
@@ -1250,20 +1811,14 @@
             submitBtn.style.opacity = '0.8';
 
             try {
-                // Register all users with OneSignal
+                // Register all users with OneSignal (UI updates happen in real-time)
                 const results = await registerVillageWithOneSignal(formData);
 
-                // Store results for display
+                // Store results for reference
                 window.villageRegistrationResults = results;
 
-                // Render the results panel with API response data
-                renderResultsPanel(results);
-
-                // Update modal with results
-                updateSuccessModal(results);
-
-                // Show success modal
-                document.getElementById('successModal').classList.add('active');
+                // Scroll to results panel
+                document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
             } catch (error) {
                 console.error('Registration failed:', error);
                 alert('There was an error creating your village. Please check the console for details.');
@@ -1276,30 +1831,7 @@
         });
 
         /**
-         * Update the success modal with registration results
-         */
-        function updateSuccessModal(results) {
-            const modal = document.querySelector('.modal');
-            const totalMembers = 1 + results.villagers.length; // mother + villagers
-            const successfulRegistrations = (results.mother ? 1 : 0) + results.villagers.length;
-
-            let statusMessage = '';
-            if (results.errors.length === 0) {
-                statusMessage = `All ${totalMembers} members have been registered successfully!`;
-            } else {
-                statusMessage = `${successfulRegistrations} of ${totalMembers} members registered. Check console for details.`;
-            }
-
-            modal.querySelector('h2').textContent = 'Welcome to Your Village!';
-            modal.querySelector('p').innerHTML = `
-                Your support network has been created.<br><br>
-                <strong>Village Key:</strong> <code style="background: #f3e8ff; padding: 4px 8px; border-radius: 6px; font-size: 0.85rem;">${results.villageKey}</code><br><br>
-                ${statusMessage}
-            `;
-        }
-
-        /**
-         * Render the results panel with API response data
+         * Render the results panel with API response data (legacy - kept for reference)
          */
         function renderResultsPanel(results) {
             const panel = document.getElementById('resultsPanel');
@@ -1314,6 +1846,17 @@
 
             // Clear previous results
             container.innerHTML = '';
+
+            // === Step 1: Create Users ===
+            const createUsersStatus = document.getElementById('createUsersStatus');
+            const userCreateErrors = results.errors.filter(e => e.type === 'mother' || e.type === 'villager');
+            if (userCreateErrors.length === 0) {
+                createUsersStatus.textContent = 'Success';
+                createUsersStatus.className = 'step-status success';
+            } else {
+                createUsersStatus.textContent = 'Partial';
+                createUsersStatus.className = 'step-status error';
+            }
 
             // Render mother result
             if (results.mother) {
@@ -1361,6 +1904,86 @@
                         success: false
                     });
                 });
+
+            // === Step 2: Update Mother with Villager IDs ===
+            const motherUpdateStep = document.getElementById('motherUpdateStep');
+            const motherUpdateStatus = document.getElementById('motherUpdateStatus');
+            const motherUpdateContainer = document.getElementById('motherUpdateContainer');
+
+            if (results.motherUpdate) {
+                motherUpdateStep.style.display = 'block';
+                motherUpdateContainer.innerHTML = '';
+
+                if (results.motherUpdate.success) {
+                    motherUpdateStatus.textContent = 'Success';
+                    motherUpdateStatus.className = 'step-status success';
+
+                    // Show the tags that were added
+                    const tagsHtml = Object.entries(results.motherUpdate.tagsAdded || {})
+                        .map(([key, value]) => `
+                            <span class="tag-item">
+                                <span class="tag-key">${key}:</span>
+                                <span class="tag-value">${value}</span>
+                            </span>
+                        `).join('');
+
+                    motherUpdateContainer.innerHTML = `
+                        <div class="api-result-card">
+                            <div class="result-label">Tags Added to Mother</div>
+                            <div class="tags-grid">${tagsHtml}</div>
+                        </div>
+                    `;
+                } else {
+                    motherUpdateStatus.textContent = 'Failed';
+                    motherUpdateStatus.className = 'step-status error';
+                    motherUpdateContainer.innerHTML = `
+                        <div class="error-message">⚠️ ${results.motherUpdate.error}</div>
+                    `;
+                }
+            }
+
+            // === Step 3: Send SMS to Villagers ===
+            const smsStep = document.getElementById('smsStep');
+            const smsStatus = document.getElementById('smsStatus');
+            const smsResultContainer = document.getElementById('smsResultContainer');
+
+            if (results.smsNotification) {
+                smsStep.style.display = 'block';
+                smsResultContainer.innerHTML = '';
+
+                if (results.smsNotification.success) {
+                    smsStatus.textContent = 'Sent';
+                    smsStatus.className = 'step-status success';
+
+                    const notificationId = results.smsNotification.result?.id || 'N/A';
+                    const recipientCount = results.smsNotification.recipients?.length || 0;
+
+                    smsResultContainer.innerHTML = `
+                        <div class="api-result-card">
+                            <div class="sms-info">
+                                <div class="info-row">
+                                    <span class="info-label">Template ID</span>
+                                    <span class="info-value">${ONESIGNAL_CONFIG.smsTemplateId}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Notification ID</span>
+                                    <span class="info-value">${notificationId}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Recipients</span>
+                                    <span class="info-value">${recipientCount} villager(s)</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    smsStatus.textContent = 'Failed';
+                    smsStatus.className = 'step-status error';
+                    smsResultContainer.innerHTML = `
+                        <div class="error-message">⚠️ ${results.smsNotification.error}</div>
+                    `;
+                }
+            }
 
             // Scroll to results
             panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1425,12 +2048,115 @@
          * Clear the results panel
          */
         function clearResults() {
-            document.getElementById('resultsPanel').classList.remove('active');
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('apiResultsWrapper').style.display = 'none';
             document.getElementById('userResultsContainer').innerHTML = '';
+            document.getElementById('motherUpdateContainer').innerHTML = '';
+            document.getElementById('smsResultContainer').innerHTML = '';
+            document.getElementById('deleteResultsContainer').innerHTML = '';
+            document.getElementById('motherUpdateStep').style.display = 'none';
+            document.getElementById('smsStep').style.display = 'none';
+            document.getElementById('deleteStep').style.display = 'none';
+            document.getElementById('resultVillageKey').textContent = '-';
+            document.getElementById('createUsersStatus').innerHTML = '';
+            document.getElementById('resetBtn').disabled = true;
+            createdUsers = [];
         }
 
-        function closeModal() {
-            document.getElementById('successModal').classList.remove('active');
+        /**
+         * Reset the village by deleting all created users
+         */
+        async function resetVillage() {
+            if (createdUsers.length === 0) {
+                alert('No users to delete.');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete ${createdUsers.length} user(s) from OneSignal?`)) {
+                return;
+            }
+
+            const resetBtn = document.getElementById('resetBtn');
+            resetBtn.disabled = true;
+            resetBtn.innerHTML = `
+                <svg class="spinner" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                </svg>
+                Deleting...
+            `;
+
+            // Show Step 4: Delete Users
+            document.getElementById('deleteStep').style.display = 'block';
+            setStepLoading('deleteStatus', 'Deleting users...');
+            document.getElementById('deleteResultsContainer').innerHTML = '';
+
+            const deleteResults = {
+                success: [],
+                errors: []
+            };
+
+            // Delete each user
+            for (const user of createdUsers) {
+                try {
+                    await deleteOneSignalUser(user.onesignalId);
+                    deleteResults.success.push(user);
+
+                    // Add success card
+                    document.getElementById('deleteResultsContainer').innerHTML += `
+                        <div class="user-result-card villager" style="border-left-color: #22c55e;">
+                            <div class="user-result-header">
+                                <div class="user-result-name">
+                                    ${user.name}
+                                    <span class="role-badge ${user.role}">${user.role}</span>
+                                </div>
+                                <span class="step-status success">Deleted</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: #6b21a8; margin-top: 8px;">
+                                OneSignal ID: <code style="background: #f3e8ff; padding: 2px 6px; border-radius: 4px;">${user.onesignalId}</code>
+                            </div>
+                        </div>
+                    `;
+                } catch (error) {
+                    deleteResults.errors.push({ user, error: error.message });
+
+                    // Add error card
+                    document.getElementById('deleteResultsContainer').innerHTML += `
+                        <div class="user-result-card error">
+                            <div class="user-result-header">
+                                <div class="user-result-name">
+                                    ${user.name}
+                                    <span class="role-badge ${user.role}">${user.role}</span>
+                                </div>
+                                <span class="step-status error">Failed</span>
+                            </div>
+                            <div class="error-message">⚠️ ${error.message}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Update Step 4 status
+            if (deleteResults.errors.length === 0) {
+                setStepSuccess('deleteStatus', `${deleteResults.success.length} Deleted`);
+            } else {
+                setStepError('deleteStatus', `${deleteResults.errors.length} Failed`);
+            }
+
+            // Reset the button
+            resetBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                Reset (Delete Users)
+            `;
+
+            // Clear the created users array
+            createdUsers = [];
+
+            console.log('=== Village Reset Summary ===');
+            console.log('Users deleted:', deleteResults.success.length);
+            console.log('Errors:', deleteResults.errors.length);
+            console.log('=============================');
         }
 
         // Set min date to today for due date field
@@ -1442,12 +2168,6 @@
             addVillager();
         });
 
-        // Close modal on overlay click
-        document.getElementById('successModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
