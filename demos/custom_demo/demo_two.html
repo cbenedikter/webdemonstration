@@ -1595,6 +1595,13 @@
             if (results.villagers.length > 0) {
                 // Show and set Step 3 to loading
                 document.getElementById('optInStep').style.display = 'block';
+
+                // Wait 5 seconds for subscriptions to propagate in OneSignal
+                console.log('Waiting 5 seconds for subscriptions to propagate...');
+                for (let i = 5; i > 0; i--) {
+                    setStepLoading('optInStatus', `Waiting ${i}s...`);
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
                 setStepLoading('optInStatus', 'Triggering...');
 
                 results.optInUpdates = [];
