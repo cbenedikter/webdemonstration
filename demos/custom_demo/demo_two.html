@@ -1126,14 +1126,6 @@
             return Math.floor(date.getTime() / 1000);
         }
 
-        /**
-         * Generate a unique external_id for a user
-         */
-        function generateExternalId(prefix, villageKey) {
-            const randomSuffix = Math.random().toString(36).substring(2, 8);
-            return `${prefix}_${villageKey}_${randomSuffix}`;
-        }
-
         // =====================================================
         // OneSignal API Functions
         // =====================================================
@@ -1141,18 +1133,14 @@
         /**
          * Create a user in OneSignal with SMS subscription and tags
          * @param {Object} userData - User data object
-         * @param {string} userData.externalId - Unique identifier for the user
          * @param {string} userData.phone - Phone number (will be converted to E164)
          * @param {Object} userData.tags - Key-value pairs for user tags
-         * @returns {Promise<Object>} - API response
+         * @returns {Promise<Object>} - API response (includes identity.onesignal_id)
          */
         async function createOneSignalUser(userData) {
             const e164Phone = formatPhoneToE164(userData.phone);
 
             const payload = {
-                identity: {
-                    external_id: userData.externalId
-                },
                 properties: {
                     tags: userData.tags
                 },
@@ -1166,7 +1154,6 @@
             };
 
             console.log('Creating OneSignal user:', {
-                externalId: userData.externalId,
                 phone: e164Phone,
                 tags: userData.tags
             });
@@ -1238,46 +1225,23 @@
         }
 
         /**
-         * Update a subscription by ID to add the villager_opt_in tag
+         * Update a user's tags by onesignal_id for villager opt-in
          * This triggers the Journey to send the welcome SMS
-         * @param {string} subscriptionId - The subscription ID from the Create User response
+         * @param {string} onesignalId - The OneSignal ID from the Create User response
          * @param {string} villagerName - Name of the villager (for logging)
          * @returns {Promise<Object>} - API response
          */
-        async function updateSubscriptionById(subscriptionId, villagerName) {
-            const payload = {
-                tags: {
-                    villager_opt_in: 'true'
-                }
+        async function triggerVillagerOptIn(onesignalId, villagerName) {
+            const tags = {
+                villager_opt_in: 'true'
             };
 
-            console.log('Updating subscription for villager opt-in:', {
-                subscriptionId: subscriptionId,
+            console.log('Triggering opt-in for villager:', {
+                onesignalId: onesignalId,
                 villagerName: villagerName
             });
 
-            try {
-                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/subscriptions/${subscriptionId}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    console.error('OneSignal Update Subscription API Error:', result);
-                    throw new Error(result.errors?.[0]?.title || 'Failed to update subscription');
-                }
-
-                console.log('Subscription updated successfully:', result);
-                return result;
-            } catch (error) {
-                console.error('Error updating subscription:', error);
-                throw error;
-            }
+            return await updateOneSignalUser(onesignalId, tags);
         }
 
         /**
@@ -1391,7 +1355,6 @@
             // 1. Create the mother's user
             try {
                 const motherData = {
-                    externalId: generateExternalId('mother', villageKey),
                     phone: formData.mother.phone,
                     tags: {
                         village_key: villageKey,
@@ -1455,7 +1418,6 @@
                     const topicEmotionalSupport = villager.topics.includes('emotional');
 
                     const villagerData = {
-                        externalId: generateExternalId(`villager_${i + 1}`, villageKey),
                         phone: villager.phone,
                         tags: {
                             village_key: villageKey,
@@ -1471,21 +1433,21 @@
 
                     const result = await createOneSignalUser(villagerData);
 
-                    // Extract subscription_id from the response
-                    const subscriptionId = result.subscriptions?.[0]?.id;
+                    // Extract onesignal_id from the response
+                    const onesignalId = result.identity?.onesignal_id;
 
                     results.villagers.push({
                         name: villager.name,
                         result: result,
                         requestData: { tags: villagerData.tags },
-                        subscriptionId: subscriptionId
+                        onesignalId: onesignalId
                     });
 
-                    // Store for potential deletion (using subscription_id)
-                    if (subscriptionId) {
+                    // Store for potential deletion (using onesignal_id)
+                    if (onesignalId) {
                         createdUsers.push({
-                            subscriptionId: subscriptionId,
-                            onesignalId: result.identity?.onesignal_id,
+                            onesignalId: onesignalId,
+                            subscriptionId: result.subscriptions?.[0]?.id,
                             name: villager.name,
                             role: 'villager'
                         });
@@ -1591,13 +1553,13 @@
                 }
             }
 
-            // 4. Trigger villager opt-in by updating subscriptions
+            // 4. Trigger villager opt-in by updating user tags
             if (results.villagers.length > 0) {
                 // Show and set Step 3 to loading
                 document.getElementById('optInStep').style.display = 'block';
 
-                // Wait 5 seconds for subscriptions to propagate in OneSignal
-                console.log('Waiting 5 seconds for subscriptions to propagate...');
+                // Wait 5 seconds for users to propagate in OneSignal
+                console.log('Waiting 5 seconds for users to propagate...');
                 for (let i = 5; i > 0; i--) {
                     setStepLoading('optInStatus', `Waiting ${i}s...`);
                     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -1608,14 +1570,14 @@
                 let optInSuccessCount = 0;
 
                 for (const villager of results.villagers) {
-                    if (villager.subscriptionId) {
+                    if (villager.onesignalId) {
                         try {
                             console.log(`Triggering opt-in for villager: ${villager.name}`);
 
-                            const optInResult = await updateSubscriptionById(villager.subscriptionId, villager.name);
+                            const optInResult = await triggerVillagerOptIn(villager.onesignalId, villager.name);
                             results.optInUpdates.push({
                                 name: villager.name,
-                                subscriptionId: villager.subscriptionId,
+                                onesignalId: villager.onesignalId,
                                 success: true,
                                 result: optInResult
                             });
@@ -1624,7 +1586,7 @@
                         } catch (error) {
                             results.optInUpdates.push({
                                 name: villager.name,
-                                subscriptionId: villager.subscriptionId,
+                                onesignalId: villager.onesignalId,
                                 success: false,
                                 error: error.message
                             });
@@ -1660,8 +1622,8 @@
                                     <span class="info-value">${update.name}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Subscription ID</span>
-                                    <span class="info-value" style="font-size: 0.75rem;">${update.subscriptionId}</span>
+                                    <span class="info-label">OneSignal ID</span>
+                                    <span class="info-value" style="font-size: 0.75rem;">${update.onesignalId}</span>
                                 </div>
                                 <div class="info-row">
                                     <span class="info-label">Tag Added</span>
@@ -2014,8 +1976,8 @@
                                     <span class="info-value">${update.name}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Subscription ID</span>
-                                    <span class="info-value" style="font-size: 0.75rem;">${update.subscriptionId}</span>
+                                    <span class="info-label">OneSignal ID</span>
+                                    <span class="info-value" style="font-size: 0.75rem;">${update.onesignalId}</span>
                                 </div>
                                 <div class="info-row">
                                     <span class="info-label">Tag Added</span>
