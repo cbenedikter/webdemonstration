@@ -743,13 +743,13 @@
             word-break: break-all;
         }
 
-        .sms-info {
+        .sms-info, .opt-in-info {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .sms-info .info-row {
+        .sms-info .info-row, .opt-in-info .info-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -758,16 +758,24 @@
             border-radius: 8px;
         }
 
-        .sms-info .info-label {
+        .sms-info .info-label, .opt-in-info .info-label {
             font-weight: 600;
             color: #6b21a8;
             font-size: 0.85rem;
         }
 
-        .sms-info .info-value {
+        .sms-info .info-value, .opt-in-info .info-value {
             font-family: 'Monaco', 'Consolas', monospace;
             font-size: 0.8rem;
             color: #7c3aed;
+        }
+
+        .opt-in-info .info-value.success {
+            color: #16a34a;
+        }
+
+        .opt-in-info .info-value.error {
+            color: #dc2626;
         }
 
         /* Reset Button */
@@ -1028,15 +1036,15 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Send SMS to Villagers -->
-                    <div class="api-step" id="smsStep" style="display: none;">
+                    <!-- Step 3: Trigger Villager Opt-In -->
+                    <div class="api-step" id="optInStep" style="display: none;">
                         <div class="api-step-header">
                             <span class="step-number">3</span>
-                            <span class="step-title">Send SMS to Villagers</span>
-                            <span id="smsStatus"></span>
+                            <span class="step-title">Trigger Villager Opt-In</span>
+                            <span id="optInStatus"></span>
                         </div>
-                        <div id="smsResultContainer">
-                            <!-- SMS result will be inserted here -->
+                        <div id="optInResultContainer">
+                            <!-- Opt-in result will be inserted here -->
                         </div>
                     </div>
 
@@ -1067,9 +1075,7 @@
         // =====================================================
         const ONESIGNAL_CONFIG = {
             appId: 'cf532c5e-5be2-4b00-ab6d-3d3d72ca9124',
-            apiUrl: 'https://api.onesignal.com/apps',
-            notificationsUrl: 'https://api.onesignal.com/notifications',
-            smsTemplateId: 'f4123707-22b4-4396-a2d7-e920d5446522'
+            apiUrl: 'https://api.onesignal.com/apps'
         };
 
         // Store created users for potential deletion
@@ -1232,28 +1238,27 @@
         }
 
         /**
-         * Send SMS message to villagers using a template
-         * @param {Array<string>} onesignalIds - Array of OneSignal IDs to send to
+         * Update a subscription by ID to add the villager_opt_in tag
+         * This triggers the Journey to send the welcome SMS
+         * @param {string} subscriptionId - The subscription ID from the Create User response
+         * @param {string} villagerName - Name of the villager (for logging)
          * @returns {Promise<Object>} - API response
          */
-        async function sendSmsToVillagers(onesignalIds) {
+        async function updateSubscriptionById(subscriptionId, villagerName) {
             const payload = {
-                app_id: ONESIGNAL_CONFIG.appId,
-                template_id: ONESIGNAL_CONFIG.smsTemplateId,
-                target_channel: 'sms',
-                include_aliases: {
-                    onesignal_id: onesignalIds
+                tags: {
+                    villager_opt_in: 'true'
                 }
             };
 
-            console.log('Sending SMS to villagers:', {
-                onesignalIds: onesignalIds,
-                templateId: ONESIGNAL_CONFIG.smsTemplateId
+            console.log('Updating subscription for villager opt-in:', {
+                subscriptionId: subscriptionId,
+                villagerName: villagerName
             });
 
             try {
-                const response = await fetch(ONESIGNAL_CONFIG.notificationsUrl, {
-                    method: 'POST',
+                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/subscriptions/${subscriptionId}`, {
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -1263,14 +1268,14 @@
                 const result = await response.json();
 
                 if (!response.ok) {
-                    console.error('OneSignal Create Message API Error:', result);
-                    throw new Error(result.errors?.[0]?.title || 'Failed to send SMS');
+                    console.error('OneSignal Update Subscription API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to update subscription');
                 }
 
-                console.log('SMS sent successfully:', result);
+                console.log('Subscription updated successfully:', result);
                 return result;
             } catch (error) {
-                console.error('Error sending SMS:', error);
+                console.error('Error updating subscription:', error);
                 throw error;
             }
         }
@@ -1463,16 +1468,22 @@
                     };
 
                     const result = await createOneSignalUser(villagerData);
+
+                    // Extract subscription_id from the response
+                    const subscriptionId = result.subscriptions?.[0]?.id;
+
                     results.villagers.push({
                         name: villager.name,
                         result: result,
-                        requestData: { tags: villagerData.tags }
+                        requestData: { tags: villagerData.tags },
+                        subscriptionId: subscriptionId
                     });
 
                     // Store for potential deletion
                     if (result.identity?.onesignal_id) {
                         createdUsers.push({
                             onesignalId: result.identity.onesignal_id,
+                            subscriptionId: subscriptionId,
                             name: villager.name,
                             role: 'villager'
                         });
@@ -1578,70 +1589,86 @@
                 }
             }
 
-            // 4. Send SMS to all villagers using the template
+            // 4. Trigger villager opt-in by updating subscriptions
             if (results.villagers.length > 0) {
                 // Show and set Step 3 to loading
-                document.getElementById('smsStep').style.display = 'block';
-                setStepLoading('smsStatus', 'Sending...');
+                document.getElementById('optInStep').style.display = 'block';
+                setStepLoading('optInStatus', 'Triggering...');
 
-                try {
-                    // Collect all villager onesignal_ids
-                    const villagerOnesignalIds = results.villagers
-                        .map(v => v.result?.identity?.onesignal_id)
-                        .filter(id => id); // Filter out any undefined/null
+                results.optInUpdates = [];
+                let optInSuccessCount = 0;
 
-                    if (villagerOnesignalIds.length > 0) {
-                        console.log('Sending SMS to villagers:', villagerOnesignalIds);
+                for (const villager of results.villagers) {
+                    if (villager.subscriptionId) {
+                        try {
+                            console.log(`Triggering opt-in for villager: ${villager.name}`);
 
-                        const smsResult = await sendSmsToVillagers(villagerOnesignalIds);
-                        results.smsNotification = {
-                            success: true,
-                            result: smsResult,
-                            recipients: villagerOnesignalIds
-                        };
+                            const optInResult = await updateSubscriptionById(villager.subscriptionId, villager.name);
+                            results.optInUpdates.push({
+                                name: villager.name,
+                                subscriptionId: villager.subscriptionId,
+                                success: true,
+                                result: optInResult
+                            });
+                            optInSuccessCount++;
 
-                        // Update UI
-                        setStepSuccess('smsStatus', 'Sent');
-                        const notificationId = smsResult?.id || 'N/A';
-                        document.getElementById('smsResultContainer').innerHTML = `
-                            <div class="api-result-card">
-                                <div class="sms-info">
-                                    <div class="info-row">
-                                        <span class="info-label">Template ID</span>
-                                        <span class="info-value">${ONESIGNAL_CONFIG.smsTemplateId}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Notification ID</span>
-                                        <span class="info-value">${notificationId}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Recipients</span>
-                                        <span class="info-value">${villagerOnesignalIds.length} villager(s)</span>
-                                    </div>
+                        } catch (error) {
+                            results.optInUpdates.push({
+                                name: villager.name,
+                                subscriptionId: villager.subscriptionId,
+                                success: false,
+                                error: error.message
+                            });
+                            results.errors.push({
+                                type: 'opt_in_update',
+                                villagerName: villager.name,
+                                error: error.message
+                            });
+                            console.error(`Failed to trigger opt-in for villager ${villager.name}:`, error);
+                        }
+                    }
+                }
+
+                // Update UI
+                if (optInSuccessCount === results.villagers.length) {
+                    setStepSuccess('optInStatus', `${optInSuccessCount} Triggered`);
+                } else if (optInSuccessCount > 0) {
+                    setStepError('optInStatus', `${optInSuccessCount}/${results.villagers.length} Triggered`);
+                } else {
+                    setStepError('optInStatus', 'Failed');
+                }
+
+                // Build opt-in results HTML
+                let optInResultsHtml = '';
+                for (const update of results.optInUpdates) {
+                    const statusClass = update.success ? 'success' : 'error';
+                    const statusIcon = update.success ? '✓' : '✗';
+                    optInResultsHtml += `
+                        <div class="api-result-card">
+                            <div class="opt-in-info">
+                                <div class="info-row">
+                                    <span class="info-label">Villager</span>
+                                    <span class="info-value">${update.name}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Subscription ID</span>
+                                    <span class="info-value" style="font-size: 0.75rem;">${update.subscriptionId}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Tag Added</span>
+                                    <span class="info-value">villager_opt_in: "true"</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Status</span>
+                                    <span class="info-value ${statusClass}">${statusIcon} ${update.success ? 'Journey Triggered' : update.error}</span>
                                 </div>
                             </div>
-                        `;
-
-                        console.log('SMS sent to all villagers');
-                    }
-                } catch (error) {
-                    results.errors.push({
-                        type: 'sms_notification',
-                        error: error.message
-                    });
-                    results.smsNotification = {
-                        success: false,
-                        error: error.message
-                    };
-
-                    // Update UI with error
-                    setStepError('smsStatus', 'Failed');
-                    document.getElementById('smsResultContainer').innerHTML = `
-                        <div class="error-message">⚠️ ${error.message}</div>
+                        </div>
                     `;
-
-                    console.error('Failed to send SMS to villagers:', error);
                 }
+                document.getElementById('optInResultContainer').innerHTML = optInResultsHtml;
+
+                console.log('Villager opt-in triggers completed');
             }
 
             // Enable Reset button if we have created users
@@ -1655,7 +1682,7 @@
             console.log('Mother registered:', results.mother ? 'Yes' : 'No');
             console.log('Villagers registered:', results.villagers.length);
             console.log('Mother updated with villager IDs:', results.motherUpdate?.success ? 'Yes' : 'No');
-            console.log('SMS sent to villagers:', results.smsNotification?.success ? 'Yes' : 'No');
+            console.log('Villager opt-ins triggered:', results.optInUpdates?.length || 0);
             console.log('Errors:', results.errors.length);
             console.log('Created users stored for reset:', createdUsers.length);
             console.log('====================================');
@@ -1943,47 +1970,57 @@
                 }
             }
 
-            // === Step 3: Send SMS to Villagers ===
-            const smsStep = document.getElementById('smsStep');
-            const smsStatus = document.getElementById('smsStatus');
-            const smsResultContainer = document.getElementById('smsResultContainer');
+            // === Step 3: Trigger Villager Opt-In ===
+            const optInStep = document.getElementById('optInStep');
+            const optInStatus = document.getElementById('optInStatus');
+            const optInResultContainer = document.getElementById('optInResultContainer');
 
-            if (results.smsNotification) {
-                smsStep.style.display = 'block';
-                smsResultContainer.innerHTML = '';
+            if (results.optInUpdates && results.optInUpdates.length > 0) {
+                optInStep.style.display = 'block';
+                optInResultContainer.innerHTML = '';
 
-                if (results.smsNotification.success) {
-                    smsStatus.textContent = 'Sent';
-                    smsStatus.className = 'step-status success';
+                const successCount = results.optInUpdates.filter(u => u.success).length;
+                const totalCount = results.optInUpdates.length;
 
-                    const notificationId = results.smsNotification.result?.id || 'N/A';
-                    const recipientCount = results.smsNotification.recipients?.length || 0;
+                if (successCount === totalCount) {
+                    optInStatus.textContent = `${successCount} Triggered`;
+                    optInStatus.className = 'step-status success';
+                } else if (successCount > 0) {
+                    optInStatus.textContent = `${successCount}/${totalCount} Triggered`;
+                    optInStatus.className = 'step-status error';
+                } else {
+                    optInStatus.textContent = 'Failed';
+                    optInStatus.className = 'step-status error';
+                }
 
-                    smsResultContainer.innerHTML = `
+                let optInHtml = '';
+                for (const update of results.optInUpdates) {
+                    const statusClass = update.success ? 'success' : 'error';
+                    const statusIcon = update.success ? '✓' : '✗';
+                    optInHtml += `
                         <div class="api-result-card">
-                            <div class="sms-info">
+                            <div class="opt-in-info">
                                 <div class="info-row">
-                                    <span class="info-label">Template ID</span>
-                                    <span class="info-value">${ONESIGNAL_CONFIG.smsTemplateId}</span>
+                                    <span class="info-label">Villager</span>
+                                    <span class="info-value">${update.name}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Notification ID</span>
-                                    <span class="info-value">${notificationId}</span>
+                                    <span class="info-label">Subscription ID</span>
+                                    <span class="info-value" style="font-size: 0.75rem;">${update.subscriptionId}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">Recipients</span>
-                                    <span class="info-value">${recipientCount} villager(s)</span>
+                                    <span class="info-label">Tag Added</span>
+                                    <span class="info-value">villager_opt_in: "true"</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Status</span>
+                                    <span class="info-value ${statusClass}">${statusIcon} ${update.success ? 'Journey Triggered' : update.error}</span>
                                 </div>
                             </div>
                         </div>
                     `;
-                } else {
-                    smsStatus.textContent = 'Failed';
-                    smsStatus.className = 'step-status error';
-                    smsResultContainer.innerHTML = `
-                        <div class="error-message">⚠️ ${results.smsNotification.error}</div>
-                    `;
                 }
+                optInResultContainer.innerHTML = optInHtml;
             }
 
             // Scroll to results
