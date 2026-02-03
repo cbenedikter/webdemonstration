@@ -876,6 +876,220 @@
             gap: 8px;
         }
 
+        /* Due Date Toggle Styles */
+        .due-date-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .due-date-toggle {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border: 2px solid #f3e8ff;
+            border-radius: 10px;
+            background: #faf5ff;
+            color: #9333ea;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            border-color: #c084fc;
+            background: white;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            border-color: transparent;
+            color: white;
+        }
+
+        .demo-mode-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fcd34d;
+            border-radius: 10px;
+            color: #92400e;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Mother CTA Section */
+        .mother-cta-section {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #6ee7b7;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .mother-cta-section .cta-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .mother-cta-section .cta-icon svg {
+            width: 45px;
+            height: 45px;
+            fill: white;
+        }
+
+        .mother-cta-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 12px;
+        }
+
+        .mother-cta-section p {
+            color: #047857;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .activate-village-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .activate-village-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.4);
+        }
+
+        .activate-village-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .activate-village-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .mother-info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .mother-info-card .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #d1fae5;
+        }
+
+        .mother-info-card .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .mother-info-card .info-label {
+            font-weight: 600;
+            color: #065f46;
+            font-size: 0.9rem;
+        }
+
+        .mother-info-card .info-value {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #047857;
+            background: #ecfdf5;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* CTA Results */
+        .cta-results {
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .cta-results h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .villager-update-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #10b981;
+        }
+
+        .villager-update-card.error {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .villager-update-card .villager-name {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 8px;
+        }
+
+        .villager-update-card .update-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .villager-update-card .update-status.success {
+            color: #059669;
+        }
+
+        .villager-update-card .update-status.error {
+            color: #dc2626;
+        }
+
         /* Responsive */
         @media (max-width: 480px) {
             .card {
@@ -888,6 +1102,14 @@
 
             .topics-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .due-date-toggle {
+                flex-direction: column;
+            }
+
+            .toggle-btn {
+                justify-content: center;
             }
         }
     </style>
@@ -904,7 +1126,7 @@
             <p>It takes a village to raise a child</p>
         </header>
 
-        <div class="info-banner">
+        <div class="info-banner" id="signupInfoBanner">
             <div class="info-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -913,6 +1135,45 @@
             <div class="info-text">
                 <h3>Build Your Support Network</h3>
                 <p>Add the special people in your life who'll be part of your journey. They'll receive helpful updates and ways to support you.</p>
+            </div>
+        </div>
+
+        <!-- Mother CTA Section - Only visible when onesignal_id is in URL -->
+        <div class="mother-cta-section" id="motherCtaSection" style="display: none;">
+            <div class="cta-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <h2>Welcome Back!</h2>
+            <p>Your village is ready to support you. Click the button below to activate your support network and notify your villagers.</p>
+
+            <div class="mother-info-card" id="motherInfoCard">
+                <div class="info-row">
+                    <span class="info-label">Your OneSignal ID</span>
+                    <span class="info-value" id="motherOnesignalIdDisplay">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Villagers Found</span>
+                    <span class="info-value" id="villagersFoundDisplay">-</span>
+                </div>
+            </div>
+
+            <button type="button" class="activate-village-btn" id="activateVillageBtn" onclick="activateVillage()">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                Activate My Village
+            </button>
+
+            <div class="cta-results" id="ctaResults" style="display: none;">
+                <h4>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#065f46">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    Village Activation Results
+                </h4>
+                <div id="villagerUpdateResults"></div>
             </div>
         </div>
 
@@ -934,7 +1195,29 @@
 
                 <div class="form-group">
                     <label for="dueDate">Expected Due Date</label>
-                    <input type="date" id="dueDate" name="dueDate" required>
+                    <div class="due-date-options">
+                        <div class="due-date-toggle">
+                            <button type="button" class="toggle-btn active" id="calendarToggle" onclick="setDueDateMode('calendar')">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+                                </svg>
+                                Calendar
+                            </button>
+                            <button type="button" class="toggle-btn" id="demoToggle" onclick="setDueDateMode('demo')">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                </svg>
+                                Demo (5 min)
+                            </button>
+                        </div>
+                        <input type="date" id="dueDate" name="dueDate" required>
+                        <div class="demo-mode-badge" id="demoModeBadge" style="display: none;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                            Demo Mode: Due date set to 5 minutes from submission
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -1080,6 +1363,321 @@
 
         // Store created users for potential deletion
         let createdUsers = [];
+
+        // Due date mode: 'calendar' or 'demo'
+        let dueDateMode = 'calendar';
+
+        // Store mother's onesignal_id from URL (if present)
+        let motherOnesignalIdFromUrl = null;
+
+        // Store villager IDs fetched from the mother's profile
+        let fetchedVillagerIds = [];
+
+        // =====================================================
+        // URL Parsing and Mother CTA Functions
+        // =====================================================
+
+        /**
+         * Parse the URL to extract onesignal_id parameter
+         * Handles both ? and & as parameter separators
+         * @returns {string|null} - The onesignal_id or null if not found
+         */
+        function getOnesignalIdFromUrl() {
+            const url = window.location.href;
+
+            // Try standard query parameter format: ?onesignal_id=xxx or &onesignal_id=xxx
+            const urlParams = new URLSearchParams(window.location.search);
+            let onesignalId = urlParams.get('onesignal_id');
+
+            if (onesignalId) {
+                return onesignalId;
+            }
+
+            // Handle non-standard format where & is used instead of ?
+            // e.g., demo_two.html&abc123 or demo_two.html&onesignal_id=abc123
+            const hashIndex = url.indexOf('#');
+            const urlWithoutHash = hashIndex > -1 ? url.substring(0, hashIndex) : url;
+
+            // Check for format: page.html&VALUE (direct value after &)
+            const ampMatch = urlWithoutHash.match(/\.html[&?]([a-f0-9-]{36})/i);
+            if (ampMatch) {
+                return ampMatch[1];
+            }
+
+            // Check for format: page.html&onesignal_id=VALUE
+            const paramMatch = urlWithoutHash.match(/[&?]onesignal_id=([a-f0-9-]+)/i);
+            if (paramMatch) {
+                return paramMatch[1];
+            }
+
+            return null;
+        }
+
+        /**
+         * View a user in OneSignal by onesignal_id
+         * @param {string} onesignalId - The OneSignal ID of the user
+         * @returns {Promise<Object>} - User data including tags
+         */
+        async function viewOneSignalUser(onesignalId) {
+            console.log('Viewing OneSignal user:', onesignalId);
+
+            try {
+                const response = await fetch(`${ONESIGNAL_CONFIG.apiUrl}/${ONESIGNAL_CONFIG.appId}/users/by/onesignal_id/${onesignalId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error('OneSignal View User API Error:', result);
+                    throw new Error(result.errors?.[0]?.title || 'Failed to view user');
+                }
+
+                console.log('OneSignal user data:', result);
+                return result;
+            } catch (error) {
+                console.error('Error viewing OneSignal user:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * Extract villager OneSignal IDs from user tags
+         * Looks for tags starting with 'villager_' that contain onesignal_ids
+         * @param {Object} userData - User data from View User API
+         * @returns {Array} - Array of {key, onesignalId} objects
+         */
+        function extractVillagerIds(userData) {
+            const villagerIds = [];
+            const tags = userData.properties?.tags || {};
+
+            for (const [key, value] of Object.entries(tags)) {
+                // Look for tags like villager_1, villager_2, etc.
+                if (key.startsWith('villager_') && value) {
+                    // Validate it looks like a onesignal_id (UUID format)
+                    if (/^[a-f0-9-]{36}$/i.test(value)) {
+                        villagerIds.push({
+                            key: key,
+                            onesignalId: value
+                        });
+                    }
+                }
+            }
+
+            console.log('Extracted villager IDs:', villagerIds);
+            return villagerIds;
+        }
+
+        /**
+         * Activate the village by updating all villagers with village_status: active
+         */
+        async function activateVillage() {
+            if (!motherOnesignalIdFromUrl) {
+                alert('No mother OneSignal ID found in URL');
+                return;
+            }
+
+            const activateBtn = document.getElementById('activateVillageBtn');
+            const originalBtnText = activateBtn.innerHTML;
+
+            // Show loading state
+            activateBtn.innerHTML = `
+                <svg class="spinner" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                </svg>
+                Activating Village...
+            `;
+            activateBtn.disabled = true;
+
+            try {
+                // Step 1: View the mother's user profile to get villager IDs
+                console.log('Fetching mother profile to get villager IDs...');
+                const motherData = await viewOneSignalUser(motherOnesignalIdFromUrl);
+
+                // Step 2: Extract villager onesignal_ids from tags
+                fetchedVillagerIds = extractVillagerIds(motherData);
+
+                if (fetchedVillagerIds.length === 0) {
+                    alert('No villagers found in your profile. Please make sure villagers have been registered.');
+                    activateBtn.innerHTML = originalBtnText;
+                    activateBtn.disabled = false;
+                    return;
+                }
+
+                // Update the display
+                document.getElementById('villagersFoundDisplay').textContent = fetchedVillagerIds.length;
+
+                // Show results section
+                document.getElementById('ctaResults').style.display = 'block';
+                document.getElementById('villagerUpdateResults').innerHTML = '';
+
+                // Step 3: Update each villager with village_status: active
+                const updateResults = [];
+
+                for (const villager of fetchedVillagerIds) {
+                    try {
+                        console.log(`Updating villager ${villager.key} (${villager.onesignalId}) with village_status: active`);
+
+                        const updateResult = await updateOneSignalUser(villager.onesignalId, {
+                            village_status: 'active'
+                        });
+
+                        updateResults.push({
+                            key: villager.key,
+                            onesignalId: villager.onesignalId,
+                            success: true,
+                            result: updateResult
+                        });
+
+                        // Add success card
+                        document.getElementById('villagerUpdateResults').innerHTML += `
+                            <div class="villager-update-card">
+                                <div class="villager-name">${villager.key}</div>
+                                <div class="update-status success">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#059669">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                    </svg>
+                                    Tag "village_status: active" added successfully
+                                </div>
+                                <div style="font-size: 0.75rem; color: #6b7280; margin-top: 6px;">
+                                    ID: ${villager.onesignalId}
+                                </div>
+                            </div>
+                        `;
+                    } catch (error) {
+                        updateResults.push({
+                            key: villager.key,
+                            onesignalId: villager.onesignalId,
+                            success: false,
+                            error: error.message
+                        });
+
+                        // Add error card
+                        document.getElementById('villagerUpdateResults').innerHTML += `
+                            <div class="villager-update-card error">
+                                <div class="villager-name">${villager.key}</div>
+                                <div class="update-status error">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#dc2626">
+                                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                                    </svg>
+                                    Failed: ${error.message}
+                                </div>
+                                <div style="font-size: 0.75rem; color: #6b7280; margin-top: 6px;">
+                                    ID: ${villager.onesignalId}
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                const successCount = updateResults.filter(r => r.success).length;
+                console.log(`Village activation complete. ${successCount}/${fetchedVillagerIds.length} villagers updated.`);
+
+                // Update button to show completion
+                activateBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    Village Activated! (${successCount}/${fetchedVillagerIds.length})
+                `;
+                activateBtn.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+
+            } catch (error) {
+                console.error('Error activating village:', error);
+                alert('Error activating village: ' + error.message);
+                activateBtn.innerHTML = originalBtnText;
+                activateBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Initialize the mother CTA section if onesignal_id is in URL
+         */
+        async function initializeMotherCta() {
+            motherOnesignalIdFromUrl = getOnesignalIdFromUrl();
+
+            if (motherOnesignalIdFromUrl) {
+                console.log('Mother OneSignal ID detected in URL:', motherOnesignalIdFromUrl);
+
+                // Show the CTA section
+                document.getElementById('motherCtaSection').style.display = 'block';
+                document.getElementById('motherOnesignalIdDisplay').textContent = motherOnesignalIdFromUrl;
+
+                // Hide the signup form and info banner
+                document.getElementById('villagerForm').style.display = 'none';
+                document.getElementById('signupInfoBanner').style.display = 'none';
+                document.getElementById('resultsPanel').style.display = 'none';
+
+                // Try to fetch villager count
+                try {
+                    const motherData = await viewOneSignalUser(motherOnesignalIdFromUrl);
+                    const villagerIds = extractVillagerIds(motherData);
+                    document.getElementById('villagersFoundDisplay').textContent = villagerIds.length;
+                    fetchedVillagerIds = villagerIds;
+                } catch (error) {
+                    console.error('Error fetching mother data:', error);
+                    document.getElementById('villagersFoundDisplay').textContent = 'Error loading';
+                }
+            }
+        }
+
+        // =====================================================
+        // Due Date Mode Functions
+        // =====================================================
+
+        /**
+         * Set the due date mode (calendar or demo)
+         * @param {string} mode - 'calendar' or 'demo'
+         */
+        function setDueDateMode(mode) {
+            dueDateMode = mode;
+
+            // Update toggle buttons
+            document.getElementById('calendarToggle').classList.toggle('active', mode === 'calendar');
+            document.getElementById('demoToggle').classList.toggle('active', mode === 'demo');
+
+            // Update date input visibility and demo badge
+            const dateInput = document.getElementById('dueDate');
+            const demoBadge = document.getElementById('demoModeBadge');
+
+            if (mode === 'demo') {
+                dateInput.style.display = 'none';
+                dateInput.removeAttribute('required');
+                demoBadge.style.display = 'flex';
+            } else {
+                dateInput.style.display = 'block';
+                dateInput.setAttribute('required', 'required');
+                demoBadge.style.display = 'none';
+            }
+        }
+
+        /**
+         * Get the due date based on current mode
+         * @returns {string} - Date string in YYYY-MM-DD format or timestamp for demo mode
+         */
+        function getDueDate() {
+            if (dueDateMode === 'demo') {
+                // Return date 5 minutes from now
+                const fiveMinutesFromNow = new Date(Date.now() + 5 * 60 * 1000);
+                return fiveMinutesFromNow.toISOString().split('T')[0];
+            }
+            return document.getElementById('dueDate').value;
+        }
+
+        /**
+         * Get the due date as Unix timestamp based on current mode
+         * @returns {number} - Unix timestamp in seconds
+         */
+        function getDueDateTimestamp() {
+            if (dueDateMode === 'demo') {
+                // Return timestamp 5 minutes from now
+                return Math.floor((Date.now() + 5 * 60 * 1000) / 1000);
+            }
+            return dateToUnixTimestamp(document.getElementById('dueDate').value);
+        }
 
         // =====================================================
         // Utility Functions
@@ -1360,7 +1958,7 @@
                         village_key: villageKey,
                         role: 'mother',
                         name: formData.mother.name,
-                        due_date: dateToUnixTimestamp(formData.mother.dueDate)
+                        mother_due_date: formData.mother.dueDateTimestamp
                     }
                 };
 
@@ -1424,7 +2022,7 @@
                             role: 'villager',
                             name: villager.name,
                             mother_name: formData.mother.name,
-                            mother_due_date: dateToUnixTimestamp(formData.mother.dueDate),
+                            mother_due_date: formData.mother.dueDateTimestamp,
                             topic_meal_support: topicMealSupport.toString(),
                             topic_errands_help: topicErrandsHelp.toString(),
                             topic_emotional_support: topicEmotionalSupport.toString()
@@ -1774,7 +2372,8 @@
             const formData = {
                 mother: {
                     name: document.getElementById('motherName').value,
-                    dueDate: document.getElementById('dueDate').value,
+                    dueDate: getDueDate(),
+                    dueDateTimestamp: getDueDateTimestamp(),
                     phone: document.getElementById('motherPhone').value
                 },
                 villagers: []
@@ -2061,10 +2660,10 @@
             document.getElementById('apiResultsWrapper').style.display = 'none';
             document.getElementById('userResultsContainer').innerHTML = '';
             document.getElementById('motherUpdateContainer').innerHTML = '';
-            document.getElementById('smsResultContainer').innerHTML = '';
+            document.getElementById('optInResultContainer').innerHTML = '';
             document.getElementById('deleteResultsContainer').innerHTML = '';
             document.getElementById('motherUpdateStep').style.display = 'none';
-            document.getElementById('smsStep').style.display = 'none';
+            document.getElementById('optInStep').style.display = 'none';
             document.getElementById('deleteStep').style.display = 'none';
             document.getElementById('resultVillageKey').textContent = '-';
             document.getElementById('createUsersStatus').innerHTML = '';
@@ -2173,8 +2772,13 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dueDate').setAttribute('min', today);
 
-            // Add first villager automatically
-            addVillager();
+            // Check if this is a mother returning via CTA link
+            initializeMotherCta();
+
+            // Add first villager automatically (only if signup form is visible)
+            if (document.getElementById('villagerForm').style.display !== 'none') {
+                addVillager();
+            }
         });
 
     </script>
