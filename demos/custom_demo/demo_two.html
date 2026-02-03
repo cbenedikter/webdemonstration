@@ -1150,8 +1150,8 @@
 
             <div class="mother-info-card" id="motherInfoCard">
                 <div class="info-row">
-                    <span class="info-label">Your OneSignal ID</span>
-                    <span class="info-value" id="motherOnesignalIdDisplay">Loading...</span>
+                    <span class="info-label">Your Mother ID</span>
+                    <span class="info-value" id="motherIdDisplay">Loading...</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Villagers Found</span>
@@ -1367,8 +1367,8 @@
         // Due date mode: 'calendar' or 'demo'
         let dueDateMode = 'calendar';
 
-        // Store mother's onesignal_id from URL (if present)
-        let motherOnesignalIdFromUrl = null;
+        // Store mother_id from URL (if present) - this is the mother's OneSignal ID
+        let motherIdFromUrl = null;
 
         // Store villager IDs fetched from the mother's profile
         let fetchedVillagerIds = [];
@@ -1378,23 +1378,23 @@
         // =====================================================
 
         /**
-         * Parse the URL to extract onesignal_id parameter
+         * Parse the URL to extract mother_id parameter
          * Handles both ? and & as parameter separators
-         * @returns {string|null} - The onesignal_id or null if not found
+         * @returns {string|null} - The mother_id (OneSignal ID) or null if not found
          */
-        function getOnesignalIdFromUrl() {
+        function getMotherIdFromUrl() {
             const url = window.location.href;
 
-            // Try standard query parameter format: ?onesignal_id=xxx or &onesignal_id=xxx
+            // Try standard query parameter format: ?mother_id=xxx or &mother_id=xxx
             const urlParams = new URLSearchParams(window.location.search);
-            let onesignalId = urlParams.get('onesignal_id');
+            let motherId = urlParams.get('mother_id');
 
-            if (onesignalId) {
-                return onesignalId;
+            if (motherId) {
+                return motherId;
             }
 
             // Handle non-standard format where & is used instead of ?
-            // e.g., demo_two.html&abc123 or demo_two.html&onesignal_id=abc123
+            // e.g., demo_two.html&abc123 or demo_two.html&mother_id=abc123
             const hashIndex = url.indexOf('#');
             const urlWithoutHash = hashIndex > -1 ? url.substring(0, hashIndex) : url;
 
@@ -1404,8 +1404,8 @@
                 return ampMatch[1];
             }
 
-            // Check for format: page.html&onesignal_id=VALUE
-            const paramMatch = urlWithoutHash.match(/[&?]onesignal_id=([a-f0-9-]+)/i);
+            // Check for format: page.html&mother_id=VALUE
+            const paramMatch = urlWithoutHash.match(/[&?]mother_id=([a-f0-9-]+)/i);
             if (paramMatch) {
                 return paramMatch[1];
             }
@@ -1475,8 +1475,8 @@
          * Activate the village by updating all villagers with village_status: active
          */
         async function activateVillage() {
-            if (!motherOnesignalIdFromUrl) {
-                alert('No mother OneSignal ID found in URL');
+            if (!motherIdFromUrl) {
+                alert('No mother_id found in URL');
                 return;
             }
 
@@ -1495,7 +1495,7 @@
             try {
                 // Step 1: View the mother's user profile to get villager IDs
                 console.log('Fetching mother profile to get villager IDs...');
-                const motherData = await viewOneSignalUser(motherOnesignalIdFromUrl);
+                const motherData = await viewOneSignalUser(motherIdFromUrl);
 
                 // Step 2: Extract villager onesignal_ids from tags
                 fetchedVillagerIds = extractVillagerIds(motherData);
@@ -1597,14 +1597,14 @@
          * Initialize the mother CTA section if onesignal_id is in URL
          */
         async function initializeMotherCta() {
-            motherOnesignalIdFromUrl = getOnesignalIdFromUrl();
+            motherIdFromUrl = getMotherIdFromUrl();
 
-            if (motherOnesignalIdFromUrl) {
-                console.log('Mother OneSignal ID detected in URL:', motherOnesignalIdFromUrl);
+            if (motherIdFromUrl) {
+                console.log('mother_id detected in URL:', motherIdFromUrl);
 
                 // Show the CTA section
                 document.getElementById('motherCtaSection').style.display = 'block';
-                document.getElementById('motherOnesignalIdDisplay').textContent = motherOnesignalIdFromUrl;
+                document.getElementById('motherIdDisplay').textContent = motherIdFromUrl;
 
                 // Hide the signup form and info banner
                 document.getElementById('villagerForm').style.display = 'none';
@@ -1613,7 +1613,7 @@
 
                 // Try to fetch villager count
                 try {
-                    const motherData = await viewOneSignalUser(motherOnesignalIdFromUrl);
+                    const motherData = await viewOneSignalUser(motherIdFromUrl);
                     const villagerIds = extractVillagerIds(motherData);
                     document.getElementById('villagersFoundDisplay').textContent = villagerIds.length;
                     fetchedVillagerIds = villagerIds;
@@ -1950,19 +1950,21 @@
                 errors: []
             };
 
-            // 1. Create the mother's user
+            // 1. Create the mother's user (initial tags - mother_id added after via update)
+            let motherOnesignalId = null;
             try {
                 const motherData = {
                     phone: formData.mother.phone,
                     tags: {
-                        village_key: villageKey,
-                        role: 'mother',
-                        name: formData.mother.name,
-                        mother_due_date: formData.mother.dueDateTimestamp
+                        mother_name: formData.mother.name,
+                        mother_due_date: formData.mother.dueDateTimestamp,
+                        role: 'mother'
                     }
                 };
 
                 const motherResponse = await createOneSignalUser(motherData);
+                motherOnesignalId = motherResponse.identity?.onesignal_id;
+
                 // Store both the response and the request data for display
                 results.mother = {
                     ...motherResponse,
@@ -1974,7 +1976,7 @@
                 if (motherSubscriptionId) {
                     createdUsers.push({
                         subscriptionId: motherSubscriptionId,
-                        onesignalId: motherResponse.identity?.onesignal_id,
+                        onesignalId: motherOnesignalId,
                         name: formData.mother.name,
                         role: 'mother'
                     });
@@ -1983,13 +1985,13 @@
                 // Update UI in real-time
                 addUserCardToResults({
                     role: 'mother',
-                    name: motherData.tags.name,
-                    onesignalId: motherResponse.identity?.onesignal_id,
+                    name: formData.mother.name,
+                    onesignalId: motherOnesignalId,
                     tags: motherData.tags,
                     success: true
                 });
 
-                console.log('Mother registered successfully');
+                console.log('Mother registered successfully with onesignal_id:', motherOnesignalId);
             } catch (error) {
                 results.errors.push({
                     type: 'mother',
@@ -2018,11 +2020,8 @@
                     const villagerData = {
                         phone: villager.phone,
                         tags: {
-                            village_key: villageKey,
-                            role: 'villager',
-                            name: villager.name,
+                            villager_name: villager.name,
                             mother_name: formData.mother.name,
-                            mother_due_date: formData.mother.dueDateTimestamp,
                             topic_meal_support: topicMealSupport.toString(),
                             topic_errands_help: topicErrandsHelp.toString(),
                             topic_emotional_support: topicEmotionalSupport.toString()
@@ -2054,7 +2053,7 @@
                     // Update UI in real-time
                     addUserCardToResults({
                         role: 'villager',
-                        name: villagerData.tags.name,
+                        name: villagerData.tags.villager_name,
                         onesignalId: result.identity?.onesignal_id,
                         tags: villagerData.tags,
                         success: true
@@ -2087,36 +2086,38 @@
                 setStepError('createUsersStatus', 'Partial');
             }
 
-            // 3. Update Mother with villager onesignal_ids as tags
-            if (results.mother && results.villagers.length > 0) {
+            // 3. Update Mother with mother_id and villager onesignal_ids as tags
+            if (results.mother && motherOnesignalId) {
                 // Show and set Step 2 to loading
                 document.getElementById('motherUpdateStep').style.display = 'block';
                 setStepLoading('motherUpdateStatus', 'Updating...');
 
                 try {
-                    const motherOnesignalId = results.mother.identity?.onesignal_id;
+                    // Build tags object: mother_id + villager onesignal_ids
+                    const motherUpdateTags = {
+                        mother_id: motherOnesignalId  // Add mother's own OneSignal ID
+                    };
 
-                    // Build tags object with villager onesignal_ids
-                    const villagerTags = {};
+                    // Add villager IDs
                     results.villagers.forEach((villager, index) => {
                         const villagerOnesignalId = villager.result?.identity?.onesignal_id;
                         if (villagerOnesignalId) {
-                            villagerTags[`villager_${index + 1}`] = villagerOnesignalId;
+                            motherUpdateTags[`villager_${index + 1}`] = villagerOnesignalId;
                         }
                     });
 
-                    console.log('Updating mother with villager tags:', villagerTags);
+                    console.log('Updating mother with tags:', motherUpdateTags);
 
-                    const updateResult = await updateOneSignalUser(motherOnesignalId, villagerTags);
+                    const updateResult = await updateOneSignalUser(motherOnesignalId, motherUpdateTags);
                     results.motherUpdate = {
                         success: true,
                         result: updateResult,
-                        tagsAdded: villagerTags
+                        tagsAdded: motherUpdateTags
                     };
 
                     // Update UI
                     setStepSuccess('motherUpdateStatus', 'Success');
-                    const tagsHtml = Object.entries(villagerTags)
+                    const tagsHtml = Object.entries(motherUpdateTags)
                         .map(([key, value]) => `
                             <span class="tag-item">
                                 <span class="tag-key">${key}:</span>
@@ -2130,7 +2131,7 @@
                         </div>
                     `;
 
-                    console.log('Mother updated with villager onesignal_ids');
+                    console.log('Mother updated with mother_id and villager onesignal_ids');
                 } catch (error) {
                     results.errors.push({
                         type: 'mother_update',
@@ -2147,7 +2148,7 @@
                         <div class="error-message">⚠️ ${error.message}</div>
                     `;
 
-                    console.error('Failed to update mother with villager tags:', error);
+                    console.error('Failed to update mother with tags:', error);
                 }
             }
 
