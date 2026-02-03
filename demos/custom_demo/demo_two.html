@@ -1472,7 +1472,7 @@
         }
 
         /**
-         * Activate the village by updating all villagers with village_status: active
+         * Activate the village by updating all villagers with activate_villagers: true
          */
         async function activateVillage() {
             if (!motherIdFromUrl) {
@@ -1514,15 +1514,15 @@
                 document.getElementById('ctaResults').style.display = 'block';
                 document.getElementById('villagerUpdateResults').innerHTML = '';
 
-                // Step 3: Update each villager with village_status: active
+                // Step 3: Update each villager with activate_villagers: true
                 const updateResults = [];
 
                 for (const villager of fetchedVillagerIds) {
                     try {
-                        console.log(`Updating villager ${villager.key} (${villager.onesignalId}) with village_status: active`);
+                        console.log(`Updating villager ${villager.key} (${villager.onesignalId}) with activate_villagers: true`);
 
                         const updateResult = await updateOneSignalUser(villager.onesignalId, {
-                            village_status: 'active'
+                            activate_villagers: 'true'
                         });
 
                         updateResults.push({
@@ -1540,7 +1540,7 @@
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="#059669">
                                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                     </svg>
-                                    Tag "village_status: active" added successfully
+                                    Tag "activate_villagers: true" added successfully
                                 </div>
                                 <div style="font-size: 0.75rem; color: #6b7280; margin-top: 6px;">
                                     ID: ${villager.onesignalId}
