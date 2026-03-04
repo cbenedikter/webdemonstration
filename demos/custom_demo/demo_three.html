@@ -1230,38 +1230,26 @@
 
     // ───────── OneSignal Events ─────────
     async function fireUpdatedCartEvent(ferry, passengers, vehicleSurcharge, total) {
-        const eventData = {
-            cart_id: currentCartId,
+        const eventProperties = {
+            last_cart_id: currentCartId,
             route: ferry.route,
             operator: ferry.operator,
             ship: ferry.ship,
             departure: ferry.departure,
-            passengers: passengers,
-            vehicle_surcharge: vehicleSurcharge,
-            total_gbp: total,
+            passengers: String(passengers),
+            vehicle_surcharge: String(vehicleSurcharge),
+            total_gbp: String(total),
             currency: 'GBP',
         };
 
-        devLog(`Firing <strong>updated_cart</strong> event...`, 'event-fire');
-        devLog(`Payload: ${JSON.stringify(eventData)}`, '');
+        devLog(`Firing <strong>updated_cart</strong> trackEvent...`, 'event-fire');
+        devLog(`Properties: ${JSON.stringify(eventProperties)}`, '');
 
         try {
             await new Promise((resolve, reject) => {
                 OneSignalDeferred.push(async function(OneSignal) {
                     try {
-                        // Send custom event via OneSignal
-                        // Using sendOutcome for tracking + tags for data
-                        await OneSignal.User.addTags({
-                            last_cart_id: currentCartId,
-                            last_cart_route: ferry.route,
-                            last_cart_total: String(total),
-                            last_cart_operator: ferry.operator,
-                            cart_status: 'active',
-                        });
-
-                        // Fire the custom event
-                        await OneSignal.Session.sendOutcome('updated_cart', total);
-
+                        await OneSignal.User.trackEvent('updated_cart', eventProperties);
                         resolve();
                     } catch(e) {
                         reject(e);
@@ -1269,7 +1257,7 @@
                 });
             });
 
-            devLog(`✅ <strong>updated_cart</strong> event sent successfully (cart_id: ${currentCartId})`, 'event-success');
+            devLog(`✅ <strong>updated_cart</strong> trackEvent sent (last_cart_id: ${currentCartId})`, 'event-success');
             showToast('Cart updated — OneSignal event fired');
         } catch(err) {
             devLog(`❌ Error firing updated_cart: ${err.message}`, 'event-error');
@@ -1277,31 +1265,21 @@
     }
 
     async function firePurchasedCartEvent(total) {
-        const eventData = {
-            cart_id: currentCartId,
-            total_gbp: total,
+        const eventProperties = {
+            last_cart_id: currentCartId,
+            total_gbp: String(total),
             currency: 'GBP',
             purchased_at: new Date().toISOString(),
         };
 
-        devLog(`Firing <strong>purchased_cart</strong> event...`, 'event-fire');
-        devLog(`Payload: ${JSON.stringify(eventData)}`, '');
+        devLog(`Firing <strong>purchased_cart</strong> trackEvent...`, 'event-fire');
+        devLog(`Properties: ${JSON.stringify(eventProperties)}`, '');
 
         try {
             await new Promise((resolve, reject) => {
                 OneSignalDeferred.push(async function(OneSignal) {
                     try {
-                        // Update tags to mark cart as purchased
-                        await OneSignal.User.addTags({
-                            last_cart_id: currentCartId,
-                            cart_status: 'purchased',
-                            last_purchase_total: String(total),
-                            last_purchase_date: new Date().toISOString(),
-                        });
-
-                        // Fire the purchased event with same cart_id
-                        await OneSignal.Session.sendOutcome('purchased_cart', total);
-
+                        await OneSignal.User.trackEvent('purchased_cart', eventProperties);
                         resolve();
                     } catch(e) {
                         reject(e);
@@ -1309,7 +1287,7 @@
                 });
             });
 
-            devLog(`✅ <strong>purchased_cart</strong> event sent successfully (cart_id: ${currentCartId})`, 'event-success');
+            devLog(`✅ <strong>purchased_cart</strong> trackEvent sent (last_cart_id: ${currentCartId})`, 'event-success');
             showToast('Purchase complete — OneSignal event fired');
         } catch(err) {
             devLog(`❌ Error firing purchased_cart: ${err.message}`, 'event-error');
