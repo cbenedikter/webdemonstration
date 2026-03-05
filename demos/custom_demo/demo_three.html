@@ -14,1418 +14,1576 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct Ferries — Book & Compare Ferry Tickets</title>
+    <title>Direct Ferries — Book Ferry Tickets</title>
     <link rel="icon" type="image/png" href="../../assets/images/icon_with_25_percent_margin.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* ── Reset & Base ── */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --teal-dark: #0F5A5C;
-            --teal-mid: #407A7D;
-            --teal-light: #5A9A9D;
-            --orange: #FC6446;
-            --orange-hover: #FF4A0E;
-            --text-primary: #212121;
-            --text-secondary: #5A5A5A;
-            --text-light: #7A7A7A;
-            --bg-cream: #FAFAF7;
-            --bg-light: #F0F2EB;
-            --bg-white: #FFFFFF;
-            --border: #D0D5D2;
-            --border-light: #E8E8E4;
-            --success: #2E7D32;
-            --warning: #E65100;
-            --font: 'Inter', sans-serif;
-            --radius: 8px;
-            --radius-lg: 12px;
-            --shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --shadow-lg: 0 4px 20px rgba(0,0,0,0.12);
+            --df-orange:       #F05028;
+            --df-orange-dark:  #D44020;
+            --df-orange-light: #FFF0EC;
+            --df-navy:         #1A1A2A;
+            --df-teal:         #006B70;
+            --df-teal-light:   #E6F4F4;
+            --white:           #FFFFFF;
+            --off-white:       #F5F7FA;
+            --light-grey:      #EEF1F5;
+            --border:          #DDE1E7;
+            --text-primary:    #1A1A2A;
+            --text-secondary:  #5C6070;
+            --text-light:      #9AA0AD;
+            --success:         #1B7A4E;
+            --success-light:   #E8F5EE;
+            --font:            'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+            --radius:          4px;
+            --radius-md:       8px;
+            --radius-lg:       12px;
+            --shadow-sm:       0 1px 4px rgba(0,0,0,0.08);
+            --shadow:          0 2px 12px rgba(0,0,0,0.10);
+            --shadow-lg:       0 6px 28px rgba(0,0,0,0.14);
         }
 
         body {
             font-family: var(--font);
-            background: var(--bg-cream);
+            background: var(--off-white);
             color: var(--text-primary);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        /* ── Header / Nav ── */
-        .site-header {
-            background: var(--teal-dark);
-            padding: 0 2rem;
+        /* ══════════════════════════════════════
+           REGISTRATION SCREEN
+        ══════════════════════════════════════ */
+        .reg-screen { min-height: 100vh; display: flex; flex-direction: column; }
+
+        .reg-topbar {
+            background: var(--df-navy);
+            padding: 0.5rem 2rem;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.7);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            justify-content: flex-end;
+            gap: 1.5rem;
         }
+        .reg-topbar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+        .reg-topbar a:hover { color: #fff; }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.25rem;
-        }
-
-        .logo-circle {
-            width: 36px;
-            height: 36px;
-            background: var(--orange);
-            border-radius: 50%;
+        .reg-header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 0.8rem;
-            color: white;
         }
 
-        .nav-links {
+        .df-logo {
             display: flex;
-            gap: 1.5rem;
             align-items: center;
+            gap: 0.6rem;
+        }
+        .df-logo-mark {
+            width: 44px; height: 44px;
+            background: var(--df-orange);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+        .df-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
-        .nav-links a {
-            color: rgba(255,255,255,0.85);
-            text-decoration: none;
+        .reg-hero {
+            background: linear-gradient(135deg, #0D2137 0%, #1a3a5c 60%, #0D2137 100%);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .reg-hero::before {
+            content: '⛴';
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.06;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .reg-hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .reg-hero p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .reg-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--off-white);
+        }
+
+        .reg-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            max-width: 460px;
+            width: 100%;
+        }
+        .reg-card h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.35rem; }
+        .reg-card .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.8rem; }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label {
+            display: block;
             font-size: 0.875rem;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
         }
+        .form-group label .req { color: var(--df-orange); }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-family: var(--font);
+            color: var(--text-primary);
+            background: var(--white);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--df-orange);
+            box-shadow: 0 0 0 3px rgba(240,80,40,0.12);
+        }
+        .form-group input::placeholder { color: var(--text-light); }
 
-        .nav-links a:hover { color: white; }
+        .btn-orange {
+            width: 100%;
+            background: var(--df-orange);
+            color: var(--white);
+            border: none;
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            font-family: var(--font);
+            letter-spacing: 0.2px;
+            margin-top: 0.5rem;
+        }
+        .btn-orange:hover { background: var(--df-orange-dark); }
+        .btn-orange:active { transform: translateY(1px); }
+        .btn-orange:disabled { opacity: 0.6; cursor: not-allowed; }
 
+        .reg-trust {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .trust-icon { color: var(--df-teal); }
+
+        /* ══════════════════════════════════════
+           MAIN APP SCREEN
+        ══════════════════════════════════════ */
+        .app-screen { display: none; }
+
+        /* Top utility bar */
+        .utility-bar {
+            background: var(--df-navy);
+            padding: 0.45rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .utility-bar a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 1rem; }
+        .utility-bar a:hover { color: #fff; }
+        .utility-left { display: flex; gap: 1rem; }
+
+        /* Main navbar */
+        .main-nav {
+            background: var(--white);
+            padding: 0 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .nav-logo { padding: 0.75rem 2rem 0.75rem 0; flex-shrink: 0; }
+        .nav-links { display: flex; flex: 1; }
+        .nav-links a {
+            padding: 1.1rem 1.1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--df-orange);
+            border-bottom-color: var(--df-orange);
+        }
         .nav-right {
             display: flex;
             align-items: center;
             gap: 1rem;
+            margin-left: auto;
         }
-
-        .login-btn {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.4);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .nav-user {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .nav-user strong { color: var(--text-primary); }
+        .cart-btn {
+            background: var(--df-orange);
+            color: var(--white);
+            border: none;
+            padding: 0.55rem 1.2rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
             font-family: var(--font);
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            position: relative;
+            transition: background 0.2s;
         }
-
-        .login-btn:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.7);
-        }
-
-        .user-badge {
+        .cart-btn:hover { background: var(--df-orange-dark); }
+        .cart-badge {
+            background: var(--white);
+            color: var(--df-orange);
+            font-size: 0.7rem;
+            font-weight: 800;
+            width: 18px; height: 18px;
+            border-radius: 50%;
             display: none;
             align-items: center;
-            gap: 8px;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .user-badge .avatar {
-            width: 28px;
-            height: 28px;
-            background: var(--orange);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.7rem;
         }
 
-        .user-badge .logout-link {
-            color: rgba(255,255,255,0.6);
-            cursor: pointer;
-            font-size: 0.75rem;
-            margin-left: 4px;
-        }
-
-        .user-badge .logout-link:hover { color: white; }
-
-        /* ── Hero Section ── */
-        .hero {
-            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-mid) 100%);
+        /* ── Hero Search Banner ── */
+        .hero-banner {
+            background: linear-gradient(to bottom, #0D2137 0%, #1a3a5c 100%);
+            padding: 3rem 2rem 2rem;
             position: relative;
             overflow: hidden;
-            min-height: 420px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 2rem;
         }
-
-        .hero::before {
+        .hero-banner::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: url('https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?w=1600&q=80') center/cover;
-            opacity: 0.15;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&q=60&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.18;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 700px;
-        }
-
-        .hero h1 {
-            color: white;
-            font-size: 2.5rem;
+        .hero-inner { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+        .hero-banner h1 {
+            color: var(--white);
+            font-size: 2.4rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            line-height: 1.15;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.02em;
         }
-
-        .hero h1 em {
+        .hero-banner h1 em {
             font-style: italic;
-            color: var(--orange);
+            font-weight: 400;
+        }
+        .hero-banner p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1rem;
+            margin-bottom: 1.8rem;
         }
 
-        .hero p {
-            color: rgba(255,255,255,0.8);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        /* ── Search Card ── */
+        /* ── Search Form Card ── */
         .search-card {
-            position: relative;
-            z-index: 2;
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 1.75rem 2rem;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             box-shadow: var(--shadow-lg);
         }
-
-        .trip-type-row {
+        .search-type-tabs {
             display: flex;
-            gap: 1.25rem;
+            gap: 1.5rem;
             margin-bottom: 1.25rem;
         }
-
-        .trip-type-row label {
+        .search-tab {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .trip-type-row input[type="radio"] {
-            accent-color: var(--teal-dark);
-        }
-
-        .search-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 1rem;
-            align-items: end;
-        }
-
-        .field-group label {
-            display: block;
-            font-size: 0.75rem;
+            gap: 0.4rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            cursor: pointer;
+        }
+        .search-tab input[type="radio"] { accent-color: var(--df-orange); }
+        .search-tab.active { color: var(--text-primary); }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 0.75rem;
+            align-items: end;
+        }
+        .search-field { display: flex; flex-direction: column; gap: 0.3rem; }
+        .search-field label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        .field-group select,
-        .field-group input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
+        .search-field select,
+        .search-field input[type="date"],
+        .search-field input[type="number"] {
+            padding: 0.7rem 0.9rem;
+            border: 1.5px solid var(--border);
             border-radius: var(--radius);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-family: var(--font);
             color: var(--text-primary);
-            background: white;
+            background: var(--white);
+            cursor: pointer;
             transition: border-color 0.2s;
+            -webkit-appearance: auto;
         }
-
-        .field-group select:focus,
-        .field-group input:focus {
+        .search-field select:focus,
+        .search-field input:focus {
             outline: none;
-            border-color: var(--teal-mid);
+            border-color: var(--df-teal);
         }
-
-        .search-row-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 1rem;
-            margin-top: 1rem;
-            align-items: end;
-        }
-
         .btn-search {
-            background: var(--orange);
-            color: white;
+            background: var(--df-orange);
+            color: var(--white);
             border: none;
-            padding: 12px 36px;
-            border-radius: 24px;
+            padding: 0.75rem 1.75rem;
             font-size: 1rem;
             font-weight: 700;
+            border-radius: var(--radius);
             cursor: pointer;
             font-family: var(--font);
-            transition: background 0.2s, transform 0.1s;
             white-space: nowrap;
+            transition: background 0.2s;
+            height: fit-content;
         }
+        .btn-search:hover { background: var(--df-orange-dark); }
 
-        .btn-search:hover {
-            background: var(--orange-hover);
-            transform: translateY(-1px);
+        /* ── Trust Strip ── */
+        .trust-strip {
+            background: var(--light-grey);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
         }
+        .trust-strip-item { display: flex; align-items: center; gap: 0.4rem; }
+        .trust-strip-icon { color: var(--df-teal); font-size: 1rem; }
 
         /* ── Results Section ── */
         .results-section {
             max-width: 960px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: none;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
 
         .results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
+        .results-header h2 { font-size: 1.3rem; font-weight: 700; }
+        .results-count { font-size: 0.9rem; color: var(--text-secondary); }
 
-        .results-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .results-count {
-            font-size: 0.875rem;
+        .results-placeholder {
+            text-align: center;
+            padding: 4rem 2rem;
             color: var(--text-light);
         }
+        .results-placeholder-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+        .results-placeholder p { font-size: 1rem; }
+
+        /* Ferry Result Cards */
+        .ferry-list { display: flex; flex-direction: column; gap: 1rem; }
 
         .ferry-card {
-            background: white;
-            border-radius: var(--radius-lg);
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            margin-bottom: 1rem;
-            display: grid;
-            grid-template-columns: 200px 1fr auto;
-            transition: box-shadow 0.2s;
-            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-
         .ferry-card:hover {
-            box-shadow: var(--shadow-lg);
+            border-color: var(--df-orange);
+            box-shadow: var(--shadow);
         }
 
-        .ferry-card-img {
-            background-size: cover;
-            background-position: center;
-            min-height: 160px;
-        }
-
-        .ferry-card-info {
+        .ferry-card-main {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1rem 1.5rem;
+            align-items: center;
             padding: 1.25rem 1.5rem;
         }
 
         .ferry-operator {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--teal-mid);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .ferry-route {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .ferry-details {
             display: flex;
-            gap: 1.25rem;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 8px;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            min-width: 80px;
         }
-
-        .ferry-details span {
+        .operator-logo {
+            width: 52px; height: 52px;
+            border-radius: var(--radius);
+            background: var(--light-grey);
             display: flex;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            font-size: 1.4rem;
         }
+        .operator-name { font-size: 0.72rem; font-weight: 600; color: var(--text-secondary); text-align: center; }
 
-        .ferry-amenities {
+        .ferry-route {
             display: flex;
-            gap: 8px;
+            align-items: center;
+            gap: 1rem;
         }
-
-        .amenity-tag {
-            background: var(--bg-light);
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--text-secondary);
+        .route-point { text-align: center; }
+        .route-time { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+        .route-port { font-size: 0.78rem; color: var(--text-secondary); font-weight: 600; margin-top: 0.15rem; }
+        .route-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            gap: 0.2rem;
         }
+        .arrow-line {
+            width: 100%;
+            height: 1.5px;
+            background: var(--border);
+            position: relative;
+        }
+        .arrow-line::after {
+            content: '▶';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.65rem;
+            color: var(--df-teal);
+        }
+        .route-duration { font-size: 0.75rem; color: var(--df-teal); font-weight: 600; }
 
-        .ferry-card-price {
-            padding: 1.25rem 1.5rem;
+        .ferry-details { display: flex; flex-direction: column; gap: 0.25rem; }
+        .ferry-detail-badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .badge-direct { background: var(--success-light); color: var(--success); }
+        .badge-vehicle { background: var(--df-teal-light); color: var(--df-teal); }
+        .ferry-amenities { font-size: 0.78rem; color: var(--text-light); margin-top: 0.2rem; }
+
+        .ferry-price-col {
+            text-align: right;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            justify-content: center;
-            min-width: 160px;
-            border-left: 1px solid var(--border-light);
+            gap: 0.5rem;
         }
-
-        .price-from {
-            font-size: 0.7rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-        }
-
+        .price-from { font-size: 0.75rem; color: var(--text-light); }
         .price-amount {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: var(--teal-dark);
+            color: var(--text-primary);
+            line-height: 1;
         }
-
-        .price-unit {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            margin-bottom: 10px;
-        }
-
+        .price-currency { font-size: 1rem; font-weight: 700; vertical-align: super; margin-right: 1px; }
+        .price-per { font-size: 0.72rem; color: var(--text-secondary); }
         .btn-select {
-            background: var(--orange);
-            color: white;
+            background: var(--df-orange);
+            color: var(--white);
             border: none;
-            padding: 10px 24px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 0.65rem 1.4rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 700;
             cursor: pointer;
             font-family: var(--font);
             transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-select:hover { background: var(--df-orange-dark); }
+        .btn-select.selected {
+            background: var(--success);
         }
 
-        .btn-select:hover { background: var(--orange-hover); }
-
-        /* ── Checkout Section ── */
-        .checkout-section {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 2rem;
+        /* ══════════════════════════════════════
+           CART SIDEBAR
+        ══════════════════════════════════════ */
+        .cart-overlay {
             display: none;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 900;
         }
+        .cart-overlay.open { display: block; }
 
-        .checkout-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 2rem;
+        .cart-sidebar {
+            position: fixed; top: 0; right: 0;
+            width: 420px; max-width: 92vw; height: 100vh;
+            background: var(--white);
+            box-shadow: -4px 0 28px rgba(0,0,0,0.14);
+            z-index: 1000;
+            display: flex; flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
         }
+        .cart-sidebar.open { transform: translateX(0); }
 
-        .checkout-panel {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 1.75rem;
-            box-shadow: var(--shadow);
-        }
-
-        .checkout-panel h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .booking-summary-route {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            margin-bottom: 1.25rem;
-        }
-
-        .route-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--teal-dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .route-text h4 { font-size: 1rem; font-weight: 700; }
-        .route-text p { font-size: 0.8rem; color: var(--text-light); }
-
-        .summary-row {
+        .cart-head {
+            background: var(--df-navy);
+            color: var(--white);
+            padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
-            padding: 0.6rem 0;
-            font-size: 0.875rem;
-            border-bottom: 1px solid var(--border-light);
+            align-items: center;
+        }
+        .cart-head h3 { font-size: 1rem; font-weight: 700; }
+        .cart-close-btn {
+            background: none; border: none;
+            color: var(--white); font-size: 1.5rem;
+            cursor: pointer; line-height: 1; padding: 0;
         }
 
-        .summary-row:last-child { border-bottom: none; }
-
-        .summary-row .label { color: var(--text-secondary); }
-        .summary-row .value { font-weight: 600; }
-
-        .summary-total {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0 0;
-            margin-top: 0.5rem;
-            border-top: 2px solid var(--teal-dark);
-            font-size: 1.1rem;
-            font-weight: 700;
+        .cart-body { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; }
+        .cart-empty-msg {
+            text-align: center; padding: 3rem 1rem;
+            color: var(--text-light);
         }
+        .cart-empty-msg .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
 
-        .summary-total .value { color: var(--teal-dark); font-size: 1.3rem; }
-
-        .passenger-form .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        .booking-item {
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
             margin-bottom: 1rem;
         }
-
-        .passenger-form .form-row.full {
-            grid-template-columns: 1fr;
-        }
-
-        .passenger-form label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .passenger-form input,
-        .passenger-form select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 0.875rem;
-            font-family: var(--font);
-            transition: border-color 0.2s;
-        }
-
-        .passenger-form input:focus,
-        .passenger-form select:focus {
-            outline: none;
-            border-color: var(--teal-mid);
-        }
-
-        .btn-pay {
-            width: 100%;
-            background: var(--orange);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 24px;
-            font-size: 1rem;
+        .booking-item-header {
+            background: var(--df-teal-light);
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            cursor: pointer;
-            font-family: var(--font);
-            margin-top: 1.25rem;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-pay:hover {
-            background: var(--orange-hover);
-            transform: translateY(-1px);
-        }
-
-        .secure-note {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-light);
-            margin-top: 0.75rem;
-        }
-
-        /* ── Confirmation ── */
-        .confirmation-section {
-            max-width: 600px;
-            margin: 3rem auto;
-            padding: 2rem;
-            text-align: center;
-            display: none;
-        }
-
-        .confirmation-card {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 3rem 2rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .confirmation-icon {
-            width: 72px;
-            height: 72px;
-            background: #E8F5E9;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-        }
-
-        .confirmation-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .confirmation-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .confirmation-details {
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            text-align: left;
-            margin-bottom: 1.5rem;
-        }
-
-        .confirmation-details .detail-row {
+            color: var(--df-teal);
             display: flex;
             justify-content: space-between;
-            padding: 0.4rem 0;
-            font-size: 0.875rem;
+            align-items: center;
+        }
+        .booking-remove {
+            background: none; border: none;
+            color: var(--text-light); cursor: pointer;
+            font-size: 1.1rem; line-height: 1;
+        }
+        .booking-remove:hover { color: var(--df-orange); }
+        .booking-item-body { padding: 0.9rem 1rem; }
+        .booking-route-label { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .booking-meta { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+        .booking-price-row {
+            display: flex; justify-content: space-between;
+            font-weight: 700; margin-top: 0.6rem;
+            font-size: 0.95rem;
         }
 
-        .confirmation-details .detail-row .label { color: var(--text-light); }
-        .confirmation-details .detail-row .value { font-weight: 600; }
-
-        .btn-home {
-            background: var(--teal-dark);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            border-radius: 24px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: var(--font);
+        .cart-foot {
+            padding: 1.25rem 1.5rem;
+            border-top: 2px solid var(--border);
+            background: var(--off-white);
+        }
+        .cart-total-row {
+            display: flex; justify-content: space-between;
+            font-size: 0.9rem; margin-bottom: 0.4rem;
+        }
+        .cart-total-row.grand-total {
+            font-size: 1.15rem; font-weight: 800;
+            margin-top: 0.5rem; padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .btn-book {
+            width: 100%;
+            background: var(--df-orange);
+            color: var(--white); border: none;
+            padding: 0.9rem;
+            font-size: 1rem; font-weight: 700;
+            border-radius: var(--radius);
+            cursor: pointer; font-family: var(--font);
+            margin-top: 1rem;
             transition: background 0.2s;
         }
+        .btn-book:hover { background: var(--df-orange-dark); }
+        .btn-book:disabled { opacity: 0.55; cursor: not-allowed; }
 
-        .btn-home:hover { background: var(--teal-mid); }
-
-        /* ── Event Log (Dev Panel) ── */
-        .dev-panel {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            width: 380px;
-            max-height: 300px;
-            background: #1a1a2e;
-            color: #a0ffa0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            border-top-left-radius: 12px;
-            overflow: hidden;
-            z-index: 200;
-            box-shadow: -4px -4px 20px rgba(0,0,0,0.3);
-        }
-
-        .dev-panel-header {
-            background: #16213e;
-            padding: 8px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .dev-panel-header span {
-            font-weight: 700;
-            color: #e0e0e0;
-            font-size: 0.8rem;
-        }
-
-        .dev-panel-toggle {
-            color: #888;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        .dev-panel-body {
-            padding: 10px 14px;
-            overflow-y: auto;
-            max-height: 250px;
-        }
-
-        .log-entry {
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            word-break: break-all;
-        }
-
-        .log-entry .timestamp {
-            color: #666;
-        }
-
-        .log-entry.event-fire {
-            color: #FFD700;
-        }
-
-        .log-entry.event-success {
-            color: #a0ffa0;
-        }
-
-        .log-entry.event-error {
-            color: #ff6b6b;
-        }
-
-        /* ── Login Modal ── */
+        /* ══════════════════════════════════════
+           BOOKING CONFIRMATION MODAL
+        ══════════════════════════════════════ */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 500;
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            padding: 2rem;
         }
-
-        .modal-overlay.active { display: flex; }
+        .modal-overlay.open { display: flex; }
 
         .modal-box {
-            background: white;
+            background: var(--white);
             border-radius: var(--radius-lg);
-            padding: 2rem;
-            max-width: 400px;
-            width: 90%;
+            max-width: 500px; width: 100%;
+            overflow: hidden;
             box-shadow: var(--shadow-lg);
         }
-
-        .modal-box h3 {
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
+        .modal-head {
+            background: var(--df-teal);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
         }
-
-        .modal-box p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
+        .modal-check {
+            width: 60px; height: 60px;
+            background: var(--white);
+            color: var(--df-teal);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 800;
+            margin: 0 auto 1rem;
         }
+        .modal-head h2 { font-size: 1.4rem; font-weight: 700; }
+        .modal-head p { font-size: 0.9rem; opacity: 0.85; margin-top: 0.35rem; }
 
-        .modal-box input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+        .modal-body { padding: 1.5rem 2rem; }
+        .confirm-row {
+            display: flex; justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
             font-size: 0.9rem;
-            font-family: var(--font);
-            margin-bottom: 1rem;
         }
+        .confirm-row:last-child { border-bottom: none; }
+        .confirm-label { color: var(--text-secondary); }
+        .confirm-value { font-weight: 600; text-align: right; max-width: 250px; }
 
-        .modal-box input:focus {
-            outline: none;
-            border-color: var(--teal-mid);
+        .modal-foot { padding: 0 2rem 2rem; }
+        .btn-done {
+            width: 100%; background: var(--df-navy);
+            color: var(--white); border: none; padding: 0.875rem;
+            font-size: 0.95rem; font-weight: 700;
+            border-radius: var(--radius);
+            cursor: pointer; font-family: var(--font);
+            transition: background 0.2s;
         }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .modal-actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: var(--font);
-            transition: all 0.2s;
-        }
-
-        .btn-modal-primary {
-            background: var(--teal-dark);
-            color: white;
-            border: none;
-        }
-
-        .btn-modal-primary:hover { background: var(--teal-mid); }
-
-        .btn-modal-secondary {
-            background: white;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-modal-secondary:hover { background: var(--bg-light); }
+        .btn-done:hover { background: #2a2a3e; }
 
         /* ── Toast ── */
         .toast {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: var(--teal-dark);
-            color: white;
-            padding: 12px 20px;
-            border-radius: var(--radius);
-            font-size: 0.85rem;
-            font-weight: 500;
+            position: fixed; bottom: 1.5rem; right: 1.5rem;
+            background: var(--df-navy); color: var(--white);
+            padding: 0.85rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem; font-weight: 500;
             box-shadow: var(--shadow-lg);
-            transform: translateX(120%);
+            z-index: 3000;
+            transform: translateY(120%);
             transition: transform 0.3s ease;
-            z-index: 300;
+            display: flex; align-items: center; gap: 0.5rem;
+            max-width: 360px;
         }
-
-        .toast.show { transform: translateX(0); }
-
-        /* ── Back Button ── */
-        .back-bar {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 1rem 2rem 0;
-            display: none;
-        }
-
-        .btn-back {
-            background: none;
-            border: none;
-            color: var(--teal-mid);
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: var(--font);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .btn-back:hover { color: var(--teal-dark); }
+        .toast.show { transform: translateY(0); }
+        .toast.success { border-left: 4px solid #1B7A4E; }
+        .toast.info    { border-left: 4px solid var(--df-orange); }
 
         /* ── Responsive ── */
-        @media (max-width: 768px) {
-            .search-grid { grid-template-columns: 1fr; }
-            .search-row-2 { grid-template-columns: 1fr 1fr; }
-            .ferry-card { grid-template-columns: 1fr; }
-            .ferry-card-img { min-height: 120px; }
-            .ferry-card-price { border-left: none; border-top: 1px solid var(--border-light); flex-direction: row; justify-content: space-between; align-items: center; }
-            .checkout-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+        @media (max-width: 900px) {
+            .search-row { grid-template-columns: 1fr 1fr; }
+            .btn-search { grid-column: 1 / -1; width: 100%; }
+        }
+        @media (max-width: 640px) {
+            .search-row { grid-template-columns: 1fr; }
+            .ferry-card-main { grid-template-columns: auto 1fr; grid-template-rows: auto auto; }
+            .ferry-price-col { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
+            .hero-banner h1 { font-size: 1.8rem; }
+            .trust-strip { gap: 1rem; }
+            .nav-links a { padding: 1rem 0.75rem; font-size: 0.82rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ══════ HEADER ══════ -->
-    <header class="site-header">
-        <a href="#" class="logo" onclick="goHome(); return false;">
-            <div class="logo-circle">df</div>
-            direct ferries
-        </a>
-        <nav class="nav-links">
-            <a href="#">Ferry Tickets</a>
-            <a href="#">Routes</a>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SCREEN 1: REGISTRATION                            -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="registration-screen" class="reg-screen">
+
+    <div class="reg-topbar">
+        <a href="#">Manage my booking</a>
+        <a href="#">My Account</a>
+        <a href="#">Help</a>
+    </div>
+
+    <div class="reg-header">
+        <div class="df-logo">
+            <div class="df-logo-mark">df</div>
+            <div class="df-logo-text">direct ferries</div>
+        </div>
+    </div>
+
+    <div class="reg-hero">
+        <h1>Wherever you're sailing,<br><em>start here.</em></h1>
+        <p>Create a free account to book ferry tickets, manage your crossings and get exclusive fare alerts.</p>
+    </div>
+
+    <div class="reg-body">
+        <div class="reg-card">
+            <h2>Create Your Account</h2>
+            <p class="subtitle">Join over 4 million travellers who book with Direct Ferries.</p>
+
+            <form id="reg-form" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label>Full Name <span class="req">*</span></label>
+                    <input type="text" id="reg-name" placeholder="e.g. Sarah Johnson" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span class="req">*</span></label>
+                    <input type="email" id="reg-email" placeholder="e.g. sarah@example.com" required>
+                </div>
+                <button type="submit" class="btn-orange" id="reg-submit-btn">Create Account &amp; Search Ferries</button>
+            </form>
+
+            <div class="reg-trust">
+                <div class="trust-item"><span class="trust-icon">✓</span> Free to join</div>
+                <div class="trust-item"><span class="trust-icon">✓</span> Instant booking confirmation</div>
+                <div class="trust-item"><span class="trust-icon">✓</span> Fare price alerts</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SCREEN 2: MAIN APP                                -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="app-screen" class="app-screen">
+
+    <!-- Utility bar -->
+    <div class="utility-bar">
+        <div class="utility-left">
+            <span>🌍 English (UK)</span>
+            <span>💷 GBP</span>
+        </div>
+        <div>
+            <a href="#">Help</a>
+            <a href="#">Manage Booking</a>
+        </div>
+    </div>
+
+    <!-- Main navbar -->
+    <div class="main-nav">
+        <div class="nav-logo">
+            <div class="df-logo">
+                <div class="df-logo-mark">df</div>
+                <div class="df-logo-text">direct ferries</div>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Ferry Tickets</a>
+            <a href="#">Route &amp; Port Finder</a>
             <a href="#">Operators</a>
             <a href="#">Special Offers</a>
-        </nav>
+            <a href="#">Countries</a>
+        </div>
         <div class="nav-right">
-            <button class="login-btn" id="loginBtn" onclick="showLoginModal()">Sign In</button>
-            <div class="user-badge" id="userBadge">
-                <div class="avatar" id="userAvatar">?</div>
-                <span id="userName">User</span>
-                <span class="logout-link" onclick="logoutUser()">Logout</span>
-            </div>
+            <span class="nav-user">Hi, <strong id="user-first-name">Traveller</strong></span>
+            <button class="cart-btn" onclick="openCart()">
+                🧾 My Basket
+                <span class="cart-badge" id="cart-badge">0</span>
+            </button>
         </div>
-    </header>
-
-    <!-- ══════ HERO + SEARCH ══════ -->
-    <section class="hero" id="heroSection">
-        <div class="hero-content">
-            <h1>Wherever you're sailing<br><em>start here</em></h1>
-            <p>Compare ferry routes, times and prices to find the best deal.</p>
-        </div>
-        <div class="search-card">
-            <div class="trip-type-row">
-                <label><input type="radio" name="tripType" value="return" checked> Return Trip</label>
-                <label><input type="radio" name="tripType" value="oneway"> One Way</label>
-            </div>
-            <div class="search-grid">
-                <div class="field-group">
-                    <label>Route</label>
-                    <select id="routeSelect">
-                        <option value="">Select a route...</option>
-                        <option value="dover-calais">Dover → Calais</option>
-                        <option value="portsmouth-bilbao">Portsmouth → Bilbao</option>
-                        <option value="holyhead-dublin">Holyhead → Dublin</option>
-                        <option value="liverpool-belfast">Liverpool → Belfast</option>
-                        <option value="poole-cherbourg">Poole → Cherbourg</option>
-                        <option value="harwich-hook">Harwich → Hook of Holland</option>
-                    </select>
-                </div>
-                <div class="field-group">
-                    <label>Travel Date</label>
-                    <input type="date" id="travelDate">
-                </div>
-                <div style="display:flex;align-items:flex-end;">
-                    <!-- placeholder for alignment -->
-                </div>
-            </div>
-            <div class="search-row-2">
-                <div class="field-group">
-                    <label>Passengers</label>
-                    <select id="passengers">
-                        <option value="1">1 Adult</option>
-                        <option value="2" selected>2 Adults</option>
-                        <option value="3">3 Adults</option>
-                        <option value="4">4 Adults</option>
-                    </select>
-                </div>
-                <div class="field-group">
-                    <label>Vehicle</label>
-                    <select id="vehicle">
-                        <option value="none">No Vehicle</option>
-                        <option value="car" selected>Car (up to 1.8m)</option>
-                        <option value="van">Van (up to 2.5m)</option>
-                        <option value="motorhome">Motorhome</option>
-                    </select>
-                </div>
-                <div class="field-group">
-                    <label>Return Date</label>
-                    <input type="date" id="returnDate">
-                </div>
-                <button class="btn-search" onclick="searchFerries()">Search</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════ RESULTS ══════ -->
-    <div class="back-bar" id="backBarResults">
-        <button class="btn-back" onclick="goHome()">← Back to Search</button>
     </div>
-    <section class="results-section" id="resultsSection"></section>
 
-    <!-- ══════ CHECKOUT ══════ -->
-    <div class="back-bar" id="backBarCheckout">
-        <button class="btn-back" onclick="goToResults()">← Back to Results</button>
-    </div>
-    <section class="checkout-section" id="checkoutSection">
-        <div class="checkout-grid">
-            <div class="checkout-panel">
-                <h3>Passenger Details</h3>
-                <div class="passenger-form">
-                    <div class="form-row">
-                        <div>
-                            <label>First Name</label>
-                            <input type="text" id="paxFirstName" placeholder="John">
-                        </div>
-                        <div>
-                            <label>Last Name</label>
-                            <input type="text" id="paxLastName" placeholder="Smith">
-                        </div>
-                    </div>
-                    <div class="form-row full">
-                        <div>
-                            <label>Email Address</label>
-                            <input type="email" id="paxEmail" placeholder="john@email.com">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div>
-                            <label>Phone Number</label>
-                            <input type="tel" id="paxPhone" placeholder="+44 7700 900000">
-                        </div>
-                        <div>
-                            <label>Nationality</label>
-                            <select id="paxNationality">
-                                <option value="GB">British</option>
-                                <option value="IE">Irish</option>
-                                <option value="FR">French</option>
-                                <option value="ES">Spanish</option>
-                                <option value="DE">German</option>
-                                <option value="OTHER">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <h3 style="margin-top:1.5rem;">Payment Information</h3>
-                    <div class="form-row full">
-                        <div>
-                            <label>Card Number</label>
-                            <input type="text" placeholder="4242 4242 4242 4242" maxlength="19">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div>
-                            <label>Expiry Date</label>
-                            <input type="text" placeholder="MM/YY" maxlength="5">
-                        </div>
-                        <div>
-                            <label>CVV</label>
-                            <input type="text" placeholder="123" maxlength="3">
-                        </div>
-                    </div>
+    <!-- Hero Search Banner -->
+    <div class="hero-banner">
+        <div class="hero-inner">
+            <h1>Wherever you're sailing,<br><em>start here.</em></h1>
+            <p>Search hundreds of routes &amp; compare ferry operators in seconds.</p>
+
+            <div class="search-card">
+                <div class="search-type-tabs">
+                    <label class="search-tab active">
+                        <input type="radio" name="trip-type" value="return" checked> Return Trip
+                    </label>
+                    <label class="search-tab">
+                        <input type="radio" name="trip-type" value="oneway"> One way
+                    </label>
                 </div>
-                <button class="btn-pay" onclick="completePurchase()">Complete Booking</button>
-                <p class="secure-note">🔒 Your payment is secured with 256-bit SSL encryption</p>
-            </div>
-            <div>
-                <div class="checkout-panel" id="bookingSummary"></div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ══════ CONFIRMATION ══════ -->
-    <section class="confirmation-section" id="confirmationSection">
-        <div class="confirmation-card" id="confirmationCard"></div>
-    </section>
-
-    <!-- ══════ LOGIN MODAL ══════ -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-box">
-            <h3>Sign In</h3>
-            <p>Log in to track your bookings and receive personalised offers.</p>
-            <input type="email" id="loginEmail" placeholder="Email address">
-            <input type="text" id="loginExternalId" placeholder="External ID (for demo)">
-            <div class="modal-actions">
-                <button class="btn-modal-secondary" onclick="closeLoginModal()">Cancel</button>
-                <button class="btn-modal-primary" onclick="loginUser()">Sign In</button>
+                <div class="search-row">
+                    <div class="search-field">
+                        <label>From</label>
+                        <select id="search-from">
+                            <option value="">Select departure port</option>
+                            <option value="Dover">Dover, England</option>
+                            <option value="Holyhead">Holyhead, Wales</option>
+                            <option value="Portsmouth">Portsmouth, England</option>
+                            <option value="Harwich">Harwich, England</option>
+                            <option value="Plymouth">Plymouth, England</option>
+                            <option value="Newcastle">Newcastle, England</option>
+                            <option value="Cairnryan">Cairnryan, Scotland</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>To</label>
+                        <select id="search-to">
+                            <option value="">Select destination port</option>
+                            <option value="Calais">Calais, France</option>
+                            <option value="Dublin">Dublin, Ireland</option>
+                            <option value="Santander">Santander, Spain</option>
+                            <option value="Hook of Holland">Hook of Holland, Netherlands</option>
+                            <option value="Roscoff">Roscoff, France</option>
+                            <option value="Amsterdam">Amsterdam, Netherlands</option>
+                            <option value="Belfast">Belfast, N. Ireland</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Outbound Date</label>
+                        <input type="date" id="search-date">
+                    </div>
+                    <div class="search-field">
+                        <label>Passengers</label>
+                        <input type="number" id="search-pax" value="2" min="1" max="9">
+                    </div>
+                    <button class="btn-search" onclick="searchFerries()">Search ▶</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ══════ TOAST ══════ -->
-    <div class="toast" id="toast"></div>
+    <!-- Trust strip -->
+    <div class="trust-strip">
+        <div class="trust-strip-item"><span class="trust-strip-icon">✓</span> Best price guarantee</div>
+        <div class="trust-strip-item"><span class="trust-strip-icon">✓</span> Instant booking confirmation</div>
+        <div class="trust-strip-item"><span class="trust-strip-icon">✓</span> 4M+ travellers trust us</div>
+        <div class="trust-strip-item"><span class="trust-strip-icon">✓</span> 700+ routes worldwide</div>
+    </div>
 
-    <!-- ══════ DEV PANEL ══════ -->
-    <div class="dev-panel" id="devPanel">
-        <div class="dev-panel-header" onclick="toggleDevPanel()">
-            <span>🔧 OneSignal Event Log</span>
-            <span class="dev-panel-toggle" id="devToggle">▼</span>
+    <!-- Results -->
+    <div class="results-section">
+        <div class="results-header">
+            <h2 id="results-title">Popular Routes</h2>
+            <span class="results-count" id="results-count"></span>
         </div>
-        <div class="dev-panel-body" id="devPanelBody">
-            <div class="log-entry"><span class="timestamp">[init]</span> OneSignal SDK loaded. Ready for events.</div>
+        <div id="ferry-results">
+            <div class="results-placeholder">
+                <div class="results-placeholder-icon">⛴</div>
+                <p>Select your departure and destination ports above, then hit <strong>Search</strong> to find available crossings.</p>
+            </div>
         </div>
     </div>
 
-    <!-- ══════ JAVASCRIPT ══════ -->
-    <script>
-    // ───────── State ─────────
-    let currentUser = null;
-    let currentCartId = null;
-    let selectedFerry = null;
-    let devPanelOpen = true;
+</div><!-- /app-screen -->
 
-    // ───────── Mock Data ─────────
-    const FERRY_DATA = {
-        'dover-calais': [
-            { operator: 'P&O Ferries', route: 'Dover → Calais', duration: '1h 30m', departure: '06:15', arrival: '08:45', ship: 'Spirit of Britain', price: 89, img: 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80', amenities: ['Restaurant', 'WiFi', 'Pet Friendly'] },
-            { operator: 'DFDS', route: 'Dover → Calais', duration: '1h 30m', departure: '09:00', arrival: '11:30', ship: 'Côte des Dunes', price: 79, img: 'https://images.unsplash.com/photo-1534224039826-c7a0eda0e6b3?w=400&q=80', amenities: ['Lounge', 'Duty Free', 'WiFi'] },
-            { operator: 'Irish Ferries', route: 'Dover → Calais', duration: '1h 35m', departure: '13:30', arrival: '16:05', ship: 'Isle of Innisfree', price: 72, img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', amenities: ['Restaurant', 'Cinema'] },
-        ],
-        'portsmouth-bilbao': [
-            { operator: 'Brittany Ferries', route: 'Portsmouth → Bilbao', duration: '24h 00m', departure: '20:00', arrival: '20:00+1', ship: 'Cap Finistère', price: 245, img: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&q=80', amenities: ['Cabin', 'Restaurant', 'Pool', 'WiFi'] },
-            { operator: 'Brittany Ferries', route: 'Portsmouth → Bilbao', duration: '24h 00m', departure: '08:15', arrival: '08:15+1', ship: 'Salamanca', price: 219, img: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=400&q=80', amenities: ['Cabin', 'Lounge', 'Pet Friendly'] },
-        ],
-        'holyhead-dublin': [
-            { operator: 'Irish Ferries', route: 'Holyhead → Dublin', duration: '3h 15m', departure: '08:10', arrival: '11:25', ship: 'Ulysses', price: 109, img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80', amenities: ['Restaurant', 'Lounge', 'WiFi', 'Duty Free'] },
-            { operator: 'Stena Line', route: 'Holyhead → Dublin', duration: '3h 15m', departure: '14:30', arrival: '17:45', ship: 'Stena Adventurer', price: 95, img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80', amenities: ['Café', 'WiFi', 'Children Play Area'] },
-        ],
-        'liverpool-belfast': [
-            { operator: 'Stena Line', route: 'Liverpool → Belfast', duration: '8h 00m', departure: '22:30', arrival: '06:30+1', ship: 'Stena Edda', price: 139, img: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&q=80', amenities: ['Cabin', 'Restaurant', 'WiFi', 'Lounge'] },
-        ],
-        'poole-cherbourg': [
-            { operator: 'Brittany Ferries', route: 'Poole → Cherbourg', duration: '4h 30m', departure: '06:30', arrival: '11:00', ship: 'Barfleur', price: 125, img: 'https://images.unsplash.com/photo-1468413253725-0d5181091126?w=400&q=80', amenities: ['Restaurant', 'Duty Free', 'Pet Friendly'] },
-            { operator: 'Condor Ferries', route: 'Poole → Cherbourg', duration: '4h 15m', departure: '11:00', arrival: '15:15', ship: 'Condor Liberation', price: 115, img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=80', amenities: ['Café', 'WiFi'] },
-        ],
-        'harwich-hook': [
-            { operator: 'Stena Line', route: 'Harwich → Hook of Holland', duration: '6h 30m', departure: '23:00', arrival: '05:30+1', ship: 'Stena Hollandica', price: 169, img: 'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=400&q=80', amenities: ['Cabin', 'Restaurant', 'WiFi', 'Lounge', 'Pet Friendly'] },
-        ],
-    };
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- CART SIDEBAR                                      -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-head">
+        <h3>🧾 Your Booking Basket</h3>
+        <button class="cart-close-btn" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+        <div class="cart-empty-msg">
+            <div class="empty-icon">⛴</div>
+            <p>Your basket is empty.<br>Search and select a ferry to get started.</p>
+        </div>
+    </div>
+    <div class="cart-foot" id="cart-foot" style="display:none;">
+        <div class="cart-total-row">
+            <span>Crossing fare</span>
+            <span id="cart-subtotal">£0.00</span>
+        </div>
+        <div class="cart-total-row">
+            <span>Booking fee</span>
+            <span>£4.99</span>
+        </div>
+        <div class="cart-total-row grand-total">
+            <span>Total</span>
+            <span id="cart-grand-total">£4.99</span>
+        </div>
+        <button class="btn-book" id="btn-book" onclick="handleCheckout()">
+            Proceed to Payment →
+        </button>
+    </div>
+</div>
 
-    // ───────── Utility ─────────
-    function generateCartId() {
-        return 'cart_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    function devLog(msg, type = '') {
-        const body = document.getElementById('devPanelBody');
-        const time = new Date().toLocaleTimeString();
-        const entry = document.createElement('div');
-        entry.className = 'log-entry ' + type;
-        entry.innerHTML = `<span class="timestamp">[${time}]</span> ${msg}`;
-        body.appendChild(entry);
-        body.scrollTop = body.scrollHeight;
-    }
-
-    function toggleDevPanel() {
-        const body = document.getElementById('devPanelBody');
-        const toggle = document.getElementById('devToggle');
-        devPanelOpen = !devPanelOpen;
-        body.style.display = devPanelOpen ? 'block' : 'none';
-        toggle.textContent = devPanelOpen ? '▼' : '▲';
-    }
-
-    // ───────── Navigation ─────────
-    function showSection(section) {
-        ['heroSection', 'resultsSection', 'checkoutSection', 'confirmationSection', 'backBarResults', 'backBarCheckout'].forEach(id => {
-            document.getElementById(id).style.display = 'none';
-        });
-        switch(section) {
-            case 'home':
-                document.getElementById('heroSection').style.display = 'flex';
-                break;
-            case 'results':
-                document.getElementById('backBarResults').style.display = 'block';
-                document.getElementById('resultsSection').style.display = 'block';
-                break;
-            case 'checkout':
-                document.getElementById('backBarCheckout').style.display = 'block';
-                document.getElementById('checkoutSection').style.display = 'block';
-                break;
-            case 'confirmation':
-                document.getElementById('confirmationSection').style.display = 'block';
-                break;
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function goHome() { showSection('home'); }
-
-    function goToResults() { showSection('results'); }
-
-    // ───────── Search ─────────
-    function searchFerries() {
-        const routeKey = document.getElementById('routeSelect').value;
-        if (!routeKey) {
-            showToast('Please select a route to search');
-            return;
-        }
-
-        const ferries = FERRY_DATA[routeKey] || [];
-        const date = document.getElementById('travelDate').value;
-        const passengers = document.getElementById('passengers').value;
-        const dateStr = date ? new Date(date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : 'Flexible dates';
-
-        let html = `
-            <div class="results-header">
-                <h2>${ferries[0]?.route || 'Results'}</h2>
-                <span class="results-count">${ferries.length} sailings found · ${dateStr} · ${passengers} passenger(s)</span>
-            </div>
-        `;
-
-        ferries.forEach((f, idx) => {
-            html += `
-                <div class="ferry-card" onclick="selectFerry('${routeKey}', ${idx})">
-                    <div class="ferry-card-img" style="background-image: url('${f.img}')"></div>
-                    <div class="ferry-card-info">
-                        <div class="ferry-operator">${f.operator}</div>
-                        <div class="ferry-route">${f.departure} → ${f.arrival}</div>
-                        <div class="ferry-details">
-                            <span>⏱ ${f.duration}</span>
-                            <span>🚢 ${f.ship}</span>
-                        </div>
-                        <div class="ferry-amenities">
-                            ${f.amenities.map(a => `<span class="amenity-tag">${a}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="ferry-card-price">
-                        <span class="price-from">From</span>
-                        <span class="price-amount">£${f.price}</span>
-                        <span class="price-unit">per person</span>
-                        <button class="btn-select">Select</button>
-                    </div>
-                </div>
-            `;
-        });
-
-        document.getElementById('resultsSection').innerHTML = html;
-        showSection('results');
-        devLog('Search executed: ' + routeKey);
-    }
-
-    // ───────── Select Ferry & Cart Event ─────────
-    function selectFerry(routeKey, idx) {
-        const ferry = FERRY_DATA[routeKey][idx];
-        selectedFerry = ferry;
-        const passengers = parseInt(document.getElementById('passengers').value);
-        const vehicle = document.getElementById('vehicle').value;
-        const vehicleSurcharge = vehicle === 'car' ? 35 : vehicle === 'van' ? 55 : vehicle === 'motorhome' ? 75 : 0;
-        const subtotal = ferry.price * passengers;
-        const total = subtotal + vehicleSurcharge;
-
-        // Generate a unique cart ID for this booking attempt
-        currentCartId = generateCartId();
-
-        // Build checkout summary
-        const summaryHtml = `
-            <h3>Booking Summary</h3>
-            <div class="booking-summary-route">
-                <div class="route-icon">🚢</div>
-                <div class="route-text">
-                    <h4>${ferry.route}</h4>
-                    <p>${ferry.operator} · ${ferry.ship}</p>
-                </div>
-            </div>
-            <div class="summary-row"><span class="label">Departure</span><span class="value">${ferry.departure}</span></div>
-            <div class="summary-row"><span class="label">Arrival</span><span class="value">${ferry.arrival}</span></div>
-            <div class="summary-row"><span class="label">Duration</span><span class="value">${ferry.duration}</span></div>
-            <div class="summary-row"><span class="label">Passengers</span><span class="value">${passengers} × £${ferry.price}</span></div>
-            ${vehicleSurcharge > 0 ? `<div class="summary-row"><span class="label">Vehicle (${vehicle})</span><span class="value">£${vehicleSurcharge}</span></div>` : ''}
-            <div class="summary-total"><span>Total</span><span class="value">£${total}</span></div>
-            <div style="margin-top:1rem; padding:0.75rem; background:var(--bg-light); border-radius:var(--radius); font-size:0.75rem; color:var(--text-light);">
-                <strong>Cart ID:</strong> ${currentCartId}
-            </div>
-        `;
-
-        document.getElementById('bookingSummary').innerHTML = summaryHtml;
-        showSection('checkout');
-
-        // ═══ Fire OneSignal "updated_cart" custom event ═══
-        fireUpdatedCartEvent(ferry, passengers, vehicleSurcharge, total);
-    }
-
-    // ───────── OneSignal Events ─────────
-    async function fireUpdatedCartEvent(ferry, passengers, vehicleSurcharge, total) {
-        const eventData = {
-            cart_id: currentCartId,
-            route: ferry.route,
-            operator: ferry.operator,
-            ship: ferry.ship,
-            departure: ferry.departure,
-            passengers: passengers,
-            vehicle_surcharge: vehicleSurcharge,
-            total_gbp: total,
-            currency: 'GBP',
-        };
-
-        devLog(`Firing <strong>updated_cart</strong> event...`, 'event-fire');
-        devLog(`Payload: ${JSON.stringify(eventData)}`, '');
-
-        try {
-            await new Promise((resolve, reject) => {
-                OneSignalDeferred.push(async function(OneSignal) {
-                    try {
-                        // Send custom event via OneSignal
-                        // Using sendOutcome for tracking + tags for data
-                        await OneSignal.User.addTags({
-                            last_cart_id: currentCartId,
-                            last_cart_route: ferry.route,
-                            last_cart_total: String(total),
-                            last_cart_operator: ferry.operator,
-                            cart_status: 'active',
-                        });
-
-                        // Fire the custom event
-                        await OneSignal.Session.sendOutcome('updated_cart', total);
-
-                        resolve();
-                    } catch(e) {
-                        reject(e);
-                    }
-                });
-            });
-
-            devLog(`✅ <strong>updated_cart</strong> event sent successfully (cart_id: ${currentCartId})`, 'event-success');
-            showToast('Cart updated — OneSignal event fired');
-        } catch(err) {
-            devLog(`❌ Error firing updated_cart: ${err.message}`, 'event-error');
-        }
-    }
-
-    async function firePurchasedCartEvent(total) {
-        const eventData = {
-            cart_id: currentCartId,
-            total_gbp: total,
-            currency: 'GBP',
-            purchased_at: new Date().toISOString(),
-        };
-
-        devLog(`Firing <strong>purchased_cart</strong> event...`, 'event-fire');
-        devLog(`Payload: ${JSON.stringify(eventData)}`, '');
-
-        try {
-            await new Promise((resolve, reject) => {
-                OneSignalDeferred.push(async function(OneSignal) {
-                    try {
-                        // Update tags to mark cart as purchased
-                        await OneSignal.User.addTags({
-                            last_cart_id: currentCartId,
-                            cart_status: 'purchased',
-                            last_purchase_total: String(total),
-                            last_purchase_date: new Date().toISOString(),
-                        });
-
-                        // Fire the purchased event with same cart_id
-                        await OneSignal.Session.sendOutcome('purchased_cart', total);
-
-                        resolve();
-                    } catch(e) {
-                        reject(e);
-                    }
-                });
-            });
-
-            devLog(`✅ <strong>purchased_cart</strong> event sent successfully (cart_id: ${currentCartId})`, 'event-success');
-            showToast('Purchase complete — OneSignal event fired');
-        } catch(err) {
-            devLog(`❌ Error firing purchased_cart: ${err.message}`, 'event-error');
-        }
-    }
-
-    // ───────── Purchase ─────────
-    function completePurchase() {
-        const passengers = parseInt(document.getElementById('passengers').value);
-        const vehicle = document.getElementById('vehicle').value;
-        const vehicleSurcharge = vehicle === 'car' ? 35 : vehicle === 'van' ? 55 : vehicle === 'motorhome' ? 75 : 0;
-        const total = (selectedFerry.price * passengers) + vehicleSurcharge;
-
-        const confirmHtml = `
-            <div class="confirmation-icon">✓</div>
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- BOOKING CONFIRMATION MODAL                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="booking-modal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <div class="modal-check">✓</div>
             <h2>Booking Confirmed!</h2>
-            <p>Your ferry has been booked. A confirmation email will be sent shortly.</p>
-            <div class="confirmation-details">
-                <div class="detail-row"><span class="label">Booking Ref</span><span class="value">#DF${Date.now().toString().slice(-8)}</span></div>
-                <div class="detail-row"><span class="label">Route</span><span class="value">${selectedFerry.route}</span></div>
-                <div class="detail-row"><span class="label">Operator</span><span class="value">${selectedFerry.operator}</span></div>
-                <div class="detail-row"><span class="label">Ship</span><span class="value">${selectedFerry.ship}</span></div>
-                <div class="detail-row"><span class="label">Departure</span><span class="value">${selectedFerry.departure}</span></div>
-                <div class="detail-row"><span class="label">Passengers</span><span class="value">${passengers}</span></div>
-                <div class="detail-row"><span class="label">Total Paid</span><span class="value">£${total}</span></div>
-                <div class="detail-row"><span class="label">Cart ID</span><span class="value" style="font-size:0.75rem">${currentCartId}</span></div>
-            </div>
-            <button class="btn-home" onclick="goHome()">Search Another Ferry</button>
-        `;
+            <p>Your booking reference has been emailed to you.</p>
+        </div>
+        <div class="modal-body" id="booking-summary"></div>
+        <div class="modal-foot">
+            <button class="btn-done" onclick="closeModal()">Search More Crossings</button>
+        </div>
+    </div>
+</div>
 
-        document.getElementById('confirmationCard').innerHTML = confirmHtml;
-        showSection('confirmation');
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-        // ═══ Fire OneSignal "purchased_cart" event ═══
-        firePurchasedCartEvent(total);
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────
+// FERRY DATA
+// ─────────────────────────────────────────────────────
+const ferryRoutes = {
+    'Dover|Calais': [
+        { id: 'pof-dc-0600', operator: 'P&O Ferries',     operatorEmoji: '🚢', departs: '06:00', arrives: '08:30', duration: '2h 30m', price: 68,  includes: 'Car + 2 passengers', amenities: 'Restaurant · Bar · WiFi', direct: true, vehicle: true },
+        { id: 'dfs-dc-0900', operator: 'DFDS',             operatorEmoji: '⛴',  departs: '09:15', arrives: '11:45', duration: '2h 30m', price: 72,  includes: 'Car + 2 passengers', amenities: 'Café · Duty Free · WiFi', direct: true, vehicle: true },
+        { id: 'pof-dc-1200', operator: 'P&O Ferries',     operatorEmoji: '🚢', departs: '12:00', arrives: '14:30', duration: '2h 30m', price: 89,  includes: 'Car + 2 passengers', amenities: 'Restaurant · Bar · WiFi', direct: true, vehicle: true },
+        { id: 'dfs-dc-1600', operator: 'DFDS',             operatorEmoji: '⛴',  departs: '16:30', arrives: '19:00', duration: '2h 30m', price: 54,  includes: 'Car + 2 passengers', amenities: 'Café · Duty Free · WiFi', direct: true, vehicle: true },
+    ],
+    'Holyhead|Dublin': [
+        { id: 'irf-hd-0820', operator: 'Irish Ferries',   operatorEmoji: '🛳', departs: '08:20', arrives: '12:30', duration: '4h 10m', price: 119, includes: 'Car + 2 passengers', amenities: 'Restaurant · Cinema · Lounge', direct: true, vehicle: true },
+        { id: 'ssl-hd-1040', operator: 'Stena Line',      operatorEmoji: '🚢', departs: '10:40', arrives: '14:25', duration: '3h 45m', price: 105, includes: 'Car + 2 passengers', amenities: 'Café · Bar · WiFi',            direct: true, vehicle: true },
+        { id: 'irf-hd-1430', operator: 'Irish Ferries',   operatorEmoji: '🛳', departs: '14:30', arrives: '17:15', duration: '2h 45m', price: 139, includes: 'Car + 2 passengers', amenities: 'Premium Lounge · Restaurant',   direct: true, vehicle: true, badge: 'Fast Ferry' },
+    ],
+    'Portsmouth|Santander': [
+        { id: 'btf-ps-1200', operator: 'Brittany Ferries',operatorEmoji: '⛴',  departs: '12:00', arrives: '08:00', duration: '20h 00m',price: 189, includes: 'Car + 2 passengers', amenities: 'Cabin · Restaurant · Spa',      direct: true, vehicle: true },
+    ],
+    'Harwich|Hook of Holland': [
+        { id: 'ssl-hh-1700', operator: 'Stena Line',      operatorEmoji: '🚢', departs: '17:00', arrives: '09:45', duration: '16h 45m',price: 149, includes: 'Car + 2 passengers', amenities: 'Cabin · Bar · Restaurant',       direct: true, vehicle: true },
+    ],
+    'Plymouth|Roscoff': [
+        { id: 'btf-pr-0800', operator: 'Brittany Ferries',operatorEmoji: '⛴',  departs: '08:00', arrives: '18:00', duration: '10h 00m',price: 135, includes: 'Car + 2 passengers', amenities: 'Cabin · Restaurant · Boutique',  direct: true, vehicle: true },
+    ],
+    'Newcastle|Amsterdam': [
+        { id: 'dfs-na-1700', operator: 'DFDS',             operatorEmoji: '⛴',  departs: '17:00', arrives: '09:30', duration: '16h 30m',price: 129, includes: 'Car + 2 passengers', amenities: 'Cabin · Restaurant · Casino',    direct: true, vehicle: true },
+    ],
+    'Cairnryan|Belfast': [
+        { id: 'ssl-cb-0800', operator: 'Stena Line',       operatorEmoji: '🚢', departs: '08:00', arrives: '10:10', duration: '2h 10m', price: 89,  includes: 'Car + 2 passengers', amenities: 'Café · Bar · WiFi',              direct: true, vehicle: true },
+        { id: 'pfs-cb-1230', operator: 'P&O Ferries',      operatorEmoji: '🚢', departs: '12:30', arrives: '14:30', duration: '2h 00m', price: 95,  includes: 'Car + 2 passengers', amenities: 'Restaurant · Bar · Lounge',      direct: true, vehicle: true },
+    ],
+};
+
+// ─────────────────────────────────────────────────────
+// DYNAMIC ROUTE GENERATOR
+// Produces realistic crossings for any From/To pair
+// that isn't in the hardcoded ferryRoutes object.
+// ─────────────────────────────────────────────────────
+const operatorPool = [
+    { name: 'P&O Ferries',      emoji: '🚢', amenities: 'Restaurant · Bar · WiFi',           shortCode: 'pof' },
+    { name: 'DFDS',             emoji: '⛴',  amenities: 'Café · Duty Free · WiFi',            shortCode: 'dfs' },
+    { name: 'Stena Line',       emoji: '🚢', amenities: 'Café · Bar · WiFi',                  shortCode: 'ssl' },
+    { name: 'Brittany Ferries', emoji: '⛴',  amenities: 'Cabin · Restaurant · Boutique',      shortCode: 'btf' },
+    { name: 'Irish Ferries',    emoji: '🛳', amenities: 'Restaurant · Cinema · Lounge',        shortCode: 'irf' },
+    { name: 'Condor Ferries',   emoji: '🚢', amenities: 'Café · Bar · Lounge',                shortCode: 'cnf' },
+];
+
+// Sailings: [departHour, departMin, durationHours, durationMins, basePrice]
+const sailingTemplates = [
+    [6,  0,  2, 30,  54],
+    [8,  30, 2, 45,  68],
+    [10, 15, 2, 30,  79],
+    [13, 0,  2, 30,  89],
+    [15, 45, 2, 30,  72],
+    [18, 30, 2, 30,  61],
+    [21, 0,  2, 30,  48],
+];
+
+// Simple deterministic hash so the same route always gets the same results
+function routeHash(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) >>> 0; }
+    return h;
+}
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+function addMins(h, m, durH, durM) {
+    let totalM = h * 60 + m + durH * 60 + durM;
+    return pad2(Math.floor(totalM / 60) % 24) + ':' + pad2(totalM % 60);
+}
+
+function generateDynamicRoutes(from, to) {
+    const hash  = routeHash(from + '|' + to);
+    // Pick 3 sailings deterministically from the template list
+    const numSailings = 3 + (hash % 2); // 3 or 4
+    const chosenTemplates = [];
+    for (let i = 0; i < numSailings; i++) {
+        chosenTemplates.push(sailingTemplates[(hash + i * 3) % sailingTemplates.length]);
     }
+    // Sort by departure hour
+    chosenTemplates.sort((a, b) => a[0] - b[0]);
 
-    // ───────── Login / Identify ─────────
-    function showLoginModal() {
-        document.getElementById('loginModal').classList.add('active');
+    // Pick operators (2 alternating)
+    const op1 = operatorPool[(hash)       % operatorPool.length];
+    const op2 = operatorPool[(hash + 2)   % operatorPool.length];
+
+    return chosenTemplates.map((t, idx) => {
+        const [depH, depM, durH, durM, basePrice] = t;
+        const op   = idx % 2 === 0 ? op1 : op2;
+        const priceVariance = ((hash + idx * 7) % 20) - 10; // -10 to +10
+        const price = basePrice + priceVariance;
+        const depStr = pad2(depH) + ':' + pad2(depM);
+        const arrStr = addMins(depH, depM, durH, durM);
+        const durStr = durH + 'h ' + pad2(durM) + 'm';
+        const id     = op.shortCode + '-' + from.slice(0,2).toLowerCase() + to.slice(0,2).toLowerCase() + '-' + depStr.replace(':','');
+
+        return {
+            id, operator: op.name, operatorEmoji: op.emoji,
+            departs: depStr, arrives: arrStr, duration: durStr,
+            price, includes: 'Car + 2 passengers',
+            amenities: op.amenities,
+            direct: true, vehicle: true,
+        };
+    });
+}
+
+function getRoutesForPair(from, to) {
+    const key = from + '|' + to;
+    return ferryRoutes[key] && ferryRoutes[key].length > 0
+        ? ferryRoutes[key]
+        : generateDynamicRoutes(from, to);
+}
+
+// ─────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────
+let currentUser = null;
+let cart = [];         // Array of booking objects
+let searchParams = {}; // Last search params
+
+// ─────────────────────────────────────────────────────
+// CHECK RETURNING USER
+// ─────────────────────────────────────────────────────
+(function init() {
+    const saved = localStorage.getItem('df_demo_user');
+    if (saved) {
+        currentUser = JSON.parse(saved);
+        showApp();
     }
+    // Set default date (tomorrow)
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 7);
+    const dateStr = tomorrow.toISOString().split('T')[0];
+    const dateInput = document.getElementById('search-date');
+    if (dateInput) dateInput.value = dateStr;
+})();
 
-    function closeLoginModal() {
-        document.getElementById('loginModal').classList.remove('active');
-    }
+// ─────────────────────────────────────────────────────
+// REGISTRATION
+// ─────────────────────────────────────────────────────
+function handleRegistration(e) {
+    e.preventDefault();
+    const name  = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    if (!name || !email) return;
 
-    function loginUser() {
-        const email = document.getElementById('loginEmail').value.trim();
-        const externalId = document.getElementById('loginExternalId').value.trim();
+    const btn = document.getElementById('reg-submit-btn');
+    btn.textContent = 'Creating Account…';
+    btn.disabled = true;
 
-        if (!externalId) {
-            showToast('Please enter an External ID');
-            return;
+    // Generate 8-character UUID
+    const uuid = generateUUID();
+
+    // Persist user
+    currentUser = { name, email, uuid };
+    localStorage.setItem('df_demo_user', JSON.stringify(currentUser));
+
+    // ── OneSignal SDK Calls ──
+    OneSignalDeferred.push(async function(OneSignal) {
+        try {
+            // 1. Login with UUID as external_id
+            await OneSignal.login(uuid);
+            console.log('OneSignal: login() called with UUID:', uuid);
+
+            // 2. Add email channel
+            await OneSignal.User.addEmail(email);
+            console.log('OneSignal: addEmail() called with:', email);
+
+            // 3. Set initial tags
+            await OneSignal.User.addTags({
+                customer_name:   name,
+                registered_user: 'true',
+            });
+            console.log('OneSignal: addTags() — customer_name, registered_user');
+
+            // 4. Fire In-App trigger to prompt for push permission
+            OneSignal.User.addTrigger('show_prompt', 'true');
+            console.log('OneSignal: addTrigger("show_prompt", "true")');
+
+        } catch (err) {
+            console.error('OneSignal registration error:', err);
         }
+    });
 
-        currentUser = { email, externalId };
+    setTimeout(() => {
+        showApp();
+        showToast('Welcome aboard, ' + name.split(' ')[0] + '! 👋', 'success');
+    }, 1200);
+}
 
-        // Update UI
-        document.getElementById('loginBtn').style.display = 'none';
-        const badge = document.getElementById('userBadge');
+function generateUUID() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+    for (let i = 0; i < 8; i++) id += chars[Math.floor(Math.random() * chars.length)];
+    return id;
+}
+
+function showApp() {
+    document.getElementById('registration-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    if (currentUser) {
+        document.getElementById('user-first-name').textContent = currentUser.name.split(' ')[0];
+    }
+    // Set default date
+    const dateInput = document.getElementById('search-date');
+    if (dateInput && !dateInput.value) {
+        const d = new Date();
+        d.setDate(d.getDate() + 7);
+        dateInput.value = d.toISOString().split('T')[0];
+    }
+}
+
+// ─────────────────────────────────────────────────────
+// FERRY SEARCH
+// ─────────────────────────────────────────────────────
+function searchFerries() {
+    const from = document.getElementById('search-from').value;
+    const to   = document.getElementById('search-to').value;
+    const date = document.getElementById('search-date').value;
+    const pax  = document.getElementById('search-pax').value;
+
+    if (!from || !to) {
+        showToast('Please select both departure and destination ports.', 'info');
+        return;
+    }
+    if (from === to) {
+        showToast('Departure and destination cannot be the same port.', 'info');
+        return;
+    }
+
+    searchParams = { from, to, date, pax };
+
+    // ── OneSignal: route_searched ──
+    OneSignalDeferred.push(async function(OneSignal) {
+        try {
+            OneSignal.User.trackEvent('route_searched', {
+                origin:      from,
+                destination: to,
+                travel_date: date,
+                passengers:  parseInt(pax),
+            });
+            console.log('OneSignal: trackEvent("route_searched")', from, '→', to);
+
+            // Update last_searched_route tag
+            await OneSignal.User.addTag('last_searched_route', from + '-' + to);
+            console.log('OneSignal: addTag("last_searched_route",', from + '-' + to + ')');
+        } catch (err) {
+            console.error('OneSignal route_searched error:', err);
+        }
+    });
+
+    renderResults(from, to, date, pax);
+}
+
+function renderResults(from, to, date, pax) {
+    const routes = getRoutesForPair(from, to);
+
+    const titleEl = document.getElementById('results-title');
+    const countEl = document.getElementById('results-count');
+    const resultsEl = document.getElementById('ferry-results');
+
+    const formattedDate = date ? new Date(date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+    titleEl.textContent = from + ' → ' + to + (formattedDate ? ' · ' + formattedDate : '');
+
+    countEl.textContent = routes.length + ' crossing' + (routes.length > 1 ? 's' : '') + ' available';
+
+    // Cache the routes against a key so selectFerry can look them up
+    window._currentRoutes = {};
+    routes.forEach(r => { window._currentRoutes[r.id] = r; });
+
+    resultsEl.innerHTML = `<div class="ferry-list">${routes.map(r => buildFerryCard(r, from, to, date, pax)).join('')}</div>`;
+}
+
+function buildFerryCard(r, from, to, date, pax) {
+    const isInCart = cart.some(b => b.id === r.id);
+    return `
+    <div class="ferry-card" id="card-${r.id}">
+        <div class="ferry-card-main">
+            <div class="ferry-operator">
+                <div class="operator-logo">${r.operatorEmoji}</div>
+                <div class="operator-name">${r.operator}</div>
+            </div>
+            <div class="ferry-route">
+                <div class="route-point">
+                    <div class="route-time">${r.departs}</div>
+                    <div class="route-port">${from}</div>
+                </div>
+                <div class="route-arrow">
+                    <div class="route-duration">${r.duration}</div>
+                    <div class="arrow-line"></div>
+                </div>
+                <div class="route-point">
+                    <div class="route-time">${r.arrives}</div>
+                    <div class="route-port">${to}</div>
+                </div>
+            </div>
+            <div class="ferry-details">
+                <span class="ferry-detail-badge badge-direct">✓ Direct</span>
+                ${r.vehicle ? '<span class="ferry-detail-badge badge-vehicle">🚗 Car included</span>' : ''}
+                ${r.badge ? '<span class="ferry-detail-badge badge-direct">' + r.badge + '</span>' : ''}
+                <div class="ferry-amenities">${r.amenities}</div>
+            </div>
+            <div class="ferry-price-col">
+                <div>
+                    <div class="price-from">from</div>
+                    <div class="price-amount"><span class="price-currency">£</span>${r.price}</div>
+                    <div class="price-per">${r.includes}</div>
+                </div>
+                <button class="btn-select ${isInCart ? 'selected' : ''}"
+                        id="btn-${r.id}"
+                        onclick="selectFerry('${r.id}', '${from}', '${to}')">
+                    ${isInCart ? '✓ Selected' : 'Select'}
+                </button>
+            </div>
+        </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────
+// CART
+// ─────────────────────────────────────────────────────
+function selectFerry(ferryId, from, to) {
+    // Look up from the cached results for the current search, or fall back to hardcoded routes
+    const cached = window._currentRoutes && window._currentRoutes[ferryId];
+    const hardcoded = (ferryRoutes[from + '|' + to] || []).find(r => r.id === ferryId);
+    const ferry = cached || hardcoded;
+    if (!ferry) return;
+
+    const alreadyIdx = cart.findIndex(b => b.id === ferryId);
+    if (alreadyIdx > -1) {
+        // Deselect
+        cart.splice(alreadyIdx, 1);
+        const btn = document.getElementById('btn-' + ferryId);
+        if (btn) { btn.textContent = 'Select'; btn.classList.remove('selected'); }
+    } else {
+        // Add to cart
+        const booking = {
+            id:        ferryId,
+            from,
+            to,
+            operator:  ferry.operator,
+            departs:   ferry.departs,
+            arrives:   ferry.arrives,
+            duration:  ferry.duration,
+            price:     ferry.price,
+            includes:  ferry.includes,
+            date:      searchParams.date || '',
+            passengers: searchParams.pax || 2,
+        };
+        cart.push(booking);
+        const btn = document.getElementById('btn-' + ferryId);
+        if (btn) { btn.textContent = '✓ Selected'; btn.classList.add('selected'); }
+
+        // ── OneSignal: ferry_selected ──
+        OneSignalDeferred.push(async function(OneSignal) {
+            try {
+                OneSignal.User.trackEvent('ferry_selected', {
+                    route:       from + ' - ' + to,
+                    operator:    ferry.operator,
+                    departure:   ferry.departs,
+                    travel_date: searchParams.date || '',
+                    price:       ferry.price,
+                });
+                console.log('OneSignal: trackEvent("ferry_selected")', from, '→', to);
+
+                // Set preferred_route tag
+                await OneSignal.User.addTag('preferred_route', from + '-' + to);
+                // Set cart_value tag
+                await OneSignal.User.addTag('cart_value', getCartTotal().toString());
+                console.log('OneSignal: addTag("preferred_route","cart_value")');
+            } catch (err) {
+                console.error('OneSignal ferry_selected error:', err);
+            }
+        });
+
+        showToast(from + ' → ' + to + ' added to basket', 'success');
+        openCart();
+    }
+
+    updateCartBadge();
+    renderCartBody();
+}
+
+function updateCartBadge() {
+    const badge = document.getElementById('cart-badge');
+    if (cart.length > 0) {
         badge.style.display = 'flex';
-        document.getElementById('userAvatar').textContent = (email || externalId).charAt(0).toUpperCase();
-        document.getElementById('userName').textContent = email || externalId;
+        badge.textContent = cart.length;
+    } else {
+        badge.style.display = 'none';
+    }
+}
 
-        closeLoginModal();
+function getCartSubtotal() {
+    return cart.reduce((sum, b) => sum + b.price, 0);
+}
 
-        // OneSignal login
-        devLog(`Logging in user: <strong>${externalId}</strong>`, 'event-fire');
+function getCartTotal() {
+    return getCartSubtotal() + (cart.length > 0 ? 4.99 : 0);
+}
 
-        OneSignalDeferred.push(async function(OneSignal) {
-            try {
-                await OneSignal.login(externalId);
-                if (email) {
-                    await OneSignal.User.addEmail(email);
-                }
-                devLog(`✅ User identified: ${externalId}` + (email ? ` (email: ${email})` : ''), 'event-success');
-                showToast('Signed in as ' + (email || externalId));
-            } catch(e) {
-                devLog(`❌ Login error: ${e.message}`, 'event-error');
-            }
-        });
+function renderCartBody() {
+    const body = document.getElementById('cart-body');
+    const foot = document.getElementById('cart-foot');
+
+    if (cart.length === 0) {
+        body.innerHTML = `<div class="cart-empty-msg"><div class="empty-icon">⛴</div><p>Your basket is empty.<br>Search and select a ferry to get started.</p></div>`;
+        foot.style.display = 'none';
+        return;
     }
 
-    function logoutUser() {
-        currentUser = null;
-        document.getElementById('loginBtn').style.display = '';
-        document.getElementById('userBadge').style.display = 'none';
+    foot.style.display = 'block';
 
-        devLog('Logging out user...', 'event-fire');
+    body.innerHTML = cart.map(b => {
+        const formattedDate = b.date ? new Date(b.date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) : 'Selected date';
+        return `
+        <div class="booking-item">
+            <div class="booking-item-header">
+                <span>⛴ Ferry Crossing</span>
+                <button class="booking-remove" onclick="removeFromCart('${b.id}', '${b.from}', '${b.to}')">&times;</button>
+            </div>
+            <div class="booking-item-body">
+                <div class="booking-route-label">${b.from} → ${b.to}</div>
+                <div class="booking-meta">
+                    ${b.operator}<br>
+                    ${formattedDate} · Departs ${b.departs} · Arrives ${b.arrives}<br>
+                    ${b.includes}
+                </div>
+                <div class="booking-price-row">
+                    <span>Crossing fare</span>
+                    <span>£${b.price.toFixed(2)}</span>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
 
+    const subtotal = getCartSubtotal();
+    const total    = getCartTotal();
+    document.getElementById('cart-subtotal').textContent   = '£' + subtotal.toFixed(2);
+    document.getElementById('cart-grand-total').textContent = '£' + total.toFixed(2);
+}
+
+function removeFromCart(ferryId, from, to) {
+    const idx = cart.findIndex(b => b.id === ferryId);
+    if (idx > -1) cart.splice(idx, 1);
+
+    // Reset the select button if still visible
+    const btn = document.getElementById('btn-' + ferryId);
+    if (btn) { btn.textContent = 'Select'; btn.classList.remove('selected'); }
+
+    updateCartBadge();
+    renderCartBody();
+
+    if (cart.length === 0) {
         OneSignalDeferred.push(async function(OneSignal) {
-            try {
-                await OneSignal.logout();
-                devLog('✅ User logged out', 'event-success');
-                showToast('Signed out');
-            } catch(e) {
-                devLog(`❌ Logout error: ${e.message}`, 'event-error');
-            }
+            try { await OneSignal.User.removeTag('cart_value'); } catch(e) {}
+        });
+    } else {
+        OneSignalDeferred.push(async function(OneSignal) {
+            try { await OneSignal.User.addTag('cart_value', getCartTotal().toString()); } catch(e) {}
         });
     }
+}
 
-    // ───────── Init ─────────
-    (function init() {
-        // Set default dates
-        const today = new Date();
-        const nextWeek = new Date(today);
-        nextWeek.setDate(today.getDate() + 7);
-        const returnDay = new Date(nextWeek);
-        returnDay.setDate(nextWeek.getDate() + 3);
+function openCart() {
+    document.getElementById('cart-sidebar').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+    renderCartBody();
+}
 
-        document.getElementById('travelDate').value = nextWeek.toISOString().split('T')[0];
-        document.getElementById('returnDate').value = returnDay.toISOString().split('T')[0];
+function closeCart() {
+    document.getElementById('cart-sidebar').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+}
 
-        showSection('home');
-    })();
-    </script>
+// ─────────────────────────────────────────────────────
+// CHECKOUT
+// ─────────────────────────────────────────────────────
+function handleCheckout() {
+    if (cart.length === 0) return;
 
+    const btn = document.getElementById('btn-book');
+    btn.textContent = 'Processing…';
+    btn.disabled = true;
+
+    const total = getCartTotal();
+    const bookingRef = 'DF-' + generateUUID().toUpperCase();
+    const routes = cart.map(b => b.from + ' → ' + b.to).join(', ');
+
+    // ── OneSignal: booking_started ──
+    OneSignalDeferred.push(async function(OneSignal) {
+        try {
+            OneSignal.User.trackEvent('booking_started', {
+                booking_ref:  bookingRef,
+                routes:       routes,
+                total_amount: total,
+                items:        cart.length,
+            });
+            console.log('OneSignal: trackEvent("booking_started")', bookingRef);
+        } catch (err) {
+            console.error('OneSignal booking_started error:', err);
+        }
+    });
+
+    setTimeout(() => {
+        // ── OneSignal: booking_completed ──
+        OneSignalDeferred.push(async function(OneSignal) {
+            try {
+                OneSignal.User.trackEvent('booking_completed', {
+                    booking_ref:   bookingRef,
+                    routes:        routes,
+                    total_amount:  total,
+                    departure_date: cart[0] ? cart[0].date : '',
+                    operator:      cart[0] ? cart[0].operator : '',
+                });
+                console.log('OneSignal: trackEvent("booking_completed")', bookingRef);
+
+                // Clear cart_value tag after booking
+                await OneSignal.User.removeTag('cart_value');
+                console.log('OneSignal: removeTag("cart_value")');
+            } catch (err) {
+                console.error('OneSignal booking_completed error:', err);
+            }
+        });
+
+        showBookingConfirmation(bookingRef, total, routes);
+        closeCart();
+        btn.textContent = 'Proceed to Payment →';
+        btn.disabled = false;
+    }, 2000);
+}
+
+function showBookingConfirmation(ref, total, routes) {
+    const formattedDate = cart[0] && cart[0].date
+        ? new Date(cart[0].date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+        : 'Selected date';
+
+    document.getElementById('booking-summary').innerHTML = `
+        <div class="confirm-row">
+            <span class="confirm-label">Booking Reference</span>
+            <span class="confirm-value" style="font-family:monospace; color:#006B70;">${ref}</span>
+        </div>
+        <div class="confirm-row">
+            <span class="confirm-label">Route(s)</span>
+            <span class="confirm-value">${routes}</span>
+        </div>
+        <div class="confirm-row">
+            <span class="confirm-label">Operator</span>
+            <span class="confirm-value">${cart[0] ? cart[0].operator : ''}</span>
+        </div>
+        <div class="confirm-row">
+            <span class="confirm-label">Travel Date</span>
+            <span class="confirm-value">${formattedDate}</span>
+        </div>
+        <div class="confirm-row">
+            <span class="confirm-label">Confirmation sent to</span>
+            <span class="confirm-value">${currentUser ? currentUser.email : ''}</span>
+        </div>
+        <div class="confirm-row">
+            <span class="confirm-label">Total Paid</span>
+            <span class="confirm-value" style="color:#F05028; font-size:1.1rem;">£${total.toFixed(2)}</span>
+        </div>`;
+
+    document.getElementById('booking-modal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('booking-modal').classList.remove('open');
+    // Reset cart state
+    cart.forEach(b => {
+        const btn = document.getElementById('btn-' + b.id);
+        if (btn) { btn.textContent = 'Select'; btn.classList.remove('selected'); }
+    });
+    cart = [];
+    updateCartBadge();
+    renderCartBody();
+    showToast('Booking confirmed! Search for your next adventure.', 'success');
+}
+
+// ─────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────
+function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.className = 'toast ' + type;
+    toast.innerHTML = (type === 'success' ? '✓ ' : 'ℹ ') + msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+}
+</script>
 </body>
 </html>
