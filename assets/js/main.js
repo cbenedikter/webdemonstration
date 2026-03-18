@@ -55,6 +55,10 @@ function handleClick(buttonText) {
             // Open the third custom demo page (Onitsuka Tiger ecommerce)
             window.open('demos/custom_demo/demo_three.html', '_blank');
             break;
+        case 'custom-demo-4':
+            // Open the fourth custom demo page (Tech Show Frankfurt)
+            window.open('demos/custom_demo/demo_four.html', '_blank');
+            break;
         default:
             console.log('Button clicked: ' + buttonText);
     }
